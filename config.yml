@@ -1,0 +1,12 @@
+# artifacts
+storage:
+  provider: hdfs
+  tenant: CLIENT
+  namespace: MIRROR
+
+# orchestrator defaults
+orchestrator:
+  root: orchestrator
+  prefix: MIRROR
+  output_default_name: out
+  output_default_format: parquet
