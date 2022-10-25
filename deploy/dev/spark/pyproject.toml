@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "spark-cluster"
 version = "0.1.0"
-description = "Spark Cluster with docker-compuse using Bitnami images"
+description = "Spark Cluster with docker-compose"
 authors = ["victor-vila <victor.vila.navazo@gmail.com>"]
 packages = [{include = "spark_cluster"}]
 
