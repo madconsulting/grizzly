@@ -30,4 +30,4 @@ def spark_example_2(is_run_on_cluster: bool = False) -> None:
 
 
 if __name__ == "__main__":
-    spark_correlation_example(is_run_on_cluster=True)
+    spark_example_2(is_run_on_cluster=True)
