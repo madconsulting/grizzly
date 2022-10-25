@@ -21,6 +21,7 @@ def spark_example_1(is_run_on_cluster: bool = False) -> None:
     columns = ["firstname", "middlename", "lastname", "dob", "gender", "salary"]
     df = spark.createDataFrame(data=data, schema=columns)
     df.show()
+    spark.stop()
 
 if __name__ == "__main__":
     spark_example_1(is_run_on_cluster=True)
