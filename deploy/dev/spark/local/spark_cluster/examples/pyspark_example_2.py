@@ -4,7 +4,7 @@ From: https://github.com/apache/spark/blob/master/examples/src/main/python/mllib
 """
 import numpy as np
 from pyspark.mllib.stat import Statistics
-from spark_cluster.utils.spark_context import get_spark_context
+from local.spark_cluster.utils.spark_context import get_spark_context
 
 
 def spark_example_2(is_run_on_cluster: bool = False) -> None:

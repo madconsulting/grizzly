@@ -1,0 +1,2 @@
+config:
+  poc_spark_emr_serverless:region: us-east-1

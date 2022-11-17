@@ -1,7 +1,4 @@
-from pyspark.sql import SparkSession
-import numpy as np
-
-from spark_cluster.utils.spark_context import get_spark_context
+from local.spark_cluster.utils.spark_context import get_spark_context
 
 
 def spark_example_1(is_run_on_cluster: bool = False) -> None:
