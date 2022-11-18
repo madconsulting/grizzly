@@ -1,15 +1,21 @@
-from deploy.dev.spark.utils.spark_context import get_spark_context
+from pyspark.conf import SparkConf
+from pyspark.sql import SparkSession
 
 
-def spark_example_1(run_mode: str) -> None:
+# TODO - script temp duplicated from local/spark_cluster for debugging purposes - without imports from other
+#  files (I would need a custom docker with the deploy poetry package implemented beforehand)
+
+def spark_simple_example() -> None:
     """
     Spark example nº 1 - Create and show DataFrame
     :param run_mode: Run mode
     :return: None
     """
-    spark = get_spark_context(
-        app_name="pyspark_example_1", run_mode=run_mode
-    )
+    spark_config = SparkConf()
+    config_var_list = [("spark.app.name", "Simple Spark Example")]
+    spark_config.setAll(config_var_list)
+    spark = SparkSession.builder.config(conf=spark_config).getOrCreate()
+    spark.sparkContext.setLogLevel("WARN")
     data = [
         ("James", "", "Smith", "1991-04-01", "M", 3000),
         ("Michael", "Rose", "", "2000-05-19", "M", 4000),
@@ -24,13 +30,4 @@ def spark_example_1(run_mode: str) -> None:
 
 
 if __name__ == "__main__":
-
-    # Inputs
-    is_run_on_cluster = True
-
-    # Example trigger
-    if is_run_on_cluster:
-        run_mode = "local_cluster"
-    else:
-        run_mode = "local_single_worker"
-    spark_example_1(run_mode=run_mode)
+    spark_simple_example()

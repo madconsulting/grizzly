@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "spark-cluster"
+name = "spark"
 version = "0.1.0"
-description = "Spark Cluster with docker-compose"
+description = "Spark"
 authors = ["victor-vila <victor.vila.navazo@gmail.com>"]
 packages = [{include = "deploy"}]
 
 [tool.poetry.dependencies]
 # Spark local dependencies
-python = ">=3.8"
+python = ">=3.8, <=3.11"
 pyspark = "3.3.0"
 numpy = "1.23.4"
 docker-compose = "1.29.2"
@@ -15,6 +15,8 @@ jupyterlab = "3.4.8"
 # Pulumi dependencies
 pulumi = ">=3.0.0,<4.0.0"
 pulumi-aws = ">=5.0.0,<6.0.0"
+# Spark EMR Serverless dependencies
+boto3 = "1.26.12"
 
 [build-system]
 requires = ["poetry-core>=1.2.0b3"]

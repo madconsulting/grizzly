@@ -4,18 +4,18 @@ From: https://github.com/apache/spark/blob/master/examples/src/main/python/mllib
 """
 import numpy as np
 from pyspark.mllib.stat import Statistics
-from local.spark_cluster.utils.spark_context import get_spark_context
+from deploy.dev.spark.utils.spark_context import get_spark_context
 
 
-def spark_example_2(is_run_on_cluster: bool = False) -> None:
+def spark_example_2(run_mode: str) -> None:
     """
     Spark example nº 2 - Correlation matrix
     Based on: https://github.com/apache/spark/blob/master/examples/src/main/python/mllib/correlations_example.py
-    :param is_run_on_cluster: True if running aplication on the spark cluster, False otherwise
+    :param run_mode: Run mode
     :return: None
     """
     spark = get_spark_context(
-        app_name="pyspark_example_2", is_run_on_cluster=is_run_on_cluster
+        app_name="pyspark_example_2", run_mode=run_mode
     )  # SparkContext
     seriesX = spark.sparkContext.parallelize([1.0, 2.0, 3.0, 3.0, 5.0])
     # seriesY must have the same number of partitions and cardinality as seriesX
@@ -35,4 +35,14 @@ def spark_example_2(is_run_on_cluster: bool = False) -> None:
 
 
 if __name__ == "__main__":
-    spark_example_2(is_run_on_cluster=True)
+
+    # Inputs
+    is_run_on_cluster = True
+
+    # Example trigger
+    if is_run_on_cluster:
+        run_mode = "local_cluster"
+    else:
+        run_mode = "local_single_worker"
+    spark_example_2(run_mode=run_mode)
+
