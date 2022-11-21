@@ -16,6 +16,7 @@ jupyterlab = "3.4.8"
 pulumi = ">=3.0.0,<4.0.0"
 pulumi-aws = ">=5.0.0,<6.0.0"
 # Spark EMR Serverless dependencies
+botocore = "1.29.13"
 boto3 = "1.26.12"
 
 [build-system]

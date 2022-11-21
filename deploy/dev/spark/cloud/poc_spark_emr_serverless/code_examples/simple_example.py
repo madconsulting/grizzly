@@ -5,6 +5,7 @@ from pyspark.sql import SparkSession
 # TODO - script temp duplicated from local/spark_cluster for debugging purposes - without imports from other
 #  files (I would need a custom docker with the deploy poetry package implemented beforehand)
 
+
 def spark_simple_example() -> None:
     """
     Spark example nº 1 - Create and show DataFrame
@@ -30,4 +31,8 @@ def spark_simple_example() -> None:
 
 
 if __name__ == "__main__":
+    # TODO - This example is failing on the cloud due to the app limits:
+    # com.amazonaws.services.emrserverlessresourcemanager.model.ApplicationMaxCapacityExceededException: Worker could
+    # not be allocated as the application has exceeded maximumCapacity settings: [cpu: 2 vCPU, memory: 8 GB, disk: 20 GB]
+    # TODO - Need to change the settings in the config.py or extend limits in Pulumi in order to make it work!!
     spark_simple_example()

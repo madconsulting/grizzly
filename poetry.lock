@@ -174,7 +174,7 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.29.12"
+version = "1.29.13"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
@@ -1032,7 +1032,7 @@ six = ">=1.12,<2.0"
 
 [[package]]
 name = "pulumi-aws"
-version = "5.21.0"
+version = "5.21.1"
 description = "A Pulumi package for creating and managing Amazon Web Services (AWS) cloud resources."
 category = "main"
 optional = false
@@ -1261,7 +1261,7 @@ nativelib = ["pywin32", "pyobjc-framework-cocoa"]
 
 [[package]]
 name = "setuptools"
-version = "65.5.1"
+version = "65.6.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "main"
 optional = false
@@ -1331,8 +1331,8 @@ test = ["pre-commit", "pytest-timeout", "pytest (>=7.0)"]
 
 [[package]]
 name = "texttable"
-version = "1.6.4"
-description = "module for creating simple ASCII tables"
+version = "1.6.5"
+description = "module to create simple ASCII tables"
 category = "main"
 optional = false
 python-versions = "*"
@@ -1443,7 +1443,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8, <=3.11"
-content-hash = "115d0e614b9361b3e1d30e5b3147b6d767d402f3a51fcc59af3f87d279e0b9a5"
+content-hash = "e19b506afdadacc96704ca25717e4f71cc2cccb9c3ec4cd9c400b13819163955"
 
 [metadata.files]
 anyio = [
@@ -1537,8 +1537,8 @@ boto3 = [
     {file = "boto3-1.26.12.tar.gz", hash = "sha256:73da24667fe1351cef0f402ee9cd4589a0a9d97b617caca3c25b5cdc38f9d62c"},
 ]
 botocore = [
-    {file = "botocore-1.29.12-py3-none-any.whl", hash = "sha256:3149b102e3c26c935acef6c330d0f46c717820d118886e983b6e81c306f31405"},
-    {file = "botocore-1.29.12.tar.gz", hash = "sha256:fdae73306a41a30697be300bdecb1e0d560d453c6d748891856beb87e9f6573f"},
+    {file = "botocore-1.29.13-py3-none-any.whl", hash = "sha256:9c73a180fad9a7da7797530ced3b5069872bff915b1ae9fa11fc1ed79b584c8e"},
+    {file = "botocore-1.29.13.tar.gz", hash = "sha256:9d39db398f472c0aa97098870c8c4cf12636b2667a18e694fea5fae046af907e"},
 ]
 certifi = [
     {file = "certifi-2022.9.24-py3-none-any.whl", hash = "sha256:90c1a32f1d68f940488354e36370f6cca89f0f106db09518524c88d6ed83f382"},
@@ -2008,7 +2008,7 @@ pulumi = [
     {file = "pulumi-3.38.0-py2.py3-none-any.whl", hash = "sha256:72eb87a8c70bd5e4d38a0f0355b1eea506954e0a6aace6765ea90dcfc7f5b042"},
 ]
 pulumi-aws = [
-    {file = "pulumi_aws-5.21.0.tar.gz", hash = "sha256:eeee5a60e29645874bc78372366489ff4c16f913942c47029f6f9b8bfa4976a7"},
+    {file = "pulumi_aws-5.21.1.tar.gz", hash = "sha256:607b51e5c2f73cd6c1457a5f64d9371c5ced784261df1374bfecbc3c48509dc0"},
 ]
 pure-eval = [
     {file = "pure_eval-0.2.2-py3-none-any.whl", hash = "sha256:01eaab343580944bc56080ebe0a674b39ec44a945e6d09ba7db3cb8cec289350"},
@@ -2233,8 +2233,8 @@ send2trash = [
     {file = "Send2Trash-1.8.0.tar.gz", hash = "sha256:d2c24762fd3759860a0aff155e45871447ea58d2be6bdd39b5c8f966a0c99c2d"},
 ]
 setuptools = [
-    {file = "setuptools-65.5.1-py3-none-any.whl", hash = "sha256:d0b9a8433464d5800cbe05094acf5c6d52a91bfac9b52bcfc4d41382be5d5d31"},
-    {file = "setuptools-65.5.1.tar.gz", hash = "sha256:e197a19aa8ec9722928f2206f8de752def0e4c9fc6953527360d1c36d94ddb2f"},
+    {file = "setuptools-65.6.0-py3-none-any.whl", hash = "sha256:6211d2f5eddad8757bd0484923ca7c0a6302ebc4ab32ea5e94357176e0ca0840"},
+    {file = "setuptools-65.6.0.tar.gz", hash = "sha256:d1eebf881c6114e51df1664bc2c9133d022f78d12d5f4f665b9191f084e2862d"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
@@ -2257,8 +2257,8 @@ terminado = [
     {file = "terminado-0.17.0.tar.gz", hash = "sha256:520feaa3aeab8ad64a69ca779be54be9234edb2d0d6567e76c93c2c9a4e6e43f"},
 ]
 texttable = [
-    {file = "texttable-1.6.4-py2.py3-none-any.whl", hash = "sha256:dd2b0eaebb2a9e167d1cefedab4700e5dcbdb076114eed30b58b97ed6b37d6f2"},
-    {file = "texttable-1.6.4.tar.gz", hash = "sha256:42ee7b9e15f7b225747c3fa08f43c5d6c83bc899f80ff9bae9319334824076e9"},
+    {file = "texttable-1.6.5-py2.py3-none-any.whl", hash = "sha256:a169c9a3598f2ef3721123c2951fdaa954dae4593a4adef0a855eb02955f83ff"},
+    {file = "texttable-1.6.5.tar.gz", hash = "sha256:fc3f763a89796ae03789a02343bd4e8fed9735935123b1bfb9537a5935852315"},
 ]
 tinycss2 = [
     {file = "tinycss2-1.2.1-py3-none-any.whl", hash = "sha256:2b80a96d41e7c3914b8cda8bc7f705a4d9c49275616e886103dd839dfc847847"},
