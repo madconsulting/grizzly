@@ -4,4 +4,4 @@ venv
 .pyc
 
 deploy/dev/spark/cloud/poc_spark_emr_serverless/job_logs/*
-!.__init__.py
+!deploy/dev/spark/cloud/poc_spark_emr_serverless/job_logs/__init__.py
