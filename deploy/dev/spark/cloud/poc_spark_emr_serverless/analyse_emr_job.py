@@ -10,13 +10,17 @@ from deploy.dev.spark.cloud.poc_spark_emr_serverless.config import (
 )
 
 
-def download_s3_folder(job_run_id: str, job_name: str, local_dir: str = "deploy/dev/spark/cloud/poc_spark_emr_serverless/job_logs"):
+def download_logs_from_s3(
+    job_run_id: str,
+    job_name: str,
+    local_dir: str = "deploy/dev/spark/cloud/poc_spark_emr_serverless/job_logs",
+) -> None:
     """
-    Download the contents of a folder directory
-    Args:
-    bucket_name: the name of the s3 bucket
-    s3_folder: the folder path in the s3 bucket
-    local_dir: a relative or absolute directory path in the local file system
+    Download Spark logs from s3
+    :param job_run_id: Job run id
+    :param job_name: Job name
+    :param local_dir: Relative directory path in the local file system where to store the downloaded logs
+    :return: None
     """
     emr_app_id = poc_config["emr_serverless"]["app_id"]
     s3 = boto3.resource("s3")
@@ -25,21 +29,28 @@ def download_s3_folder(job_run_id: str, job_name: str, local_dir: str = "deploy/
     common_log_path = f"{job_name}/applications/{emr_app_id}/jobs/{job_run_id}/"
     s3_folder = f"logs/{common_log_path}"
     target_base_dir = f"{get_base_dir()}/{local_dir}/{common_log_path}"
+    print(f"Job logs stored in the following folder: {target_base_dir}")
     for obj in bucket.objects.filter(Prefix=s3_folder):
         target = os.path.join(target_base_dir, os.path.relpath(obj.key, s3_folder))
         if not os.path.exists(os.path.dirname(target)):
             os.makedirs(os.path.dirname(target))
-        if obj.key[-1] == '/':
+        if obj.key[-1] == "/":
             continue
         bucket.download_file(obj.key, target)
         # Unzip GZIP files as .txt files
         if ".gz" in target:
-            with gzip.open(target, 'rb') as f_in:
-                with open(target.replace(".gz", ".txt"), 'wb') as f_out:
+            with gzip.open(target, "rb") as f_in:
+                with open(target.replace(".gz", ".txt"), "wb") as f_out:
                     shutil.copyfileobj(f_in, f_out)
             os.remove(target)
-    print(f"Job logs stored in the following folder: {target_base_dir}")
-    print("Check the SPARK_DRIVED/stdout.txt file in that folder for the STDOUT logs")
+        # Print the stdout logs from the driver
+        if "SPARK_DRIVER/stdout" in target:
+            print(f"Printing below the Spark driver stdout logs:")
+            print("-" * 50, end="\n\n")
+            with open(target.replace(".gz", ".txt"), encoding="utf8") as f:
+                for line in f:
+                    print(line.strip())
+            print("-" * 50)
 
 
 def analyse_job_run(job_run_id: str) -> None:
@@ -76,7 +87,7 @@ def analyse_job_run(job_run_id: str) -> None:
                 )
             elif job_state != "RUNNING":
                 print(
-                    "The job is not running and thus, there is no Spark Live UI available. If you'd like to check"
+                    "The job is not running and thus, there is no Spark Live UI available. If you'd like to check "
                     "the the Spark UI for historic jobs, you can get that UI from the EMR Studio in the AWS console."
                 )
             else:
@@ -87,7 +98,7 @@ def analyse_job_run(job_run_id: str) -> None:
         else:
             raise ValueError(f"EMR Serverless client error: {e}")
     job_name = job_run_info["name"]
-    download_s3_folder(job_run_id=job_run_id, job_name=job_name)
+    download_logs_from_s3(job_run_id=job_run_id, job_name=job_name)
 
 
 if __name__ == "__main__":
