@@ -1,6 +1,7 @@
 import botocore
 import boto3
 from datetime import datetime
+from typing import Dict, Any, Tuple
 
 from path_interations import get_base_dir
 from deploy.dev.spark.cloud.poc_spark_emr_serverless.config import (
@@ -27,7 +28,7 @@ def start_emr_app(emr_client: botocore.client.BaseClient, emr_app_id: str) -> No
     """
     Start EMR Serverless application - the app needs to be in STARTED mode in order to be able to run a job
     :param emr_client: EMR Serverless boto3 client
-    :param emr_app_id: EMR Serverless application id
+    :param emr_app_id: EMR Serverless application ID
     :return: None
     """
     emr_app_details = emr_client.get_application(applicationId=emr_app_id)[
@@ -40,7 +41,14 @@ def start_emr_app(emr_client: botocore.client.BaseClient, emr_app_id: str) -> No
 
 def define_job_run_args(
     script_file_path: str, emr_app_id: str, execution_timeout_min: int = None
-):
+) -> Tuple[str, Dict[str, Any]]:
+    """
+    Define job run arguments
+    :param script_file_path: File path of the script to be run
+    :param emr_app_id: EMR Serverless application ID
+    :param execution_timeout_min: Execution timeout in minutes
+    :return: 
+    """
     job_driver = {
         "sparkSubmit": {
             "entryPoint": f"s3://{poc_config['s3_bucket']}/{script_file_path}",
@@ -77,13 +85,13 @@ def define_job_run_args(
 
 def trigger_emr_job(
     script_file_path: str, is_update_script_s3: bool, execution_timeout_min: int = None
-):
+) -> str:
     """
     Trigger EMR Serverless job
     :param script_file_path: File path of the script to be run
     :param is_update_script_s3: True if updating the script in s3, False otherwise
     :param execution_timeout_min: Execution timeout in minutes
-    :return:
+    :return: Job run ID
     """
     if is_update_script_s3:
         upload_file_to_s3(script_file_path=script_file_path)
@@ -104,10 +112,10 @@ def trigger_emr_job(
 if __name__ == "__main__":
 
     # Inputs
-    is_update_script_s3 = False
+    is_update_script_s3 = True
     exec_timeout_min = 20
-    # script_path = "code_examples/extreme_weather.py"
-    script_path = "code_examples/simple_example.py"
+    script_path = "code_examples/extreme_weather.py"
+    # script_path = "code_examples/simple_example.py"
 
     # Trigger EMR Serverless job
     job_run_id = trigger_emr_job(

@@ -56,8 +56,13 @@ def download_logs_from_s3(
 def analyse_job_run(job_run_id: str) -> None:
     """
     Get information regarding a job ID
+
     NOTE: boto3 EMR Serverless client does not provide a way to retrieve the Spark UI for historic jobs that already
-    finished. You can get that UI that from EMR Studio in the AWS console
+    finished. You can get that UI that from EMR Studio in the AWS console (or alternatively build a custom docker file
+    to access that Spark UI locally as described in here:
+    https://github.com/aws-samples/emr-serverless-samples/blob/main/utilities/spark-ui/README.md,
+    but it's simpler from the EMR Studio)
+
     :param job_run_id: EMR Serverless job run ID
     :return: None
     """
@@ -104,7 +109,7 @@ def analyse_job_run(job_run_id: str) -> None:
 if __name__ == "__main__":
 
     # Inputs
-    job_run_id = "00f5o2d6c2qhk709"
+    job_run_id = "00f5o7vi1g011209"
 
     # Analyse EMR Serverless job
     analyse_job_run(job_run_id=job_run_id)

@@ -103,8 +103,12 @@ def get_access_role_policy_details(bucket_arn):
                 "Resource": [
                     "arn:aws:s3:::*.elasticmapreduce",
                     "arn:aws:s3:::*.elasticmapreduce/*",
+                    # S3 bucket for code example
+                    "arn:aws:s3:::noaa-gsod-pds",
+                    "arn:aws:s3:::noaa-gsod-pds/*",
                 ],
             },
+
             {
                 "Sid": "FullAccessToOutputBucket",
                 "Effect": "Allow",
