@@ -66,12 +66,14 @@ def analyse_job_run(job_run_id: str) -> None:
     :param job_run_id: EMR Serverless job run ID
     :return: None
     """
+    # https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/job-states.html
+    not_started_job_states = ["submitted", "pending", "scheduled"]
     emr_app_id = poc_config["emr_serverless"]["app_id"]
     emr_client = boto3.client("emr-serverless")
     job_run_info = emr_client.get_job_run(
         applicationId=emr_app_id, jobRunId=job_run_id
     )["jobRun"]
-    job_state = job_run_info["state"]
+    job_state = job_run_info["state"].lower()
     print(f"Job state: {job_state}")
     job_details = job_run_info["stateDetails"]
     print(f"Job state details: {job_details if job_details!='' else 'None'}")
@@ -86,11 +88,11 @@ def analyse_job_run(job_run_id: str) -> None:
         print(f"Dashboard URL: {dashboard_url}")
     except botocore.exceptions.ClientError as e:
         if "LiveUI is not supported for jobs that are not running" in str(e):
-            if job_state in ["SCHEDULED", "PENDING"]:
+            if job_state in not_started_job_states:
                 print(
                     f"You can't check the Spark Live UI until the job transitions from {job_state} to RUNNING state"
                 )
-            elif job_state != "RUNNING":
+            elif job_state != "running":
                 print(
                     "The job is not running and thus, there is no Spark Live UI available. If you'd like to check "
                     "the the Spark UI for historic jobs, you can get that UI from the EMR Studio in the AWS console."
@@ -103,13 +105,14 @@ def analyse_job_run(job_run_id: str) -> None:
         else:
             raise ValueError(f"EMR Serverless client error: {e}")
     job_name = job_run_info["name"]
-    download_logs_from_s3(job_run_id=job_run_id, job_name=job_name)
+    if job_state not in not_started_job_states:
+        download_logs_from_s3(job_run_id=job_run_id, job_name=job_name)
 
 
 if __name__ == "__main__":
 
     # Inputs
-    job_run_id = "00f5o7vi1g011209"
+    job_run_id = "00f5oapmbk808809"
 
     # Analyse EMR Serverless job
     analyse_job_run(job_run_id=job_run_id)

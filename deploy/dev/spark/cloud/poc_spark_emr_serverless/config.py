@@ -17,6 +17,12 @@ poc_spark_emr_serverless_config = {
     # Finally, note that the maximum_capacity in Pulumi needs to be set equal or above the job properties
     # (https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/application-capacity.html#max-capacity)
     "spark_submit_parameters": {
+        # Custom environment
+        "spark.archives": "s3://poc-spark-emr-serverless-dev-bucket-7cb2462/artifacts/pyspark_venv/pyspark_3.9.12.tar.gz#environment",
+        "spark.emr-serverless.driverEnv.PYSPARK_DRIVER_PYTHON": "./environment/bin/python",
+        "spark.emr-serverless.driverEnv.PYSPARK_PYTHON": "./environment/bin/python",
+        "spark.emr-serverless.executorEnv.PYSPARK_PYTHON": "./environment/bin/python",
+        # Worker specifications
         "spark.driver.cores": "1",
         "spark.driver.memory": "2g",
         "spark.driver.disk": 20,

@@ -114,8 +114,8 @@ if __name__ == "__main__":
     # Inputs
     is_update_script_s3 = True
     exec_timeout_min = 20
-    script_path = "code_examples/extreme_weather.py"
-    # script_path = "code_examples/simple_example.py"
+    # script_path = "code_examples/extreme_weather.py"
+    script_path = "code_examples/simple_example.py"
 
     # Trigger EMR Serverless job
     job_run_id = trigger_emr_job(

@@ -1,3 +1,4 @@
+import sys
 from pyspark.conf import SparkConf
 from pyspark.sql import SparkSession
 
@@ -6,12 +7,22 @@ from pyspark.sql import SparkSession
 #  files (I would need a custom docker with the deploy poetry package implemented beforehand)
 
 
+def check_python_version() -> None:
+    """
+    Check python version corresponds to the one installed in the custom venv used for the job
+    :return: None
+    """
+    print(sys.executable)
+    print(sys.version)
+
+
 def spark_simple_example() -> None:
     """
     Spark example nº 1 - Create and show DataFrame
     :param run_mode: Run mode
     :return: None
     """
+    check_python_version()
     spark_config = SparkConf()
     config_var_list = [("spark.app.name", "Simple Spark Example")]
     spark_config.setAll(config_var_list)
@@ -31,8 +42,4 @@ def spark_simple_example() -> None:
 
 
 if __name__ == "__main__":
-    # TODO - This example is failing on the cloud due to the app limits:
-    # com.amazonaws.services.emrserverlessresourcemanager.model.ApplicationMaxCapacityExceededException: Worker could
-    # not be allocated as the application has exceeded maximumCapacity settings: [cpu: 2 vCPU, memory: 8 GB, disk: 20 GB]
-    # TODO - Need to change the settings in the config.py or extend limits in Pulumi in order to make it work!!
     spark_simple_example()
