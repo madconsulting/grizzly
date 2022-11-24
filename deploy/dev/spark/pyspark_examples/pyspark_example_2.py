@@ -1,22 +1,15 @@
-""""
-Example to compute correlation matrix.
-From: https://github.com/apache/spark/blob/master/examples/src/main/python/mllib/correlations_example.py
-"""
 import numpy as np
 from pyspark.mllib.stat import Statistics
-from deploy.dev.spark.utils.spark_context import get_spark_context
+from pyspark.sql import SparkSession
 
 
-def spark_example_2(run_mode: str) -> None:
+def pyspark_example_2(spark: SparkSession) -> None:
     """
-    Spark example nº 2 - Correlation matrix
+    Pyspark example nº 2 - Correlation matrix
     Based on: https://github.com/apache/spark/blob/master/examples/src/main/python/mllib/correlations_example.py
-    :param run_mode: Run mode
+    :param spark: Spark session
     :return: None
     """
-    spark = get_spark_context(
-        app_name="pyspark_example_2", run_mode=run_mode
-    )  # SparkContext
     seriesX = spark.sparkContext.parallelize([1.0, 2.0, 3.0, 3.0, 5.0])
     # seriesY must have the same number of partitions and cardinality as seriesX
     seriesY = spark.sparkContext.parallelize([11.0, 22.0, 33.0, 33.0, 555.0])
@@ -31,18 +24,3 @@ def spark_example_2(run_mode: str) -> None:
     )  # an RDD of Vectors
     # Calculate the correlation matrix using Pearson's method.
     print(Statistics.corr(data, method="pearson"))
-    spark.stop()
-
-
-if __name__ == "__main__":
-
-    # Inputs
-    is_run_on_cluster = True
-
-    # Example trigger
-    if is_run_on_cluster:
-        run_mode = "local_cluster"
-    else:
-        run_mode = "local_single_worker"
-    spark_example_2(run_mode=run_mode)
-

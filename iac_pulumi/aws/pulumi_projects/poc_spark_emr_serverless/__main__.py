@@ -334,7 +334,7 @@ poc_spark_emr_serverless_dev_emr_studio = aws.emrserverless.Application(
     initial_capacities=None,  # Not keeping warm instances to limit computational costs
     maximum_capacity=aws.emrserverless.ApplicationMaximumCapacityArgs(
         cpu="4 vCPU",
-        memory="10 GB",
+        memory="12 GB",
         disk="80 GB",
     ),
     auto_start_configuration=aws.emrserverless.ApplicationAutoStartConfigurationArgs(

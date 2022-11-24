@@ -114,8 +114,12 @@ if __name__ == "__main__":
     # Inputs
     is_update_script_s3 = True
     exec_timeout_min = 20
-    # script_path = "code_examples/extreme_weather.py"
-    script_path = "code_examples/simple_example.py"
+    # Note: Multiple examples available in the pyspark_example.py script - modify its __main__ to select one example
+    # from all the available ones in "deploy/dev/spark/pyspark_examples"
+    # examples available
+    # TODO - check if I could send the inputs in the main as a configuration instead, to
+    #  not have to upload the file to s3 every time we change the pyspark example.
+    script_path = "pyspark_example.py"
 
     # Trigger EMR Serverless job
     job_run_id = trigger_emr_job(

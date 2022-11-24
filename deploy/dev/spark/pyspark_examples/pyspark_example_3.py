@@ -27,14 +27,16 @@ def find_largest(df: DataFrame, col_name: str) -> Row:
     )
 
 
-def extreme_weather(
+def pyspark_example_3(
+        spark: SparkSession,
         year: int,
         is_specific_csv_file_only: bool,
         csv_file_name: str = None,
 ):
     """
-    Usage: extreme-weather [year]
+    Pyspark example nº 3 - extreme-weather
     Displays extreme weather stats (highest temperature, wind, precipitation) for the given, or latest, year.
+    :param spark: Spark session
     :param year: Year
     :param is_specific_csv_file_only: True if using a single specific CSV file for that year, False if using all the
                                       csv files for that year.
@@ -46,7 +48,6 @@ def extreme_weather(
         if csv_file_name is None:
             raise ValueError("csv_file_name needs to be defined if is_specific_csv_file_only is True")
         s3_path += csv_file_name
-    spark = SparkSession.builder.appName("ExtremeWeather").getOrCreate()
     df = spark.read.csv(s3_path, header=True, inferSchema=True)
     print(f"The amount of weather readings in {year} is: {df.count()}\n")
     print(f"Here are some extreme weather stats for {year}:")
@@ -74,19 +75,3 @@ def extreme_weather(
         print(
             f"  {stat['description']}: {max_row[stat['column_name']]}{stat['units']} on {max_row.DATE} at {max_row.NAME} ({max_row.LATITUDE}, {max_row.LONGITUDE})"
         )
-
-
-if __name__ == "__main__":
-
-    # Input - Note that by default we are limiting for a single csv file to limit computational costs of the example.
-    year = 2022
-    is_specific_csv_file_only = True
-    # CSV file name from https://s3.console.aws.amazon.com/s3/buckets/noaa-gsod-pds
-    csv_file = "11213099999.csv"
-
-    # Run example
-    extreme_weather(
-        year=year,
-        is_specific_csv_file_only=is_specific_csv_file_only,
-        csv_file_name=csv_file,
-    )

@@ -1,5 +1,11 @@
+from deploy.dev.spark.cloud.poc_spark_emr_serverless.build.get_poetry_package_wheel_file import\
+    get_poetry_wheel_file
+
+wheel_file_name = get_poetry_wheel_file(is_return_file_name=True)
+s3_bucket = "poc-spark-emr-serverless-dev-bucket-7cb2462"
+
 poc_spark_emr_serverless_config = {
-    "s3_bucket": "poc-spark-emr-serverless-dev-bucket-7cb2462",
+    "s3_bucket": s3_bucket,
     "emr_serverless": {
         "app_name": "poc-spark-emr-serverless-dev-emr-serverless-app-a442433",
         "app_id": "00f5lp5iapag6909",
@@ -17,11 +23,13 @@ poc_spark_emr_serverless_config = {
     # Finally, note that the maximum_capacity in Pulumi needs to be set equal or above the job properties
     # (https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/application-capacity.html#max-capacity)
     "spark_submit_parameters": {
-        # Custom environment
-        "spark.archives": "s3://poc-spark-emr-serverless-dev-bucket-7cb2462/artifacts/pyspark_venv/pyspark_3.9.12.tar.gz#environment",
+        # Custom virtual environment
+        "spark.archives": f"s3://{s3_bucket}/artifacts/venvs/pyspark_3.9.12.tar.gz#environment",
         "spark.emr-serverless.driverEnv.PYSPARK_DRIVER_PYTHON": "./environment/bin/python",
         "spark.emr-serverless.driverEnv.PYSPARK_PYTHON": "./environment/bin/python",
         "spark.emr-serverless.executorEnv.PYSPARK_PYTHON": "./environment/bin/python",
+        # Base code package as a wheel file
+        "spark.submit.pyFiles": f"s3://{s3_bucket}/artifacts/package_wheel_files/{wheel_file_name}",
         # Worker specifications
         "spark.driver.cores": "1",
         "spark.driver.memory": "2g",

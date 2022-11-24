@@ -42,7 +42,8 @@ def get_spark_context(
             ("spark.driver.host", SPARK_DRIVER_HOST),
         ]
     elif run_mode == "emr_serverless":
-        pass # TODO - add configs if required
+        # Note - The config is sent when triggering the EMR Serverless job, not when creating the spark context
+        pass
     else:
         raise NotImplementedError(f"Run mode {run_mode} not implemented")
     spark_config.setAll(config_var_list)
