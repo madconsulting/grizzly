@@ -51,7 +51,7 @@ def define_job_run_args(
     """
     job_driver = {
         "sparkSubmit": {
-            "entryPoint": f"s3://{poc_config['s3_bucket']}/{script_file_path}",
+            "entryPoint": f"s3://{poc_config['s3_bucket']}/code_examples/{script_file_path}",
         },
     }
     if len(poc_config["spark_submit_parameters"]) > 0:

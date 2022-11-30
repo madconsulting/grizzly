@@ -112,7 +112,7 @@ def analyse_job_run(job_run_id: str) -> None:
 if __name__ == "__main__":
 
     # Inputs
-    job_run_id = "00f5vbd47vtdk309"
+    job_run_id = "00f5vbfv8lqpl409"
 
     # Analyse EMR Serverless job
     analyse_job_run(job_run_id=job_run_id)

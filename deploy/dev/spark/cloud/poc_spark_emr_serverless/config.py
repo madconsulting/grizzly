@@ -5,8 +5,8 @@ s3_bucket = "poc-spark-emr-serverless-dev-bucket-7cb2462"
 
 # Option to override current Poetry package and run with previous packages by
 # using poetry_package_version != pyspark.tar.gz:
-# poetry_package_version = None
-poetry_package_version = "0.1.0"
+poetry_package_version = None
+# poetry_package_version = "0.1.0"
 
 venv_file_name = get_venv_file(package_version=poetry_package_version)
 wheel_file_name = get_poetry_wheel_file(package_version=poetry_package_version)
