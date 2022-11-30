@@ -20,7 +20,7 @@ def upload_file_to_s3(script_file_path: str) -> None:
     s3_client.upload_file(
         Filename=f"{base_dir}/deploy/dev/spark/cloud/poc_spark_emr_serverless/{script_file_path}",
         Bucket=poc_config["s3_bucket"],
-        Key=script_file_path,
+        Key=f"code_examples/{script_file_path}",
     )
 
 
@@ -127,5 +127,3 @@ if __name__ == "__main__":
         is_update_script_s3=is_update_script_s3,
         execution_timeout_min=exec_timeout_min,
     )
-
-    # TODO - find ways to run from jupyter notebook as well.

@@ -41,9 +41,8 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install venv-pack==0.2.0
 RUN mkdir /output && \
-    venv-pack -f -o /output/pyspark_${PYTHON_VERSION}.tar.gz --python-prefix /home/hadoop/environment
+    venv-pack -f -o /output/pyspark.tar.gz --python-prefix /home/hadoop/environment
 
 FROM scratch AS export
-ARG PYTHON_VERSION
-COPY --from=base output/pyspark_${PYTHON_VERSION}.tar.gz deploy/dev/spark/cloud/poc_spark_emr_serverless/build/artifacts/venvs/
+COPY --from=base output/pyspark.tar.gz deploy/dev/spark/cloud/poc_spark_emr_serverless/build/artifacts/venvs/
 COPY --from=base dist/ deploy/dev/spark/cloud/poc_spark_emr_serverless/build/artifacts/package_wheel_files/

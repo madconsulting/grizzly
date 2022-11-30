@@ -1,8 +1,15 @@
-from deploy.dev.spark.cloud.poc_spark_emr_serverless.build.get_poetry_package_wheel_file import\
-    get_poetry_wheel_file
+from deploy.dev.spark.cloud.poc_spark_emr_serverless.build.build_artifacts_interactions import\
+    get_poetry_wheel_file, get_venv_file
 
-wheel_file_name = get_poetry_wheel_file(is_return_file_name=True)
 s3_bucket = "poc-spark-emr-serverless-dev-bucket-7cb2462"
+
+# Option to override current Poetry package and run with previous packages by
+# using poetry_package_version != pyspark.tar.gz:
+# poetry_package_version = None
+poetry_package_version = "0.1.0"
+
+venv_file_name = get_venv_file(package_version=poetry_package_version)
+wheel_file_name = get_poetry_wheel_file(package_version=poetry_package_version)
 
 poc_spark_emr_serverless_config = {
     "s3_bucket": s3_bucket,
@@ -24,7 +31,7 @@ poc_spark_emr_serverless_config = {
     # (https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/application-capacity.html#max-capacity)
     "spark_submit_parameters": {
         # Custom virtual environment
-        "spark.archives": f"s3://{s3_bucket}/artifacts/venvs/pyspark_3.9.12.tar.gz#environment",
+        "spark.archives": f"s3://{s3_bucket}/artifacts/venvs/{venv_file_name}#environment",
         "spark.emr-serverless.driverEnv.PYSPARK_DRIVER_PYTHON": "./environment/bin/python",
         "spark.emr-serverless.driverEnv.PYSPARK_PYTHON": "./environment/bin/python",
         "spark.emr-serverless.executorEnv.PYSPARK_PYTHON": "./environment/bin/python",
