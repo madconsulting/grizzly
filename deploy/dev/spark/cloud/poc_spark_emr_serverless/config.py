@@ -1,7 +1,7 @@
 from deploy.dev.spark.cloud.poc_spark_emr_serverless.build.build_artifacts_interactions import\
     get_poetry_wheel_file, get_venv_file
 
-s3_bucket = "poc-spark-emr-serverless-dev-bucket-7cb2462"
+s3_bucket = "poc-spark-emr-serverless-dev-bucket-316fb28"
 
 # Option to override current Poetry package and run with previous packages by
 # using poetry_package_version != pyspark.tar.gz:
@@ -14,9 +14,9 @@ wheel_file_name = get_poetry_wheel_file(package_version=poetry_package_version)
 poc_spark_emr_serverless_config = {
     "s3_bucket": s3_bucket,
     "emr_serverless": {
-        "app_name": "poc-spark-emr-serverless-dev-emr-serverless-app-a442433",
-        "app_id": "00f5lp5iapag6909",
-        "job_role_arn": "arn:aws:iam::561796644494:role/poc-spark-emr-serverless-dev-role-c4ae352",
+        "app_name": "poc-spark-emr-serverless-dev-emr-serverless-app-a27b574",
+        "app_id": "00f63bgjtalj4d09",
+        "job_role_arn": "arn:aws:iam::561796644494:role/poc-spark-emr-serverless-dev-role-617964c",
     },
     # The default Spark Job properties are described below:
     # https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/jobs-spark.html#spark-defaults
