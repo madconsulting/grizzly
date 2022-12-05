@@ -17,6 +17,7 @@ bucket = aws.s3.Bucket(
     acl="private",
     versioning=aws.s3.BucketVersioningArgs(enabled=True,),
     tags=base_tags,
+    force_destroy=True  # To be able to delete a not empty bucket
 )
 
 # IAM Role:
