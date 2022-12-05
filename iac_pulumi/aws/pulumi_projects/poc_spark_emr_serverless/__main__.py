@@ -1,4 +1,3 @@
-"""An AWS Python Pulumi program"""
 import json
 import pulumi
 import pulumi_aws as aws
@@ -17,12 +16,11 @@ bucket = aws.s3.Bucket(
     acl="private",
     versioning=aws.s3.BucketVersioningArgs(enabled=True,),
     tags=base_tags,
-    force_destroy=True  # To be able to delete a not empty bucket
+    force_destroy=True,  # To be able to delete a not empty bucket
 )
 
 # IAM Role:
 # - To allow jobs submitted to the Amazon EMR Serverless application to access other AWS services on our behalf
-# - Required for the EMR Studio
 iam_role = aws.iam.Role(
     f"{resource_prefix_name}-role",
     assume_role_policy=json.dumps(
@@ -60,7 +58,6 @@ def get_access_role_policy_details(bucket_arn):
                     "arn:aws:s3:::noaa-gsod-pds/*",
                 ],
             },
-
             {
                 "Sid": "FullAccessToOutputBucket",
                 "Effect": "Allow",
@@ -88,16 +85,15 @@ poc_spark_emr_serverless_dev_emr_studio = aws.emrserverless.Application(
     f"{resource_prefix_name}-emr-serverless-app",
     initial_capacities=None,  # Not keeping warm instances to limit computational costs
     maximum_capacity=aws.emrserverless.ApplicationMaximumCapacityArgs(
-        cpu="4 vCPU",
-        memory="12 GB",
-        disk="80 GB",
+        cpu=f"{config.require('max_vcpu')} vCPU",
+        memory=f"{config.require('max_memory_gb')} GB",
+        disk=f"{config.require('max_disk_gb')} GB",
     ),
     auto_start_configuration=aws.emrserverless.ApplicationAutoStartConfigurationArgs(
         enabled=True
     ),
     auto_stop_configuration=aws.emrserverless.ApplicationAutoStopConfigurationArgs(
-        enabled=True,
-        idle_timeout_minutes=5,
+        enabled=True, idle_timeout_minutes=config.require('idle_timeout_minutes'),
     ),
     release_label="emr-6.8.0",
     tags=base_tags,
