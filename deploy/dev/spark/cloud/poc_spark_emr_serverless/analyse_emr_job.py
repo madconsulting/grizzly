@@ -95,7 +95,7 @@ def analyse_job_run(job_run_id: str) -> None:
             elif job_state != "running":
                 print(
                     "The job is not running and thus, there is no Spark Live UI available. If you'd like to check "
-                    "the the Spark UI for historic jobs, you can get that UI from the EMR Studio in the AWS console."
+                    "the Spark UI for historic jobs, you can get that UI from the EMR Studio in the AWS console."
                 )
             else:
                 raise ValueError(
@@ -112,7 +112,7 @@ def analyse_job_run(job_run_id: str) -> None:
 if __name__ == "__main__":
 
     # Inputs
-    job_run_id = "00f5vbfv8lqpl409"
+    job_run_id = "00f63dfqf53i0i09"
 
     # Analyse EMR Serverless job
     analyse_job_run(job_run_id=job_run_id)
