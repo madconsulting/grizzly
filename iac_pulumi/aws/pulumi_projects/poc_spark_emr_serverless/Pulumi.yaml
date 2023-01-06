@@ -1,0 +1,4 @@
+name: poc_spark_emr_serverless
+description: POC for Spark in AWS using EMR Serverless
+runtime:
+    name: python
