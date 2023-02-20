@@ -1,6 +1,6 @@
 import boto3
 
-from deploy.dev.spark.cloud.poc_spark_emr_serverless.config import (
+from grizzly.deploy.dev.spark.cloud.poc_spark_emr_serverless.config import (
     poc_spark_emr_serverless_config as poc_config,
 )
 

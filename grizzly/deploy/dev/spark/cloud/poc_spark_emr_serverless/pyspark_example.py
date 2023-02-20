@@ -2,8 +2,8 @@ import sys
 import pulumi
 from typing import Dict, Any
 
-from deploy.dev.spark.utils.spark_context import get_spark_context
-from deploy.dev.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
+from grizzly.deploy.dev.spark.utils.spark_context import get_spark_context
+from grizzly.deploy.dev.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
 
 
 def check_python_version() -> None:

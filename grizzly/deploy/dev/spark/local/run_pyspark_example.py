@@ -1,7 +1,7 @@
 from typing import Dict, Any
 
-from deploy.dev.spark.utils.spark_context import get_spark_context
-from deploy.dev.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
+from grizzly.deploy.dev.spark.utils.spark_context import get_spark_context
+from grizzly.deploy.dev.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
 
 
 def run_pyspark_example(example_name: str, example_kwargs: Dict[str, Any], run_mode: str) -> None:

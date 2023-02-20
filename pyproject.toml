@@ -3,7 +3,7 @@ name = "grizzly"
 version = "0.1.2"
 description = "MAD Consulting - Grizzly"
 authors = ["victor-vila <victor.vila.navazo@gmail.com>"]
-packages = [{include = "deploy"}]
+packages = [{include = "grizzly"}]
 
 # TODO - In the future we can use multiple dependency groups / extras, if we start adding lots of dependencies
 # which might not be required for all the subprojects within the grizzly repo
