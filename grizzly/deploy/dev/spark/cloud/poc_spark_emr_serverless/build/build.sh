@@ -15,7 +15,7 @@ DOCKER_BUILDKIT=1 docker build \
   --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
   --build-arg PYTHON_VERSION_SHORT="${PYTHON_VERSION_SHORT}" \
   --build-arg POETRY_VERSION="${POETRY_VERSION}" \
-  -f deploy/dev/spark/cloud/poc_spark_emr_serverless/build/Dockerfile \
+  -f deploy/dev/spark/cloud/spark_emr_serverless/build/Dockerfile \
   --output . .
 
 # -- Upload the virtual environment to S3

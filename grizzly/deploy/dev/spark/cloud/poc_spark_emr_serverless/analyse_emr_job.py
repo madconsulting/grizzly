@@ -13,7 +13,7 @@ from grizzly.deploy.dev.spark.cloud.poc_spark_emr_serverless.config import (
 def download_logs_from_s3(
     job_run_id: str,
     job_name: str,
-    local_dir: str = "deploy/dev/spark/cloud/poc_spark_emr_serverless/job_logs",
+    local_dir: str = "deploy/dev/spark/cloud/spark_emr_serverless/job_logs",
 ) -> None:
     """
     Download Spark logs from s3
