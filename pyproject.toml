@@ -5,6 +5,10 @@ description = "MAD Consulting - Grizzly"
 authors = ["victor-vila <victor.vila.navazo@gmail.com>"]
 packages = [{include = "grizzly"}]
 
+# CLI executable from shell
+[tool.poetry.scripts]
+grizzly-examples = "grizzly.grizzly_examples_cli:app"
+
 # TODO - In the future we can use multiple dependency groups / extras, if we start adding lots of dependencies
 # which might not be required for all the subprojects within the grizzly repo
 [tool.poetry.dependencies]
@@ -21,6 +25,8 @@ pulumi-aws = ">=5.0.0,<6.0.0"
 botocore = "1.29.13"
 boto3 = "1.26.12"
 tomlkit = "0.11.6"
+typer = "0.7.0"
+rich = "13.3.1"
 
 [build-system]
 requires = ["poetry-core>=1.2.0b3"]
