@@ -44,5 +44,5 @@ RUN mkdir /output && \
     venv-pack -f -o /output/pyspark.tar.gz --python-prefix /home/hadoop/environment
 
 FROM scratch AS export
-COPY --from=base output/pyspark.tar.gz deploy/dev/spark/cloud/poc_spark_emr_serverless/build/artifacts/venvs/
-COPY --from=base dist/ deploy/dev/spark/cloud/poc_spark_emr_serverless/build/artifacts/package_wheel_files/
+COPY --from=base output/pyspark.tar.gz deploy/dev/spark/cloud/spark_emr_serverless/build/artifacts/venvs/
+COPY --from=base dist/ deploy/dev/spark/cloud/spark_emr_serverless/build/artifacts/package_wheel_files/

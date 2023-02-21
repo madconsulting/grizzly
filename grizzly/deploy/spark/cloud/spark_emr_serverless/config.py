@@ -1,4 +1,4 @@
-from grizzly.deploy.dev.spark.cloud.poc_spark_emr_serverless.build.build_artifacts_interactions import\
+from grizzly.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import\
     get_poetry_wheel_file, get_venv_file
 
 s3_bucket = "poc-spark-emr-serverless-dev-bucket-316fb28"

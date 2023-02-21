@@ -20,7 +20,7 @@ DOCKER_BUILDKIT=1 docker build \
 
 # -- Upload the virtual environment to S3
 echo "Adding Poetry package version to venv file name"
-script="deploy/dev/spark/cloud/poc_spark_emr_serverless/build/build_artifacts_interactions.py"
+script="deploy/dev/spark/cloud/spark_emr_serverless/build/build_artifacts_interactions.py"
 function="add_package_version_to_venv"
 python_run_command="poetry run python3 $script $function"
 echo "Python command to add the package version to the venv file name: $python_run_command"

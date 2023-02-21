@@ -1,5 +1,7 @@
 import typer
 
+from grizzly.deploy.spark.cloud.spark_emr_serverless.cli_example import SparkEmrServerlessCLIExample
+
 app = typer.Typer(
     rich_markup_mode="rich"
 )
@@ -17,7 +19,7 @@ def emr_serverless():
     """
     Guided example to deploy Spark in AWS with EMR Serverless
     """
-    print("Example coming soon!")
+    SparkEmrServerlessCLIExample().run_example()
 
 
 @app.command(rich_help_panel="Spark - AWS")
