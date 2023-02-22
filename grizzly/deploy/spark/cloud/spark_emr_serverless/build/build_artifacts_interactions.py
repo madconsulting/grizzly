@@ -4,7 +4,7 @@ import pprint
 import tomlkit
 from zipfile import ZipFile
 from typing import Tuple, Optional
-from path_interations import get_base_dir
+from grizzly.path_interations import get_base_dir
 
 base_dir = get_base_dir()
 

@@ -4,7 +4,7 @@ import boto3
 import gzip
 import shutil
 
-from path_interations import get_base_dir
+from grizzly.path_interations import get_base_dir
 from grizzly.deploy.spark.cloud.spark_emr_serverless.config import (
     poc_spark_emr_serverless_config as poc_config,
 )
