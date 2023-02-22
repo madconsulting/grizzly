@@ -9,6 +9,7 @@ from rich.prompt import Prompt
 from rich import print as rich_print
 
 import grizzly.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
+from grizzly.iac_pulumi.aws.pulumi_projects.spark_emr_serverless.__main__ import create_spark_emr_serverless_architecture
 
 
 class SparkEmrServerlessCLIExample:
@@ -17,7 +18,7 @@ class SparkEmrServerlessCLIExample:
         pass
 
     @staticmethod
-    def _recommend_pulumi_get_started_tutorial():
+    def _recommend_pulumi_get_started_tutorial() -> None:
         is_first_time = Prompt.ask(
             prompt="[bold][blue]Is this the first time you use Pulumi to deploy AWS infrastructure?",
             choices=["y", "n"],
@@ -31,7 +32,7 @@ class SparkEmrServerlessCLIExample:
             print("- Basic knowledge on how to create a Pulumi project and use basic pulumi commands to manage your "
                   "infrastructure programmatically.")
             Prompt.ask(
-                prompt="[bold][blue]\nPlease type enter when you are ready to continue.",
+                prompt="[bold][blue]\nPlease type enter when you are ready to continue",
             )
 
     @staticmethod
@@ -39,13 +40,13 @@ class SparkEmrServerlessCLIExample:
         print("\nWe will use a single environment for this example. We will name the Pulumi Stack as the environment "
               "name.")
         stack_name = Prompt.ask(
-            prompt="[bold][blue]\nPlease type the environment / stack name: ",
+            prompt="[bold][blue]\nPlease type the environment / stack name",
             default="dev"
         )
         return stack_name
 
     @staticmethod
-    def _copy_pulumi_files(stack_name: str):
+    def _copy_pulumi_files(stack_name: str) -> str:
         source_dir = os.path.dirname(inspect.getfile(grizzly.iac_pulumi.aws.pulumi_projects.spark_emr_serverless))
         files_list = os.listdir(source_dir)
         # Keep only "dev" environment file name
@@ -75,14 +76,14 @@ class SparkEmrServerlessCLIExample:
         return pulumi_project_dir
 
     @staticmethod
-    def _update_aws_account_id(pulumi_project_dir: str, stack_name: str):
+    def _update_aws_account_id(pulumi_project_dir: str, stack_name: str) -> None:
         stack_config_file = f"{pulumi_project_dir}/Pulumi.{stack_name}.yaml"
-        print(f"\nIn the stack configuration file ({stack_config_file}), there is the aws_account_id pending to be"
+        print(f"\nIn the stack configuration file ({stack_config_file}), there is the aws_account_id pending to be "
               f"filled. This account requires programmatic access with rights to deploy and manage resources handled "
               f"through Pulumi, as described in: "
               f"https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account")
         aws_account_id = Prompt.ask(
-            prompt="[bold][blue]Please type your AWS account id:",
+            prompt="[bold][blue]\nPlease type your AWS account id",
         )
         data = ruamel.yaml.YAML().load(open(stack_config_file, "r"))
         data["config"]["spark_emr_serverless:aws_account_id"] = aws_account_id
@@ -93,6 +94,41 @@ class SparkEmrServerlessCLIExample:
         print(yaml.dump(data, sys.stdout))
         print("\nFeel free to modify the other configuration parameters, such as the maximum computational resources "
               "for the Spark workers, but this is not required to run this example.")
+        more_info = Prompt.ask(
+            prompt="[bold][blue]Would you like more information about the configuration parameters?",
+            choices=["y", "n"],
+            default="y"
+        )
+        if more_info == "y":
+            print("You can find the explanation of the parameters in the docstrings of the "
+                  f"'create_spark_emr_serverless_architecture' function used in {pulumi_project_dir}/__main__.py ")
+            print("print(help(create_spark_emr_serverless_architecture))\n")
+            print(help(create_spark_emr_serverless_architecture))
+
+    @staticmethod
+    def _create_pulumi_stack(stack_name: str) -> None:
+        print("\nNow we are going to create a new stack using the following command:")
+        rich_print("\n[bold][italic]pulumi stack init <org-name>/<stack-name>")
+        print("\nNote that <org-name> can be either the Pulumi organization where the stack will be created, or your "
+              "\nPulumi individual Account ID if you don't belong to an organization."
+              "\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_stack_init/")
+        org_name = Prompt.ask(
+            prompt="[bold][blue]\nPlease type the target <org-name>",
+        )
+        pulumi_command = f"pulumi stack init {org_name}/{stack_name}"
+        print(f"\nPulumi command: {pulumi_command}")
+        is_execute_command = Prompt.ask(
+            prompt="[bold][blue]\nWould you like me to execute the command above in this terminal?",
+            choices=["y", "n"],
+            default="y"
+        )
+        if is_execute_command == "y":
+            os.system(pulumi_command)
+        else:
+            Prompt.ask(
+                prompt="[bold][blue]\nPlease execute the command above in another terminal. "
+                       "Afterwards, type enter when you are ready to continue",
+            )
 
     def _run_section_1(self):
         rich_print("[bold][yellow]### SECTION 1 - Deploy the infrastructure ###\n")
@@ -104,6 +140,7 @@ class SparkEmrServerlessCLIExample:
             pulumi_project_dir=pulumi_project_dir,
             stack_name=stack_name
         )
+        self._create_pulumi_stack(stack_name=stack_name)
 
     def run_example(self):
         self._run_section_1()
