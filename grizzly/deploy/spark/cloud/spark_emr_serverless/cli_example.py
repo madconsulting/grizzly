@@ -9,7 +9,7 @@ from rich.prompt import Prompt
 from rich import print as rich_print
 
 import grizzly.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
-from grizzly.iac_pulumi.aws.pulumi_projects.spark_emr_serverless.__main__ import create_spark_emr_serverless_architecture
+from grizzly.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import create_spark_emr_serverless_architecture
 
 
 class SparkEmrServerlessCLIExample:
@@ -106,7 +106,7 @@ class SparkEmrServerlessCLIExample:
             print(help(create_spark_emr_serverless_architecture))
 
     @staticmethod
-    def _create_pulumi_stack(stack_name: str) -> None:
+    def _create_pulumi_stack(pulumi_project_dir: str, stack_name: str) -> None:
         print("\nNow we are going to create a new stack using the following command:")
         rich_print("\n[bold][italic]pulumi stack init <org-name>/<stack-name>")
         print("\nNote that <org-name> can be either the Pulumi organization where the stack will be created, or your "
@@ -123,7 +123,9 @@ class SparkEmrServerlessCLIExample:
             default="y"
         )
         if is_execute_command == "y":
+            os.system(f"cd {pulumi_project_dir}")
             os.system(pulumi_command)
+            os.system("cd ..")
         else:
             Prompt.ask(
                 prompt="[bold][blue]\nPlease execute the command above in another terminal. "
@@ -140,7 +142,10 @@ class SparkEmrServerlessCLIExample:
             pulumi_project_dir=pulumi_project_dir,
             stack_name=stack_name
         )
-        self._create_pulumi_stack(stack_name=stack_name)
+        self._create_pulumi_stack(
+            pulumi_project_dir=pulumi_project_dir,
+            stack_name=stack_name
+        )
 
     def run_example(self):
         self._run_section_1()
