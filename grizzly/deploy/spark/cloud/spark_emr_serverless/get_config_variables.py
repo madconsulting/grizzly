@@ -11,6 +11,9 @@ def _find_single_pulumi_resource_based_on_type(
     stack_state_dict: Dict[str, Any], resource_type: str, project_stack_name: str = "",
 ):
     chosen_resource_dict = None
+    if "deployment" not in stack_state_dict.keys():
+        print(f"Stack state dictionary: {stack_state_dict}")
+        raise ValueError("Stack state dictionary does not contain deployed resources information")
     for resource_dict in stack_state_dict["deployment"]["resources"]:
         if resource_dict["type"] == resource_type:
             if chosen_resource_dict is not None:
