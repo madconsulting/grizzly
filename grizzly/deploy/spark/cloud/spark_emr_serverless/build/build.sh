@@ -1,8 +1,12 @@
 # -- Inputs
+# TODO  get this variables from main config (how to do it on client side?) + set short variable automatically
 PYTHON_VERSION="3.9.12"
 PYTHON_VERSION_SHORT="3.9"
 POETRY_VERSION="1.2.0b3"
 S3_BUCKET="poc-spark-emr-serverless-dev-bucket-316fb28"
+
+
+
 echo "Inputs to deploy Spark cloud env to s3:"
 echo "PYTHON_VERSION=$PYTHON_VERSION"
 echo "PYTHON_VERSION_SHORT=$PYTHON_VERSION_SHORT"

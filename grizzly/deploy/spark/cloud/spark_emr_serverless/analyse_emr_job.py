@@ -1,31 +1,31 @@
 import os
-import botocore
-import boto3
 import gzip
+import boto3
 import shutil
+import botocore
+from typing import Dict, Any
 
 from grizzly.path_interations import get_base_dir
-from grizzly.deploy.spark.cloud.spark_emr_serverless.config import (
-    poc_spark_emr_serverless_config as poc_config,
-)
 
 
 def download_logs_from_s3(
+    s3_bucket: str,
+    emr_app_id: str,
     job_run_id: str,
     job_name: str,
     local_dir: str = "deploy/dev/spark/cloud/spark_emr_serverless/job_logs",
 ) -> None:
     """
     Download Spark logs from s3
+    :param s3_bucket: S3 bucket id
+    :param emr_app_id: EMR Serverless application ID
     :param job_run_id: Job run id
     :param job_name: Job name
     :param local_dir: Relative directory path in the local file system where to store the downloaded logs
     :return: None
     """
-    emr_app_id = poc_config["emr_serverless"]["app_id"]
     s3 = boto3.resource("s3")
-    s3_bucket_name = poc_config["s3_bucket"]
-    bucket = s3.Bucket(name=s3_bucket_name)
+    bucket = s3.Bucket(name=s3_bucket)
     common_log_path = f"{job_name}/applications/{emr_app_id}/jobs/{job_run_id}/"
     s3_folder = f"logs/{common_log_path}"
     target_base_dir = f"{get_base_dir()}/{local_dir}/{common_log_path}"
@@ -53,7 +53,9 @@ def download_logs_from_s3(
             print("-" * 50)
 
 
-def analyse_job_run(job_run_id: str) -> None:
+def analyse_job_run(
+    spark_emr_serverless_config: Dict[str, Any], job_run_id: str
+) -> None:
     """
     Get information regarding a job ID
 
@@ -63,12 +65,13 @@ def analyse_job_run(job_run_id: str) -> None:
     https://github.com/aws-samples/emr-serverless-samples/blob/main/utilities/spark-ui/README.md,
     but it's simpler from the EMR Studio)
 
+    :param spark_emr_serverless_config: Spark EMR Serverless config
     :param job_run_id: EMR Serverless job run ID
     :return: None
     """
     # https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/job-states.html
     not_started_job_states = ["submitted", "pending", "scheduled"]
-    emr_app_id = poc_config["emr_serverless"]["app_id"]
+    emr_app_id = spark_emr_serverless_config["emr_serverless"]["app_id"]
     emr_client = boto3.client("emr-serverless")
     job_run_info = emr_client.get_job_run(
         applicationId=emr_app_id, jobRunId=job_run_id
@@ -106,13 +109,31 @@ def analyse_job_run(job_run_id: str) -> None:
             raise ValueError(f"EMR Serverless client error: {e}")
     job_name = job_run_info["name"]
     if job_state not in not_started_job_states:
-        download_logs_from_s3(job_run_id=job_run_id, job_name=job_name)
+        download_logs_from_s3(
+            s3_bucket=spark_emr_serverless_config["s3_bucket"],
+            emr_app_id=spark_emr_serverless_config["emr_serverless"]["app_id"],
+            job_run_id=job_run_id,
+            job_name=job_name,
+        )
 
 
 if __name__ == "__main__":
 
-    # Inputs
+    # Example of main config defined by a Mad Consulting client
+    from grizzly.deploy.spark.cloud.spark_emr_serverless.main_config_example import (
+        main_config,
+    )
+    from grizzly.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
+        get_spark_emr_serverless_config,
+    )
+
+    spark_emr_serverless_config = get_spark_emr_serverless_config(**main_config)
+
+    # Additional Inputs --------------------------------------------------------------------------------------------
     job_run_id = "00f63dfqf53i0i09"
+    # --------------------------------------------------------------------------------------------------------------
 
     # Analyse EMR Serverless job
-    analyse_job_run(job_run_id=job_run_id)
+    analyse_job_run(
+        spark_emr_serverless_config=spark_emr_serverless_config, job_run_id=job_run_id
+    )
