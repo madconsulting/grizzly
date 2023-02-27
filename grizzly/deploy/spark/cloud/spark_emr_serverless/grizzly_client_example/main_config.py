@@ -9,7 +9,7 @@ main_config = {
             "disk_in_GB": 20,
         },
     },
-    "pulumi_organization": "victor-vila",
+    "pulumi_organization": "",  # TODO - Fill value
     "pulumi_project": "spark_emr_serverless",
     "pulumi_stack": "dev",
     # Deployment variables
