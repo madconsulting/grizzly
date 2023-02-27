@@ -2,7 +2,7 @@ import typer
 from rich.prompt import Prompt
 from rich import print as rich_print
 
-from grizzly.deploy.spark.cloud.spark_emr_serverless.cli_example import SparkEmrServerlessCLIExample
+from grizzly.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example import SparkEmrServerlessCLIExample
 
 app = typer.Typer(
     rich_markup_mode="rich"

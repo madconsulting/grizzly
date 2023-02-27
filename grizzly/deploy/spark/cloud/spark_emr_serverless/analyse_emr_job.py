@@ -115,25 +115,3 @@ def analyse_job_run(
             job_run_id=job_run_id,
             job_name=job_name,
         )
-
-
-if __name__ == "__main__":
-
-    # Example of main config defined by a Mad Consulting client
-    from grizzly.deploy.spark.cloud.spark_emr_serverless.main_config_example import (
-        main_config,
-    )
-    from grizzly.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
-        get_spark_emr_serverless_config,
-    )
-
-    spark_emr_serverless_config = get_spark_emr_serverless_config(**main_config)
-
-    # Additional Inputs --------------------------------------------------------------------------------------------
-    job_run_id = "00f63dfqf53i0i09"
-    # --------------------------------------------------------------------------------------------------------------
-
-    # Analyse EMR Serverless job
-    analyse_job_run(
-        spark_emr_serverless_config=spark_emr_serverless_config, job_run_id=job_run_id
-    )

@@ -82,7 +82,7 @@ def get_spark_emr_serverless_config(
         is_allow_input_token=False,
         pulumi_stack=pulumi_stack,
     )
-    project_stack_name = f"{pulumi_organization}/{pulumi_project}/{stack}"
+    project_stack_name = f"{pulumi_organization}/{pulumi_project}/{pulumi_stack}"
     s3_bucket = get_s3_bucket_id_from_pulumi(
         stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
     )

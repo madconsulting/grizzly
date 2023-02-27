@@ -9,12 +9,6 @@ from grizzly.path_interations import get_base_dir
 base_dir = get_base_dir()
 
 
-def _get_python_and_poetry_version_from_config(
-
-):
-    pyth
-
-
 # ----------- Poetry functions -----------
 def _get_current_poetry_package_name_and_version() -> Tuple[str, str]:
     """
