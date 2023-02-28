@@ -4,7 +4,7 @@ from typing import Union
 
 
 def get_base_dir(
-    path_end: str = "grizzly",
+    path_end: str = "grizzly_main",
     path_input: Union[str, pathlib.Path] = None,
 ) -> pathlib.Path:
     """
