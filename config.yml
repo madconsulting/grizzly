@@ -1,4 +1,4 @@
-# artifacts
+# temp_artifacts
 storage:
   provider: hdfs
   tenant: CLIENT

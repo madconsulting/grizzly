@@ -90,7 +90,9 @@ class SparkEmrServerlessCLIExample:
     @staticmethod
     def _copy_pulumi_files(stack_name: str) -> str:
         source_dir = os.path.dirname(
-            inspect.getfile(grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless)
+            inspect.getfile(
+                grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
+            )
         )
         files_list = os.listdir(source_dir)
         # Keep only "dev" environment file name

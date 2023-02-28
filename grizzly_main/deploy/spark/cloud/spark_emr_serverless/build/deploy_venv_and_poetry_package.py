@@ -30,6 +30,6 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
                 inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.build)
     )
     build_file_path = f"{build_dir}/build.sh"
-    # Run build.sh from root path of grizzly_main repository
-    with cd(get_base_dir(build_file_path)):
+    # Run build.sh from root path of grizzly repository
+    with cd(get_base_dir()):
         subprocess.call(['sh', build_file_path])

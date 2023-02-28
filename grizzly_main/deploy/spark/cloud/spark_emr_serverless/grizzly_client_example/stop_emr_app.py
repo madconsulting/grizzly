@@ -1,4 +1,6 @@
-from grizzly_main.deploy.spark.cloud.spark_emr_serverless.stop_emr_app import stop_emr_app
+from grizzly_main.deploy.spark.cloud.spark_emr_serverless.stop_emr_app import (
+    stop_emr_app,
+)
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.main_config import (
     main_config,
 )

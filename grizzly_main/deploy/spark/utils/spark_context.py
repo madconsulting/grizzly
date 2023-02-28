@@ -12,7 +12,7 @@ from grizzly_main.deploy.spark.utils.spark_local_cluster_context_config import (
 def get_spark_context(
     app_name: str,
     run_mode: str = "local_single_worker",
-    context_log_level: str = "WARN"
+    context_log_level: str = "WARN",
 ) -> SparkSession:
     """
     Get the spark context and setting the log level
@@ -31,7 +31,9 @@ def get_spark_context(
         )
         # See: https://github.com/bitnami/bitnami-docker-spark/issues/18#issuecomment-701487655
         os.environ["SPARK_LOCAL_IP"] = SPARK_DRIVER_HOST
-        config_var_list += [(k, v) for k, v in spark_local_cluster_context_config.items()] + [
+        config_var_list += [
+            (k, v) for k, v in spark_local_cluster_context_config.items()
+        ] + [
             # spark.master = spark://<ip of master node>:<port of master node>
             (
                 "spark.master",

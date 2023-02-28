@@ -28,10 +28,10 @@ def find_largest(df: DataFrame, col_name: str) -> Row:
 
 
 def pyspark_example_3(
-        spark: SparkSession,
-        year: int,
-        is_specific_csv_file_only: bool,
-        csv_file_name: str = None,
+    spark: SparkSession,
+    year: int,
+    is_specific_csv_file_only: bool,
+    csv_file_name: str = None,
 ):
     """
     Pyspark example nº 3 - extreme-weather
@@ -46,7 +46,9 @@ def pyspark_example_3(
     s3_path = f"s3://noaa-gsod-pds/{year}/"
     if is_specific_csv_file_only:
         if csv_file_name is None:
-            raise ValueError("csv_file_name needs to be defined if is_specific_csv_file_only is True")
+            raise ValueError(
+                "csv_file_name needs to be defined if is_specific_csv_file_only is True"
+            )
         s3_path += csv_file_name
     df = spark.read.csv(s3_path, header=True, inferSchema=True)
     print(f"The amount of weather readings in {year} is: {df.count()}\n")
