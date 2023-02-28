@@ -7,7 +7,8 @@ echo "S3_BUCKET=$S3_BUCKET"
 
 # -- Build the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)
 echo "Building the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)"
-DOCKER_BUILDKIT=1 docker build \
+# NOTE: Remove the quiet flag (-q) for debugging purposes
+DOCKER_BUILDKIT=1 docker build -q \
   --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
   --build-arg PYTHON_VERSION_SHORT="${PYTHON_VERSION_SHORT}" \
   --build-arg POETRY_VERSION="${POETRY_VERSION}" \
