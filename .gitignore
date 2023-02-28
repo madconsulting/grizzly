@@ -3,5 +3,5 @@ __pycache__
 venv
 .pyc
 
-grizzly/deploy/spark/cloud/spark_emr_serverless/job_logs/*
-!grizzly/deploy/spark/cloud/spark_emr_serverless/job_logs/__init__.py
+grizzly_main/deploy/spark/cloud/spark_emr_serverless/job_logs/*
+!grizzly_main/deploy/spark/cloud/spark_emr_serverless/job_logs/__init__.py
