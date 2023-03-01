@@ -16,7 +16,7 @@ DOCKER_BUILDKIT=1 docker build -q \
   --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
   --build-arg PYTHON_VERSION_SHORT="${PYTHON_VERSION_SHORT}" \
   --build-arg POETRY_VERSION="${POETRY_VERSION}" \
-  --build-arg GRIZZLY_MAIN_PATH="${GRIZZLY_MAIN_PATH}" \
+  --build-arg GRIZZLY_BASE_DIR="${GRIZZLY_BASE_DIR}" \
   -f "$GRIZZLY_BASE_DIR/deploy/spark/cloud/spark_emr_serverless/build/Dockerfile" \
   --output . .
 
