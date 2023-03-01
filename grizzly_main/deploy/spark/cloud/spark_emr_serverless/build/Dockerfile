@@ -4,7 +4,6 @@ ARG PYTHON_VERSION
 ARG PYTHON_VERSION_SHORT
 ARG POETRY_VERSION
 ARG GRIZZLY_BASE_DIR
-ARG TEMP_POETRY_DIR="deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files"
 
 # Install Python - Note that python 3.10 requires OpenSSL >= 1.1.1 (installing it by default)
 RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget make && \
@@ -15,9 +14,11 @@ RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget ma
     make install
 
 # Install Poetry and then convert the .lock file into a requirements.txt file
-# Copy poetry files: pyproject.toml and poetry.lock into our working directory
-COPY $GRIZZLY_BASE_DIR$TEMP_POETRY_DIR/pyproject.toml $GRIZZLY_BASE_DIR$TEMP_POETRY_DIR/poetry.lock ./
-# Install Poetry environment
+# First, copy all the files from the directory from where Docker has been executed (client repository). This will include the
+# client repository packages and the pyproject.toml and poetry.lock files, required to install poetry and building the
+# wheel file.
+COPY ./ ./
+# Then, install Poetry environment
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade setuptools && \
     python3 -m pip install poetry==${POETRY_VERSION}

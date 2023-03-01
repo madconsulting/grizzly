@@ -3,8 +3,8 @@ echo "Inputs to deploy Spark cloud env to s3:"
 echo "PYTHON_VERSION=$PYTHON_VERSION"
 echo "PYTHON_VERSION_SHORT=$PYTHON_VERSION_SHORT"
 echo "POETRY_VERSION=$POETRY_VERSION"
-echo "S3_BUCKET=$S3_BUCKET"
 echo "GRIZZLY_BASE_DIR=$GRIZZLY_BASE_DIR"
+echo "S3_BUCKET=$S3_BUCKET"
 
 # -- Build the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)
 echo "Building the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)"

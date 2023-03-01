@@ -1,8 +1,9 @@
 import os
 import inspect
+import pathlib
 import shutil
 import subprocess
-from typing import Dict, Any
+from typing import Dict, Any, Union
 
 from grizzly_main.path_interations import cd, get_base_dir
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.build
@@ -12,8 +13,8 @@ from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables i
 base_dir = get_base_dir()
 
 
-def copy_poetry_raw_files(poetry_dir: str):
-    poetry_dir = os.path.abspath(poetry_dir)
+def copy_poetry_raw_files(base_dir_client_repo: Union[str, pathlib.Path], poetry_dir: str):
+    poetry_dir = os.path.abspath(f"{base_dir_client_repo}/{poetry_dir}")
     for file in ["pyproject.toml", "poetry.lock"]:
         shutil.copyfile(
             src=f"{poetry_dir}/{file}",
@@ -26,7 +27,7 @@ def delete_copies_of_poetry_raw_files():
         os.remove(f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files/{file}")
 
 
-def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
+def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]):
     python_version = main_config["python_version"]
     os.environ["PYTHON_VERSION"] = python_version
     os.environ["PYTHON_VERSION_SHORT"] = python_version[:python_version.rfind('.')]
@@ -48,6 +49,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
                 inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.build)
     )
     build_file_path = os.path.abspath(f"{build_dir}/build.sh")
-    copy_poetry_raw_files(poetry_dir=main_config["poetry_dir"])
-    subprocess.call(['sh', build_file_path])
+    copy_poetry_raw_files(base_dir_client_repo=base_dir_client_repo, poetry_dir=main_config["poetry_dir"])
+    with cd(base_dir_client_repo):
+        subprocess.call(['sh', build_file_path])
     delete_copies_of_poetry_raw_files()
