@@ -24,7 +24,7 @@ def _get_current_poetry_package_name_and_version(poetry_dir: str) -> Tuple[str, 
 
 
 def _get_poetry_package_name_and_version(
-    poetry_dir: str, package_version: str = None
+    poetry_dir: str = "", package_version: str = None
 ) -> Tuple[str, str]:
     """
     Get Poetry package name and version from pyproject.toml file (or overwritten by input)
@@ -44,7 +44,7 @@ def _get_poetry_package_name_and_version(
 
 # ----------- Wheel file functions -----------
 def get_poetry_wheel_file(
-    poetry_dir: str,
+    poetry_dir: str = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
     package_version: str = None,
 ) -> Optional[str]:
@@ -65,7 +65,7 @@ def get_poetry_wheel_file(
 
 
 def rename_poetry_wheel_file(
-    poetry_dir: str,
+    poetry_dir: str = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/"
     "package_wheel_files",
 ) -> None:
@@ -119,7 +119,7 @@ def list_files_inside_wheel(wheel_file_path: str) -> None:
 
 # ----------- Venv file functions -----------
 def get_venv_file(
-    poetry_dir: str,
+    poetry_dir: str = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     package_version: str = None,
 ) -> str:
@@ -140,7 +140,7 @@ def get_venv_file(
 
 
 def add_package_version_to_venv(
-    poetry_dir: str,
+    poetry_dir: str = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     file_name: str = "pyspark.tar.gz",
 ) -> None:
