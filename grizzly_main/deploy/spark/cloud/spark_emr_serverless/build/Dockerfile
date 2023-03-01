@@ -6,7 +6,8 @@ ARG POETRY_VERSION
 ARG GRIZZLY_BASE_DIR
 
 # Install Python - Note that python 3.10 requires OpenSSL >= 1.1.1 (installing it by default)
-RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget make && \
+# Note: Git is required, as grizzly is being installed via poetry as a git dependency
+RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget make git && \
     wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz && \
     tar xzf Python-${PYTHON_VERSION}.tgz && \
     cd Python-${PYTHON_VERSION} && \
