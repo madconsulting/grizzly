@@ -4,6 +4,7 @@ echo "PYTHON_VERSION=$PYTHON_VERSION"
 echo "PYTHON_VERSION_SHORT=$PYTHON_VERSION_SHORT"
 echo "POETRY_VERSION=$POETRY_VERSION"
 echo "S3_BUCKET=$S3_BUCKET"
+echo "GRIZZLY_BASE_DIR=$GRIZZLY_BASE_DIR"
 
 # -- Build the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)
 echo "Building the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)"
@@ -15,12 +16,13 @@ DOCKER_BUILDKIT=1 docker build -q \
   --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
   --build-arg PYTHON_VERSION_SHORT="${PYTHON_VERSION_SHORT}" \
   --build-arg POETRY_VERSION="${POETRY_VERSION}" \
-  -f deploy/spark/cloud/spark_emr_serverless/build/Dockerfile \
+  --build-arg GRIZZLY_MAIN_PATH="${GRIZZLY_MAIN_PATH}" \
+  -f "$GRIZZLY_BASE_DIR/deploy/spark/cloud/spark_emr_serverless/build/Dockerfile" \
   --output . .
 
 # -- Upload the virtual environment to S3
 echo "Adding Poetry package version to venv file name"
-script="deploy/spark/cloud/spark_emr_serverless/build/build_artifacts_interactions.py"
+script="$GRIZZLY_BASE_DIR/deploy/spark/cloud/spark_emr_serverless/build/build_artifacts_interactions.py"
 function="add_package_version_to_venv"
 python_run_command="poetry run python3 $script $function"
 echo "Python command to add the package version to the venv file name: $python_run_command"

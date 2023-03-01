@@ -15,14 +15,15 @@ base_dir = get_base_dir()
 def copy_poetry_raw_files(poetry_dir: str):
     poetry_dir = os.path.abspath(poetry_dir)
     for file in ["pyproject.toml", "poetry.lock"]:
-        shutil.copyfile(src=f"{poetry_dir}/{file}",
-                        dst=f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files")
+        shutil.copyfile(
+            src=f"{poetry_dir}/{file}",
+            dst=f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files/{file}"
+        )
 
 
-def delete_copies_of_poetry_raw_files(poetry_dir: str):
-    poetry_dir = os.path.abspath(poetry_dir)
+def delete_copies_of_poetry_raw_files():
     for file in ["pyproject.toml", "poetry.lock"]:
-        os.remove(f"{poetry_dir}/{file}")
+        os.remove(f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files/{file}")
 
 
 def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
@@ -30,6 +31,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
     os.environ["PYTHON_VERSION"] = python_version
     os.environ["PYTHON_VERSION_SHORT"] = python_version[:python_version.rfind('.')]
     os.environ["POETRY_VERSION"] = main_config["poetry_version"]
+    os.environ["GRIZZLY_BASE_DIR"] = str(base_dir)
     pulumi_organization = main_config["pulumi_organization"]
     pulumi_project = main_config["pulumi_project"]
     pulumi_stack = main_config["pulumi_stack"]
@@ -47,7 +49,5 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
     )
     build_file_path = os.path.abspath(f"{build_dir}/build.sh")
     copy_poetry_raw_files(poetry_dir=main_config["poetry_dir"])
-    # Run build.sh from root path of grizzly repository
-    with cd(get_base_dir()):
-        subprocess.call(['sh', build_file_path])
-    delete_copies_of_poetry_raw_files(poetry_dir=main_config["poetry_dir"])
+    subprocess.call(['sh', build_file_path])
+    delete_copies_of_poetry_raw_files()
