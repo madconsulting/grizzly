@@ -16,7 +16,9 @@ def _get_current_poetry_package_name_and_version(poetry_dir: str) -> Tuple[str, 
     :param poetry_dir: Poetry directory
     :return: Current poetry package name and version
     """
-    with open(os.path.abspath(f"{poetry_dir}/pyproject.toml")) as pyproject:
+    if poetry_dir != "":
+        poetry_dir += "/"
+    with open(os.path.abspath(f"{poetry_dir}pyproject.toml")) as pyproject:
         file_contents = pyproject.read()
     package_name = tomlkit.parse(file_contents)["tool"]["poetry"]["name"]
     package_version = tomlkit.parse(file_contents)["tool"]["poetry"]["version"]
