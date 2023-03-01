@@ -16,7 +16,7 @@ RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget ma
 
 # Install Poetry and then convert the .lock file into a requirements.txt file
 # Copy poetry files: pyproject.toml and poetry.lock into our working directory
-COPY $TEMP_POETRY_DIR/pyproject.toml $TEMP_POETRY_DIR/poetry.lock ./
+COPY $GRIZZLY_BASE_DIR$TEMP_POETRY_DIR/pyproject.toml $GRIZZLY_BASE_DIR$TEMP_POETRY_DIR/poetry.lock ./
 # Install Poetry environment
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade setuptools && \
