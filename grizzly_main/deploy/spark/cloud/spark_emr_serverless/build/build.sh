@@ -3,7 +3,6 @@ echo "Inputs to deploy Spark cloud env to s3:"
 echo "PYTHON_VERSION=$PYTHON_VERSION"
 echo "PYTHON_VERSION_SHORT=$PYTHON_VERSION_SHORT"
 echo "POETRY_VERSION=$POETRY_VERSION"
-echo "POETRY_DIR=$POETRY_DIR"
 echo "S3_BUCKET=$S3_BUCKET"
 
 # -- Build the custom venv and package wheel files from Poetry in Docker (with BuildKit backend)
@@ -16,7 +15,6 @@ DOCKER_BUILDKIT=1 docker build -q \
   --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
   --build-arg PYTHON_VERSION_SHORT="${PYTHON_VERSION_SHORT}" \
   --build-arg POETRY_VERSION="${POETRY_VERSION}" \
-  --build-arg POETRY_DIR="${POETRY_DIR}" \
   -f deploy/spark/cloud/spark_emr_serverless/build/Dockerfile \
   --output . .
 
