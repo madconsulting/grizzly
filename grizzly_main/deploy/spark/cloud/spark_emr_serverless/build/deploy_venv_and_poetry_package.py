@@ -14,6 +14,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
     os.environ["PYTHON_VERSION"] = python_version
     os.environ["PYTHON_VERSION_SHORT"] = python_version[:python_version.rfind('.')]
     os.environ["POETRY_VERSION"] = main_config["poetry_version"]
+    os.environ["POETRY_DIR"] = main_config["poetry_dir"]
     pulumi_organization = main_config["pulumi_organization"]
     pulumi_project = main_config["pulumi_project"]
     pulumi_stack = main_config["pulumi_stack"]
@@ -29,7 +30,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any]):
     build_dir = os.path.dirname(
                 inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.build)
     )
-    build_file_path = f"{build_dir}/build.sh"
+    build_file_path = os.path.abspath(f"{build_dir}/build.sh")
     # Run build.sh from root path of grizzly repository
     with cd(get_base_dir()):
         subprocess.call(['sh', build_file_path])

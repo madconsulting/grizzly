@@ -10,10 +10,11 @@ main_config = {
         },
     },
     # "pulumi_organization": "",  # TODO - Fill value
-    "pulumi_organization": "victor-vila",  # TODO - TEMP for testing
+    "pulumi_organization": "victor-vila",  # TODO - TEMP for testing - delete that line afterwards
     "pulumi_project": "spark_emr_serverless",
     "pulumi_stack": "dev",
     # Deployment variables
     "python_version": "3.9.12",
     "poetry_version": "1.2.0b3",
+    "poetry_dir": "",  # TODO - Fill value
 }

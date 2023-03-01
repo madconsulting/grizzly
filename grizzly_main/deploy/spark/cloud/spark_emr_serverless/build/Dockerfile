@@ -3,6 +3,7 @@ FROM --platform=linux/amd64 amazonlinux:2 AS base
 ARG PYTHON_VERSION
 ARG PYTHON_VERSION_SHORT
 ARG POETRY_VERSION
+ARG POETRY_DIR
 
 # Install Python - Note that python 3.10 requires OpenSSL >= 1.1.1 (installing it by default)
 RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget make && \
@@ -14,9 +15,9 @@ RUN yum install -y gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget ma
 
 # Install Poetry and then convert the .lock file into a requirements.txt file
 # Copy poetry files: pyproject.toml and poetry.lock into our working directory
-COPY pyproject.toml poetry.lock ./
-# Copy the grizzly_main/deploy folder (containing the poetry package and the local/spark_cluster folder):
-COPY grizzly_main/deploy grizzly_main/deploy
+COPY $POETRY_DIR/pyproject.toml $POETRY_DIR/poetry.lock ./
+# Copy the deploy folder (containing the poetry package and the local/spark_cluster folder):
+COPY deploy/ deploy/
 # Install Poetry environment
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade setuptools && \
@@ -44,5 +45,5 @@ RUN mkdir /output && \
     venv-pack -f -o /output/pyspark.tar.gz --python-prefix /home/hadoop/environment
 
 FROM scratch AS export
-COPY --from=base output/pyspark.tar.gz grizzly_main/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs/
-COPY --from=base dist/ grizzly_main/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files/
+COPY --from=base output/pyspark.tar.gz deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs/
+COPY --from=base dist/ deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files/

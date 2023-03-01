@@ -68,15 +68,16 @@ def get_spark_emr_serverless_config(
     pulumi_project: str,
     pulumi_stack: str,
     spark_resources_dict: Dict[str, Any],
+    poetry_dir: str,
     poetry_package_version: str = None,
     **kwargs,
 ):
     """
-
     :param pulumi_organization:
     :param pulumi_project:
     :param pulumi_stack:
     :param spark_resources_dict:
+    :param poetry_dir:
     :param poetry_package_version: Poetry package version. If a specific version is provided, it will override current
                                    Poetry package (e.g. to run PySpark code using a past deployed version of Poetry)
     :return:
@@ -97,8 +98,8 @@ def get_spark_emr_serverless_config(
     job_role_arm = get_job_role_arm_from_pulumi(
         stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
     )
-    venv_file_name = get_venv_file(package_version=poetry_package_version)
-    wheel_file_name = get_poetry_wheel_file(package_version=poetry_package_version)
+    venv_file_name = get_venv_file(poetry_dir=poetry_dir, package_version=poetry_package_version)
+    wheel_file_name = get_poetry_wheel_file(poetry_dir=poetry_dir, package_version=poetry_package_version)
     return {
         "s3_bucket": s3_bucket,
         "emr_serverless": {
