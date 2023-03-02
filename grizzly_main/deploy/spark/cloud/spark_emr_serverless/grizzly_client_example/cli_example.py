@@ -109,13 +109,12 @@ class SparkEmrServerlessCLIExample:
             )
             and file != "__pycache__"
         ]
-        print(f"\nThe Pulumi code will be copied from the directory: {source_dir} to the target directory: "
-              f"{pulumi_project_dir}")
+        print(f"\nThe Pulumi code will be copied from the directory: {source_dir}")
         if not os.path.exists(pulumi_project_dir):
             os.makedirs(pulumi_project_dir)
         else:
             if os.listdir(pulumi_project_dir):
-                raise ValueError("Destination directory is not empty")
+                raise ValueError(f"Destination directory {pulumi_project_dir} is not empty")
         new_file_list = []
         for file in files_list:
             if file == "Pulumi.dev.yaml":
@@ -217,8 +216,27 @@ class SparkEmrServerlessCLIExample:
             "The infrastructure required to run PySpark code on EMR Serverless has been successfully deployed"
         )
 
+    def _copy_files_for_minimal_example(self):
+        pass
+
+    def _update_main_config_with_user_params(self):
+        pass
+
+
     def _run_section_2(self) -> None:
-        rich_print("[bold yellow]### SECTION 2 - r the infrastructure ###\n")
+        rich_print("[bold yellow]### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n")
+        print("For the EMR Serverless app, a custom Poetry virtual environment and package are used to:\n"
+              "- Handle all the package dependencies and versioning.\n"
+              "- Package all the files from the repository in a single wheel file, which will allow to have relative "
+              "imports and thus, use modular code across all the repo.\n")
+        print("In this section we will:\n"
+              "1. Copy all the required files to run and monitor a minimal PySpark example on EMR Serverless.\n"
+              "2. Create the venv and package wheel files and push them to the S3 bucket (already deployed in Section 1"
+              " using Pulumi)\n"
+              )
+
+        # TODO - copy all files - including main + modifying main with the parameters we already know (pulumi org,
+        #  stack, etc.) + then push venv and wheel to s3
 
     def run_example(self) -> None:
         self._run_section_1()
