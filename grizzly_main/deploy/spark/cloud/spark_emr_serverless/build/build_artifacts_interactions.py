@@ -68,8 +68,7 @@ def get_poetry_wheel_file(
 
 def rename_poetry_wheel_file(
     poetry_dir: str = "",
-    file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/"
-    "package_wheel_files",
+    file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
 ) -> None:
     """
     Get the poetry wheel file for the current Poetry package name and version
@@ -84,7 +83,7 @@ def rename_poetry_wheel_file(
     current_package_wheel_file = [
         file_name
         for file_name in built_files
-        if file_name.startswith(f"{package_name}-{package_version}-py3")
+        if file_name.replace("_", "-").startswith(f"{package_name.replace('_', '-')}-{package_version}-py3")
         and file_name.endswith(".whl")
     ]
     if len(current_package_wheel_file) == 0:

@@ -1,7 +1,6 @@
 import os
 import inspect
 import pathlib
-import shutil
 import subprocess
 from typing import Dict, Any, Union
 
@@ -11,20 +10,6 @@ from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_s
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import get_s3_bucket_id_from_pulumi
 
 base_dir = get_base_dir()
-
-
-def copy_poetry_raw_files(base_dir_client_repo: Union[str, pathlib.Path], poetry_dir: str):
-    poetry_dir = os.path.abspath(f"{base_dir_client_repo}/{poetry_dir}")
-    for file in ["pyproject.toml", "poetry.lock"]:
-        shutil.copyfile(
-            src=f"{poetry_dir}/{file}",
-            dst=f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files/{file}"
-        )
-
-
-def delete_copies_of_poetry_raw_files():
-    for file in ["pyproject.toml", "poetry.lock"]:
-        os.remove(f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/poetry_raw_files/{file}")
 
 
 def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]):
@@ -50,7 +35,5 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_
                 inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.build)
     )
     build_file_path = os.path.abspath(f"{build_dir}/build.sh")
-    copy_poetry_raw_files(base_dir_client_repo=base_dir_client_repo, poetry_dir=main_config["poetry_dir"])
     with cd(base_dir_client_repo):
         subprocess.call(['sh', build_file_path])
-    delete_copies_of_poetry_raw_files()
