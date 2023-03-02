@@ -88,7 +88,7 @@ class SparkEmrServerlessCLIExample:
         return stack_name
 
     @staticmethod
-    def _copy_pulumi_files(stack_name: str) -> str:
+    def _copy_pulumi_files(stack_name: str, pulumi_project_dir: str = "spark_emr_serverless_example/iac_pulumi") -> str:
         source_dir = os.path.dirname(
             inspect.getfile(
                 grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
@@ -109,11 +109,8 @@ class SparkEmrServerlessCLIExample:
             )
             and file != "__pycache__"
         ]
-        print(f"\nThe Pulumi code will be copied from the directory: {source_dir}")
-        pulumi_project_dir = Prompt.ask(
-            prompt="[bold blue]\nPlease write down the target directory (should be empty or not existing yet)",
-            default="example_spark_emr_serverless",
-        )
+        print(f"\nThe Pulumi code will be copied from the directory: {source_dir} to the target directory: "
+              f"{pulumi_project_dir}")
         if not os.path.exists(pulumi_project_dir):
             os.makedirs(pulumi_project_dir)
         else:
