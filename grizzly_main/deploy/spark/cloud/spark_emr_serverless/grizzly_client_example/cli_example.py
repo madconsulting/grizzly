@@ -163,7 +163,7 @@ class SparkEmrServerlessCLIExample:
             prompt="[bold blue]\nPlease type your AWS account id",
         )
         data = ruamel.yaml.YAML().load(open(stack_config_file, "r"))
-        data["config"]["spark_emr_serverless:aws_account_id"] = aws_account_id
+        data["config"]["aws_account_id"] = aws_account_id
         yaml = ruamel.yaml.YAML()
         with open(stack_config_file, "w") as fp:
             yaml.dump(data, fp)
