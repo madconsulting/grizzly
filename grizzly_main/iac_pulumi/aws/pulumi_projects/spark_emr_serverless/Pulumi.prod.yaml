@@ -1,6 +1,6 @@
 config:
-  spark_emr_serverless:aws_account_id: "TO_FILL"
-  spark_emr_serverless:max_vcpu: 4
-  spark_emr_serverless:max_memory_gb: 12
-  spark_emr_serverless:max_disk_gb: 80
-  spark_emr_serverless:idle_timeout_minutes: 5
+  aws_account_id: "TO_FILL"
+  max_vcpu: 4
+  max_memory_gb: 12
+  max_disk_gb: 80
+  idle_timeout_minutes: 5

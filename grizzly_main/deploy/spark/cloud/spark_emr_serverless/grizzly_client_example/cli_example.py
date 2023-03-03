@@ -139,7 +139,7 @@ class SparkEmrServerlessCLIExample:
             shutil.copyfile(src=f"{source_dir}/{file}", dst=new_file_dir)
             new_file_list.append(new_file)
         print(
-            f"\nThe folowing files have been created in {self.pulumi_dir}: {new_file_list}"
+            f"The folowing files have been created in {self.pulumi_dir}: {new_file_list}"
         )
         
     def _update_pulumi_project_name(self) -> None:
@@ -149,7 +149,7 @@ class SparkEmrServerlessCLIExample:
         yaml = ruamel.yaml.YAML()
         with open(config_file, "w") as fp:
             yaml.dump(data, fp)
-        print(f"The Pulumi Project name {self.pulumi_project} has been updated in the {config_file} file.")
+        print(f"The Pulumi Project name {self.pulumi_project} has been updated in the 'Pulumi.yaml' file.")
 
     def _update_aws_account_id(self) -> None:
         stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
@@ -208,7 +208,7 @@ class SparkEmrServerlessCLIExample:
     def _deploy_infrastructure(self) -> None:
         pulumi_command = "pulumi up"
         print(
-            "\nNow we are going to create a new stack (or select it, if already exists) using the following command:"
+            f"\nNow we are going to deploy the infrastructure for the {self.pulumi_stack} stack"
         )
         rich_print(f"\n[bold italic]{pulumi_command}")
         print(
