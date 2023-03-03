@@ -267,6 +267,9 @@ class SparkEmrServerlessCLIExample:
             raise ValueError(f"Revise if poetry version from str '{poetry_version}' matches the regex format: {regex_version}")
         main_config_dict["poetry_version"] = poetry_version
         main_config_dict["python_version"] = platform.python_version()
+        main_config_dict["repository_name"] = subprocess.run("basename `git rev-parse --show-toplevel`",
+                                                             shell=True,
+                                                             stdout=subprocess.PIPE).stdout.decode('utf-8').replace("\n", "")
         with open(file_path, 'w') as fp:
             fp.write('main_config = ' + json.dumps(main_config_dict))
         print(f"The main_config dictionary in {file_path} has been updated according to your "
@@ -315,7 +318,7 @@ class SparkEmrServerlessCLIExample:
         print("In this section we will:\n"
               "1. Copy all the required files to run and monitor a minimal PySpark example on EMR Serverless.\n"
               "2. Create the venv and package wheel files and push them to the S3 bucket (already deployed in Section 1"
-              " using Pulumi)\n\n"
+              " using Pulumi)\n"
               )
         self._copy_files_for_minimal_example()
         self._update_main_config_with_user_params()

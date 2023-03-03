@@ -9,6 +9,7 @@ main_config = {
             "disk_in_GB": 20,
         },
     },
+    "repository_name": "",  # Automatically filled in the CLI example
     "pulumi_organization": "",  # Automatically filled in the CLI example
     "pulumi_project": "",  # Automatically filled in the CLI example
     "pulumi_stack": "",  # Automatically filled in the CLI example
