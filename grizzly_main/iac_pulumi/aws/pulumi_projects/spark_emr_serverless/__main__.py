@@ -3,9 +3,10 @@ from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless imp
 
 config = pulumi.Config()
 stack_name = pulumi.get_stack()
+resource_prefix_name = config.name.replace("_", "-")
 
 create_spark_emr_serverless_architecture(
-    resource_prefix_name=f"spark-emr-serverless-{stack_name}",
+    resource_prefix_name=f"{resource_prefix_name}-{stack_name}",
     max_vcpu=int(config.require('max_vcpu')),
     max_memory_gb=int(config.require('max_memory_gb')),
     max_disk_gb=int(config.require('max_disk_gb')),

@@ -274,7 +274,7 @@ class SparkEmrServerlessCLIExample:
             fp.write('main_config = ' + json.dumps(main_config_dict))
         print(f"The main_config dictionary in {file_path} has been updated according to your "
               f"python and poetry versions and the Pulumi information previously provided in this example.\nFeel free "
-              f"to revise the main_config dictionary values.")
+              f"to revise the main_config dictionary values.\n")
 
     def _deploy_venv_and_poetry_package(self):
         file_path = f"{self.main_dir}/deploy_venv_and_poetry_package.py"
