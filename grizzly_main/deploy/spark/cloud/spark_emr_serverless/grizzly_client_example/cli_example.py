@@ -28,6 +28,7 @@ class SparkEmrServerlessCLIExample:
         self.pulumi_subdir = pulumi_subdir
         self.pulumi_dir = f"{self.main_dir}/{self.pulumi_subdir}"
         self.pulumi_organization = None
+        self.pulumi_project = None
         self.pulumi_stack = None
 
     def _ask_user_confirmation_to_execute_pulumi_command(
@@ -88,10 +89,14 @@ class SparkEmrServerlessCLIExample:
             )
 
     @staticmethod
-    def _set_environment_name() -> None:
+    def _set_pulumi_project_and_stack() -> None:
+        self.pulumi_project = Prompt.ask(
+            prompt=f"[bold blue]\nPlease type the Pulumi Project name",
+            default="spark_emr_serverless",
+        )
         print(
-            "\nWe will use a single environment for this example. We will name the Pulumi Stack as the environment "
-            "name."
+            "\nWe will use a single environment for this example. We will also name the Pulumi Stack as the "
+            "environment name."
         )
         self.pulumi_stack = Prompt.ask(
             prompt="[bold blue]\nPlease type the environment / stack name",
@@ -137,6 +142,15 @@ class SparkEmrServerlessCLIExample:
         print(
             f"\nThe folowing files have been created in {self.pulumi_dir}: {new_file_list}"
         )
+        
+    def _update_pulumi_project_name(self) -> None:
+        config_file = f"{self.pulumi_dir}/Pulumi.yaml"
+        data = ruamel.yaml.YAML().load(open(config_file, "r"))
+        data["name"] = self.pulumi_project
+        yaml = ruamel.yaml.YAML()
+        with open(config_file, "w") as fp:
+            yaml.dump(data, fp)
+        print(f"The Pulumi Project name {self.pulumi_project} has been updated in the {config_file} file.")
 
     def _update_aws_account_id(self) -> None:
         stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
@@ -211,8 +225,9 @@ class SparkEmrServerlessCLIExample:
             "In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n"
         )
         self._recommend_pulumi_get_started_tutorial()
-        self._set_environment_name()
+        self._set_pulumi_project_and_stack()
         self._copy_pulumi_files()
+        self._update_pulumi_project_name()
         self._update_aws_account_id()
         self._create_pulumi_stack()
         self._deploy_infrastructure()
@@ -243,6 +258,7 @@ class SparkEmrServerlessCLIExample:
         loader.exec_module(mod)
         main_config_dict = mod.main_config
         main_config_dict["pulumi_organization"] = self.pulumi_organization
+        main_config_dict["pulumi_project"] = self.pulumi_project
         main_config_dict["pulumi_stack"] = self.pulumi_stack
         poetry_version = subprocess.run(["poetry", "-V"], stdout=subprocess.PIPE).stdout.decode('utf-8')
         regex_version = r"version (\d+\.\d+\.\d+[a-z]?\d?)"
@@ -306,11 +322,6 @@ class SparkEmrServerlessCLIExample:
         self._update_main_config_with_user_params()
         self._deploy_venv_and_poetry_package()
 
-
-
-        # TODO - copy all files - including main + modifying main with the parameters we already know (pulumi org,
-        #  stack, etc.) + then push venv and wheel to s3
-
     def run_example(self) -> None:
         self._run_section_1()
         self._run_section_2()
@@ -321,6 +332,5 @@ class SparkEmrServerlessCLIExample:
 
 
 # TODO - main below for temp testing
-
 if __name__ in '__main__':
     self = SparkEmrServerlessCLIExample()
