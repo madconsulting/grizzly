@@ -16,5 +16,5 @@ main_config = {
     # Deployment variables
     "python_version": "3.9.12",
     "poetry_version": "1.2.0b3",
-    "poetry_dir": "",  # TODO - Fill value
+    "poetry_dir": "",
 }
