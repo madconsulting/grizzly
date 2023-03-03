@@ -88,8 +88,7 @@ class SparkEmrServerlessCLIExample:
                 prompt="[bold blue]\nPlease type enter when you are ready to continue",
             )
 
-    @staticmethod
-    def _set_pulumi_project_and_stack() -> None:
+    def _set_pulumi_project_and_stack(self) -> None:
         self.pulumi_project = Prompt.ask(
             prompt=f"[bold blue]\nPlease type the Pulumi Project name",
             default="spark_emr_serverless",
