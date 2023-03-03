@@ -1,9 +1,11 @@
+import re
 import os
 import sys
 import json
 import types
 import shutil
 import inspect
+import platform
 import subprocess
 import ruamel.yaml
 from rich.prompt import Prompt
@@ -26,6 +28,7 @@ class SparkEmrServerlessCLIExample:
         self.pulumi_subdir = pulumi_subdir
         self.pulumi_dir = f"{self.main_dir}/{self.pulumi_subdir}"
         self.pulumi_organization = None
+        self.pulumi_stack = None
 
     def _ask_user_confirmation_to_execute_pulumi_command(
         self, pulumi_command: str
@@ -50,7 +53,8 @@ class SparkEmrServerlessCLIExample:
                         f"\n- stderr: {res.stderr.decode('utf-8')}"
                     )
                     print(
-                        "Please start again the example addressing the Pulumi error above."
+                        "Please start again the example addressing the Pulumi error above, or contact Mad Consulting "
+                        "if you need further support."
                     )
                     sys.exit()
                 else:
@@ -58,7 +62,7 @@ class SparkEmrServerlessCLIExample:
         else:
             Prompt.ask(
                 prompt="[bold blue]\nPlease execute the command above in another terminal. "
-                "Afterwards, type enter when you are ready to continue",
+                "Afterwards, type enter when you are ready to continue.",
             )
 
     @staticmethod
@@ -84,18 +88,17 @@ class SparkEmrServerlessCLIExample:
             )
 
     @staticmethod
-    def _get_environment_name() -> str:
+    def _set_environment_name() -> None:
         print(
             "\nWe will use a single environment for this example. We will name the Pulumi Stack as the environment "
             "name."
         )
-        stack_name = Prompt.ask(
+        self.pulumi_stack = Prompt.ask(
             prompt="[bold blue]\nPlease type the environment / stack name",
             default="dev",
         )
-        return stack_name
 
-    def _copy_pulumi_files(self, stack_name: str) -> None:
+    def _copy_pulumi_files(self) -> None:
         source_dir = os.path.dirname(
             inspect.getfile(
                 grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
@@ -125,7 +128,7 @@ class SparkEmrServerlessCLIExample:
         new_file_list = []
         for file in files_list:
             if file == "Pulumi.dev.yaml":
-                new_file = file.replace("dev", stack_name)
+                new_file = file.replace("dev", self.pulumi_stack)
             else:
                 new_file = file
             new_file_dir = f"{os.path.abspath(self.pulumi_dir)}/{new_file}"
@@ -135,8 +138,8 @@ class SparkEmrServerlessCLIExample:
             f"\nThe folowing files have been created in {self.pulumi_dir}: {new_file_list}"
         )
 
-    def _update_aws_account_id(self, stack_name: str) -> None:
-        stack_config_file = f"{self.pulumi_dir}/Pulumi.{stack_name}.yaml"
+    def _update_aws_account_id(self) -> None:
+        stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
         print(
             f"\nIn the stack configuration file ({stack_config_file}), there is the aws_account_id pending to be "
             f"filled. This account requires programmatic access with rights to deploy and manage resources handled "
@@ -172,7 +175,7 @@ class SparkEmrServerlessCLIExample:
             print("print(create_spark_emr_serverless_architecture.__doc__)\n")
             print(create_spark_emr_serverless_architecture.__doc__)
 
-    def _create_pulumi_stack(self, stack_name: str) -> None:
+    def _create_pulumi_stack(self) -> None:
         print(
             "\nNow we are going to create a new stack (or select it, if already exists) using the following command:"
         )
@@ -183,7 +186,7 @@ class SparkEmrServerlessCLIExample:
             "\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_stack_select/"
         )
         self.pulumi_organization = Prompt.ask(prompt="[bold blue]\nPlease type the target <org-name>",)
-        pulumi_command = f"pulumi stack select {self.pulumi_organization}/{stack_name} --create"
+        pulumi_command = f"pulumi stack select {self.pulumi_organization}/{self.pulumi_stack} --create"
         rich_print(f"\nPulumi command: [bold italic]{pulumi_command}")
         self._ask_user_confirmation_to_execute_pulumi_command(
             pulumi_command=pulumi_command
@@ -208,14 +211,10 @@ class SparkEmrServerlessCLIExample:
             "In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n"
         )
         self._recommend_pulumi_get_started_tutorial()
-        stack_name = self._get_environment_name()
-        self._copy_pulumi_files(stack_name=stack_name)
-        self._update_aws_account_id(
-            stack_name=stack_name
-        )
-        self._create_pulumi_stack(
-            stack_name=stack_name
-        )
+        self._set_environment_name()
+        self._copy_pulumi_files()
+        self._update_aws_account_id()
+        self._create_pulumi_stack()
         self._deploy_infrastructure()
         print(
             "The infrastructure required to run PySpark code on EMR Serverless has been successfully deployed"
@@ -244,12 +243,53 @@ class SparkEmrServerlessCLIExample:
         loader.exec_module(mod)
         main_config_dict = mod.main_config
         main_config_dict["pulumi_organization"] = self.pulumi_organization
+        main_config_dict["pulumi_stack"] = self.pulumi_stack
+        poetry_version = subprocess.run(["poetry", "-V"], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        regex_version = r"version (\d+\.\d+\.\d+[a-z]?\d?)"
+        try:
+            poetry_version = re.search(regex_version, poetry_version).group(1)
+        except AttributeError:
+            raise ValueError(f"Revise if poetry version from str '{poetry_version}' matches the regex format: {regex_version}")
+        main_config_dict["poetry_version"] = poetry_version
+        main_config_dict["python_version"] = platform.python_version()
         with open(file_path, 'w') as fp:
             fp.write('main_config = ' + json.dumps(main_config_dict))
-        print(f"pulumi_organization field has been updated in the main_config dictionary in {file_path}")
+        print(f"The main_config dictionary in {file_path} has been updated according to your "
+              f"python and poetry versions and the Pulumi information previously provided in this example.\nFeel free "
+              f"to revise the main_config dictionary values.")
 
-    def _deploy_
-
+    def _deploy_venv_and_poetry_package(self):
+        file_path = f"{self.main_dir}/deploy_venv_and_poetry_package.py"
+        print(f"Now, we are going to run the python script: {file_path}\n"
+              f"This will create the venv and package wheel files and push them to s3.")
+        is_execute_command = Prompt.ask(
+            prompt="[bold blue]\nWould you like me to execute it in this terminal?",
+            choices=["y", "n"],
+            default="y",
+        )
+        if is_execute_command == "y":
+            res = subprocess.run(
+                ["poetry", "run", "python", file_path],
+                stderr=subprocess.PIPE,
+            )
+            if res.returncode != 0:
+                rich_print(
+                    f"[bold red] The following error occurred with:"
+                    f"\n- returncode {res.returncode}"
+                    f"\n- stderr: {res.stderr.decode('utf-8')}"
+                )
+                print(
+                    "Please start again the example addressing the error above, or contact Mad Consulting if you need "
+                    "further support."
+                )
+                sys.exit()
+            else:
+                print("venv and wheel files successfully created and pushed to s3")
+        else:
+            Prompt.ask(
+                prompt=f"[bold blue]\nPlease execute the script {file_path}\n"
+                       "Afterwards, type enter when you are ready to continue.",
+            )
 
     def _run_section_2(self) -> None:
         rich_print("[bold yellow]### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n")
@@ -264,6 +304,7 @@ class SparkEmrServerlessCLIExample:
               )
         self._copy_files_for_minimal_example()
         self._update_main_config_with_user_params()
+        self._deploy_venv_and_poetry_package()
 
 
 

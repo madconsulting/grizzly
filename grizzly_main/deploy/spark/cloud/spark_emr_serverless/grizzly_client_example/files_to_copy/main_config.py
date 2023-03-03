@@ -9,12 +9,11 @@ main_config = {
             "disk_in_GB": 20,
         },
     },
-    # "pulumi_organization": "",  # TODO - Fill value
-    "pulumi_organization": "victor-vila",  # TODO - TEMP for testing - delete that line afterwards
+    "pulumi_organization": "",  # TODO - Automatically filled in the CLI example
     "pulumi_project": "spark_emr_serverless",
-    "pulumi_stack": "dev",
+    "pulumi_stack": "",  # TODO - Automatically filled in the CLI example
     # Deployment variables
-    "python_version": "3.9.12",
-    "poetry_version": "1.2.0b3",
-    "poetry_dir": "",
+    "python_version": "",  # TODO - Automatically filled in the CLI example
+    "poetry_version": "",  # TODO - Automatically filled in the CLI example
+    "poetry_dir": "",  # Empty directory by default (poetry files in root directory of client repository)
 }
