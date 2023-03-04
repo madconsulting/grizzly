@@ -22,7 +22,7 @@ from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless imp
 
 class SparkEmrServerlessCLIExample:
     def __init__(self,
-                 main_dir: str = "spark_emr_serverless_example",
+                 main_dir: str = "deploy_examples/spark_emr_serverless_example",
                  pulumi_subdir: str = "iac_pulumi"):
         self.main_dir = main_dir
         self.pulumi_subdir = pulumi_subdir
