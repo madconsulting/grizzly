@@ -49,7 +49,7 @@ def get_poetry_wheel_file(
     poetry_dir: str = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
     package_version: str = None,
-) -> Optional[str]:
+) -> Tuple[str, str]:
     """
     Get wheel file name
     :param poetry_dir: Poetry directory
@@ -61,25 +61,27 @@ def get_poetry_wheel_file(
     package_name, package_version = _get_poetry_package_name_and_version(
         poetry_dir=poetry_dir, package_version=package_version
     )
+    wheel_file_path = f"{base_dir}/{file_folder}"
     wheel_file_name = f"{package_name}-{package_version}.whl"
-    print(f"{file_folder}/{wheel_file_name}")
-    return wheel_file_name
+    print(f"{wheel_file_path}/{wheel_file_name}")
+    return wheel_file_path, wheel_file_name
 
 
 def rename_poetry_wheel_file(
     poetry_dir: str = "",
-    file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
 ) -> None:
     """
     Get the poetry wheel file for the current Poetry package name and version
     :param poetry_dir: Poetry directory
-    :param file_folder: Folder where we store the wheel files of Poetry
     :return: None
     """
     package_name, package_version = _get_poetry_package_name_and_version(
         poetry_dir=poetry_dir, package_version=None
     )
-    built_files = os.listdir(path=f"{base_dir}/{file_folder}")
+    wheel_file_path, new_wheel_file_name = get_poetry_wheel_file(
+        poetry_dir=poetry_dir, package_version=None
+    )
+    built_files = os.listdir(path=wheel_file_path)
     current_package_wheel_file = [
         file_name
         for file_name in built_files
@@ -93,12 +95,9 @@ def rename_poetry_wheel_file(
         )
     elif len(current_package_wheel_file) == 1:
         wheel_file_name = current_package_wheel_file[0]
-        new_wheel_file_name = get_poetry_wheel_file(
-            poetry_dir=poetry_dir, file_folder=file_folder, package_version=None
-        )
         os.rename(
-            f"{base_dir}/{file_folder}/{wheel_file_name}",
-            f"{base_dir}/{file_folder}/{new_wheel_file_name}",
+            f"{wheel_file_path}/{wheel_file_name}",
+            f"{wheel_file_path}/{new_wheel_file_name}",
         )
     else:
         raise ValueError(
@@ -123,26 +122,26 @@ def get_venv_file(
     poetry_dir: str = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     package_version: str = None,
-) -> str:
+) -> Tuple[str, str]:
     """
     Get venv file name
     :param poetry_dir: Poetry directory
     :param file_folder: Venv file folder
     :param package_version: Poetry package version. By default (None) using the current package version in
                             the pyproject.toml file
-    :return: Venv file name
+    :return: Venv file path and name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
         poetry_dir=poetry_dir, package_version=package_version
     )
+    venv_file_path = f"{base_dir}/{file_folder}"
     venv_file_name = f"{package_name}-{package_version}.tar.gz"
-    print(f"{file_folder}/{venv_file_name}")
-    return venv_file_name
+    print(f"{venv_file_path}/{venv_file_name}")
+    return venv_file_path, venv_file_name
 
 
 def add_package_version_to_venv(
     poetry_dir: str = "",
-    file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     file_name: str = "pyspark.tar.gz",
 ) -> None:
     """
@@ -152,10 +151,10 @@ def add_package_version_to_venv(
     :param file_name: Venv original file name
     :return: None
     """
-    new_venv_file_name = get_venv_file(poetry_dir=poetry_dir, file_folder=file_folder, package_version=None)
+    venv_file_path, new_venv_file_name = get_venv_file(poetry_dir=poetry_dir, package_version=None)
     os.rename(
-        f"{base_dir}/{file_folder}/{file_name}",
-        f"{base_dir}/{file_folder}/{new_venv_file_name}",
+        f"{venv_file_path}/{file_name}",
+        f"{venv_file_path}/{new_venv_file_name}",
     )
 
 
