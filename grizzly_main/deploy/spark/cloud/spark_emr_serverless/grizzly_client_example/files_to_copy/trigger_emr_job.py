@@ -1,7 +1,7 @@
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.trigger_emr_job import (
     trigger_emr_job,
 )
-from spark_emr_serverless_example.main_config import (
+from deploy_examples.spark_emr_serverless_example.main_config import (
     main_config,
 )
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
