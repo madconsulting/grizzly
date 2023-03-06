@@ -12,7 +12,13 @@ from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables i
 base_dir = get_base_dir()
 
 
-def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]):
+def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -> None:
+    """
+    Deploy virtual environment and poetry package wheel files
+    :param main_config: Main configuration dictionary
+    :param base_dir_client_repo: Base directory of client repository using grizzly
+    :return: None
+    """
     python_version = main_config["python_version"]
     os.environ["PYTHON_VERSION"] = python_version
     os.environ["PYTHON_VERSION_SHORT"] = python_version[:python_version.rfind('.')]

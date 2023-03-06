@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
     get_poetry_wheel_file,
@@ -9,8 +9,15 @@ from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_s
 
 def _find_single_pulumi_resource_based_on_type(
     stack_state_dict: Dict[str, Any], resource_type: str, project_stack_name: str = "",
-):
-    chosen_resource_dict = None
+) -> Dict[str, Any]:
+    """
+    Find single Pulumi resource corresponding to a given resource type.
+    :param stack_state_dict: Stack state dictionary
+    :param resource_type: Resource type
+    :param project_stack_name: Project stack name
+    :return: Selected resource dictionary
+    """
+    selected_resource_dict = None
     if "deployment" not in stack_state_dict.keys():
         print(f"Stack state dictionary: {stack_state_dict}")
         raise ValueError(
@@ -18,23 +25,29 @@ def _find_single_pulumi_resource_based_on_type(
         )
     for resource_dict in stack_state_dict["deployment"]["resources"]:
         if resource_dict["type"] == resource_type:
-            if chosen_resource_dict is not None:
+            if selected_resource_dict is not None:
                 raise ValueError(
                     f"Multiple resources of type {resource_type} found in Pulumi stack {project_stack_name}. "
                     "This is not expected."
                 )
             else:
-                chosen_resource_dict = resource_dict
-    if chosen_resource_dict is None:
+                selected_resource_dict = resource_dict
+    if selected_resource_dict is None:
         raise ValueError(
             f"resource of type {resource_type} not found in Pulumi stack {project_stack_name}."
         )
-    return chosen_resource_dict
+    return selected_resource_dict
 
 
 def get_s3_bucket_id_from_pulumi(
     stack_state_dict: Dict[str, Any], project_stack_name: str = "",
-):
+) -> str:
+    """
+    Get s3 bucket id from Pulumi
+    :param stack_state_dict: Stack state dictionary
+    :param project_stack_name: Project stack name
+    :return: s3 bucket id
+    """
     return _find_single_pulumi_resource_based_on_type(
         stack_state_dict=stack_state_dict,
         resource_type="aws:s3/bucket:Bucket",
@@ -44,7 +57,13 @@ def get_s3_bucket_id_from_pulumi(
 
 def get_emr_serverless_app_from_pulumi(
     stack_state_dict: Dict[str, Any], project_stack_name: str = "",
-):
+) -> Tuple[str, str]:
+    """
+    Get EMR Serverless application details from Pulumi
+    :param stack_state_dict: Stack state dictionary
+    :param project_stack_name: Project stack name
+    :return: EMR Serverless app id and name
+    """
     app_dict = _find_single_pulumi_resource_based_on_type(
         stack_state_dict=stack_state_dict,
         resource_type="aws:emrserverless/application:Application",
@@ -55,7 +74,13 @@ def get_emr_serverless_app_from_pulumi(
 
 def get_job_role_arm_from_pulumi(
     stack_state_dict: Dict[str, Any], project_stack_name: str = "",
-):
+) -> str:
+    """
+    Get job role ARN from Pulumi
+    :param stack_state_dict: Stack state dictionary
+    :param project_stack_name: Project stack name
+    :return: job role ARN
+    """
     return _find_single_pulumi_resource_based_on_type(
         stack_state_dict=stack_state_dict,
         resource_type="aws:iam/role:Role",
@@ -71,16 +96,18 @@ def get_spark_emr_serverless_config(
     poetry_dir: str,
     poetry_package_version: str = None,
     **kwargs,
-):
+) -> Dict[str, Any]:
     """
-    :param pulumi_organization:
-    :param pulumi_project:
-    :param pulumi_stack:
-    :param spark_resources_dict:
-    :param poetry_dir:
+    Get Spark EMR Serverless config.
+    Note that **kwargs is used so that we can pass additional redundant fields from the main config.
+    :param pulumi_organization: Pulumi organization
+    :param pulumi_project: Pulumi project
+    :param pulumi_stack: Pulumi stack
+    :param spark_resources_dict: Spark resources dictionary
+    :param poetry_dir: Poetry directory
     :param poetry_package_version: Poetry package version. If a specific version is provided, it will override current
                                    Poetry package (e.g. to run PySpark code using a past deployed version of Poetry)
-    :return:
+    :return: Spark EMR Serverless config
     """
     stack_state_dict = get_pulumi_stack_state(
         pulumi_organization=pulumi_organization,
@@ -98,8 +125,12 @@ def get_spark_emr_serverless_config(
     job_role_arm = get_job_role_arm_from_pulumi(
         stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
     )
-    venv_file_name = get_venv_file(poetry_dir=poetry_dir, package_version=poetry_package_version)
-    wheel_file_name = get_poetry_wheel_file(poetry_dir=poetry_dir, package_version=poetry_package_version)
+    venv_file_name = get_venv_file(
+        poetry_dir=poetry_dir, package_version=poetry_package_version
+    )
+    wheel_file_name = get_poetry_wheel_file(
+        poetry_dir=poetry_dir, package_version=poetry_package_version
+    )
     return {
         "s3_bucket": s3_bucket,
         "emr_serverless": {
