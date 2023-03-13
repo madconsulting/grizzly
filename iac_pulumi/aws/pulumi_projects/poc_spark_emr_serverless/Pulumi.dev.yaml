@@ -1,7 +1,0 @@
-config:
-  poc_spark_emr_serverless:aws_account_id: 561796644494
-  poc_spark_emr_serverless:region: us-east-1
-  poc_spark_emr_serverless:max_vcpu: 4
-  poc_spark_emr_serverless:max_memory_gb: 12
-  poc_spark_emr_serverless:max_disk_gb: 80
-  poc_spark_emr_serverless:idle_timeout_minutes: 5

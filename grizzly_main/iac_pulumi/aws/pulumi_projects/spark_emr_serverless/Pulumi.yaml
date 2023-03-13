@@ -1,0 +1,4 @@
+name: spark_emr_serverless
+description: Spark in AWS using EMR Serverless
+runtime:
+    name: python
