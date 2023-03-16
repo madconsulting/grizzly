@@ -5,10 +5,6 @@ description = "MAD Consulting - Grizzly"
 authors = ["victor-vila <victor.vila.navazo@gmail.com>"]
 packages = [{include = "grizzly_main"}]
 
-# CLI executable from shell
-[tool.poetry.scripts]
-grizzly-deploy-examples = "grizzly_main.deploy.grizzly_deploy_examples_cli:app"
-
 # TODO - In the future we can use multiple dependency groups / extras, if we start adding lots of dependencies
 # which might not be required for all the subprojects within the grizzly_main repo
 [tool.poetry.dependencies]
