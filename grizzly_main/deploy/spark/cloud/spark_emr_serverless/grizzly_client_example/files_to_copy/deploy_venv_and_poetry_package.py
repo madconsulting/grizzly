@@ -1,5 +1,3 @@
-import pathlib
-
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.deploy_venv_and_poetry_package import (
     deploy_venv_and_poetry_package,
 )
@@ -8,7 +6,6 @@ from grizzly_main.path_interations import get_base_dir
 
 base_dir_client_repo = get_base_dir(
     path_end=main_config["repository_name"],
-    path_input=pathlib.Path(__file__).absolute(),
 )
 
 if __name__ in "__main__":

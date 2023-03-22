@@ -2,23 +2,25 @@ import os
 import sys
 import pprint
 import tomlkit
+import pathlib
 from zipfile import ZipFile
-from typing import Tuple
+from typing import Tuple, Union
 from grizzly_main.path_interations import get_base_dir
 
 base_dir = get_base_dir()
 
 
 # ----------- Poetry functions -----------
-def _get_current_poetry_package_name_and_version(poetry_dir: str) -> Tuple[str, str]:
+def _get_current_poetry_package_name_and_version(poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = "") -> Tuple[str, str]:
     """
     Get current Poetry package name and version from pyproject.toml file
     :param poetry_dir: Poetry directory
     :return: Current poetry package name and version
     """
+    pyproject_path = f"{base_dir_client_repo}"
     if poetry_dir != "":
-        poetry_dir += "/"
-    with open(os.path.abspath(f"{poetry_dir}pyproject.toml")) as pyproject:
+        pyproject_path += f"/{poetry_dir}"
+    with open(os.path.abspath(f"{pyproject_path}/pyproject.toml")) as pyproject:
         file_contents = pyproject.read()
     package_name = tomlkit.parse(file_contents)["tool"]["poetry"]["name"]
     package_version = tomlkit.parse(file_contents)["tool"]["poetry"]["version"]
@@ -26,7 +28,7 @@ def _get_current_poetry_package_name_and_version(poetry_dir: str) -> Tuple[str, 
 
 
 def _get_poetry_package_name_and_version(
-    poetry_dir: str = "", package_version: str = None
+    poetry_dir: str = "", base_dir_client_repo: Union[str, pathlib.Path] = "", package_version: str = None
 ) -> Tuple[str, str]:
     """
     Get Poetry package name and version from pyproject.toml file (or overwritten by input)
@@ -38,7 +40,7 @@ def _get_poetry_package_name_and_version(
     (
         package_name,
         current_package_version,
-    ) = _get_current_poetry_package_name_and_version(poetry_dir=poetry_dir)
+    ) = _get_current_poetry_package_name_and_version(poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo)
     if package_version is None:
         package_version = current_package_version
     return package_name, package_version
@@ -47,6 +49,7 @@ def _get_poetry_package_name_and_version(
 # ----------- Wheel file functions -----------
 def get_poetry_wheel_file(
     poetry_dir: str = "",
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
     package_version: str = None,
 ) -> Tuple[str, str]:
@@ -59,7 +62,7 @@ def get_poetry_wheel_file(
     :return: Wheel file name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, package_version=package_version
+        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=package_version
     )
     wheel_file_path = f"{base_dir}/{file_folder}"
     wheel_file_name = f"{package_name}-{package_version}.whl"
@@ -69,6 +72,7 @@ def get_poetry_wheel_file(
 
 def rename_poetry_wheel_file(
     poetry_dir: str = "",
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
 ) -> None:
     """
     Get the poetry wheel file for the current Poetry package name and version
@@ -76,10 +80,10 @@ def rename_poetry_wheel_file(
     :return: None
     """
     package_name, package_version = _get_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, package_version=None
+        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=None
     )
     wheel_file_path, new_wheel_file_name = get_poetry_wheel_file(
-        poetry_dir=poetry_dir, package_version=None
+        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=None
     )
     built_files = os.listdir(path=wheel_file_path)
     current_package_wheel_file = [
@@ -120,6 +124,7 @@ def list_files_inside_wheel(wheel_file_path: str) -> None:
 # ----------- Venv file functions -----------
 def get_venv_file(
     poetry_dir: str = "",
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     package_version: str = None,
 ) -> Tuple[str, str]:
@@ -132,7 +137,7 @@ def get_venv_file(
     :return: Venv file path and name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, package_version=package_version
+        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=package_version
     )
     venv_file_path = f"{base_dir}/{file_folder}"
     venv_file_name = f"{package_name}-{package_version}.tar.gz"

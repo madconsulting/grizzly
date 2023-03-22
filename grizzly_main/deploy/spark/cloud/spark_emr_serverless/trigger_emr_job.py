@@ -16,7 +16,7 @@ def upload_file_to_s3(s3_bucket: str, script_file_path: str) -> None:
     base_dir = get_base_dir()
     s3_client = boto3.client("s3")
     s3_client.upload_file(
-        Filename=f"{base_dir}/deploy/dev/spark/cloud/poc_spark_emr_serverless/{script_file_path}",
+        Filename=f"{base_dir}/deploy/spark/cloud/spark_emr_serverless/{script_file_path}",
         Bucket=s3_bucket,
         Key=f"code_examples/{script_file_path}",
     )
