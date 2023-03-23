@@ -21,7 +21,7 @@ if __name__ in "__main__":
 
     # Method to overwrite job_run_id input above calling the script with --job_run_id flag
     parser = argparse.ArgumentParser()
-    parser.add_argument('--job_run_id', dest='job_run_id', type=str)
+    parser.add_argument("--job_run_id", dest="job_run_id", type=str)
     args, unknown = parser.parse_known_args()
     job_run_id_arg = args.job_run_id
     if job_run_id_arg is not None:
@@ -35,5 +35,5 @@ if __name__ in "__main__":
         spark_emr_serverless_config=spark_emr_serverless_config,
         job_run_id=job_run_id,
         logs_dir="deploy_examples/spark_emr_serverless_example/main/job_logs",
-        base_dir_client_repo=base_dir_client_repo
+        base_dir_client_repo=base_dir_client_repo,
     )

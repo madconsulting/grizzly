@@ -84,7 +84,10 @@ class SparkEmrServerlessCLIExample:
 
     @staticmethod
     def _run_python_script_from_terminal(
-            file_path: str, success_message: str, is_capture_output: bool = False, args: str = None
+        file_path: str,
+        success_message: str,
+        is_capture_output: bool = False,
+        args: str = None,
     ) -> Optional[str]:
         is_execute_command = Prompt.ask(
             prompt="[bold blue]\nWould you like me to execute it in this terminal?",
@@ -99,9 +102,7 @@ class SparkEmrServerlessCLIExample:
             command = ["poetry", "run", "python", file_path]
             if args:
                 command += args.split()
-            res = subprocess.run(
-                ["poetry", "run", "python", file_path], stdout=stdout, stderr=subprocess.PIPE,
-            )
+            res = subprocess.run(command, stdout=stdout, stderr=subprocess.PIPE,)
             if res.returncode != 0:
                 rich_print(
                     f"[bold red] The following error occurred with:"
@@ -118,10 +119,11 @@ class SparkEmrServerlessCLIExample:
         else:
             Prompt.ask(
                 prompt=f"[bold blue]\nPlease execute the script {file_path}\n"
-                       "Afterwards, type enter when you are ready to continue.",
+                "Afterwards, type enter when you are ready to continue.",
             )
         if is_capture_output:
             stdout = res.stdout.decode("utf-8")
+            print(stdout)
             return stdout
 
     @staticmethod
@@ -343,22 +345,24 @@ class SparkEmrServerlessCLIExample:
         )
         dst_dir = os.path.abspath(self.code_dir)
         shutil.copytree(
-                src=source_dir,
-                dst=dst_dir,
-                ignore=shutil.ignore_patterns("README.txt", "__pycache__")
-            )
+            src=source_dir,
+            dst=dst_dir,
+            ignore=shutil.ignore_patterns("README.txt", "__pycache__"),
+        )
 
         print(
             f"The following files have been copied to the main example directory {self.code_dir}:"
         )
-        sd.seedir(dst_dir, style='lines')
+        sd.seedir(dst_dir, style="lines")
 
     def _read_main_config(self) -> Dict[str, Any]:
         """
         Read main configuration
         :return: Main configuration dictionary
         """
-        loader = SourceFileLoader(fullname="main_config_module", path=self.main_config_path)
+        loader = SourceFileLoader(
+            fullname="main_config_module", path=self.main_config_path
+        )
         mod = types.ModuleType(loader.name)
         loader.exec_module(mod)
         return mod.main_config
@@ -456,33 +460,40 @@ class SparkEmrServerlessCLIExample:
             f"The Spark resources used in the EMR job are defined in the main configuration: "
             f"{self.code_dir}/main_config.py\n"
             f"For this minimal example, we have very low computational requirements, so the main config has "
-            f"the following specifications for the Spark workers:\n"
+            f"the following specifications for the Spark workers:"
         )
         main_config_dict = self._read_main_config()
         rich_print(main_config_dict["spark_resources_dict"])
-        print("Although not required for this example, feel free to modify the \"spark_resources_dict\" within the "
-              "main_config before triggering the job.")
+        print(
+            'Although not required for this example, feel free to modify the "spark_resources_dict" within the '
+            "main_config before triggering the job."
+        )
         trigger_output = self._run_python_script_from_terminal(
             file_path=file_path,
-            success_message="EMR Serverless job trigger was successful."
+            success_message="EMR Serverless job trigger was successful. Logs from trigger script:",
+            is_capture_output=True,
         )
         out_partitioned = trigger_output.rpartition(", and id: ")
         if len(out_partitioned) != 3:
-            raise ValueError("The prints in script to trigger EMR job might have been modified. We are relying on those"
-                             "to get the job id. Please, revise that the last print corresponds to: \n"
-                             "', and id: {job_run_id}'")
+            raise ValueError(
+                "The prints in script to trigger EMR job might have been modified. We are relying on those"
+                "to get the job id. Please, revise that the last print corresponds to: \n"
+                "', and id: {job_run_id}'"
+            )
         else:
             job_id = out_partitioned[-1].replace("\n", "")
             if job_id.isspace():
-                raise ValueError(f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}")
+                raise ValueError(
+                    f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}"
+                )
         return job_id
 
     def _monitor_emr_serverless_job(self, job_id: str):
         file_path = f"{self.code_dir}/analyse_emr_job.py"
         args = f"--job_run_id={job_id}"
         print(
-            f"You can monitor the job from the AWS UI using EMR Studio, but we have also provided a script to monitor"
-            f"directly the job using the python AWS SDK: {file_path}\n"
+            f"\nYou can monitor the job from the AWS UI using EMR Studio, but we have also provided a script to "
+            f"monitor directly the job using the python AWS SDK: {file_path}\n"
             f"Note 1: The logs will be stored in the following folder: {self.code_dir}/logs/\n"
             f"Note 2: We are passing the following argument for the job id: {args}"
         )
@@ -490,13 +501,13 @@ class SparkEmrServerlessCLIExample:
         while not is_monitoring_finished:
             self._run_python_script_from_terminal(
                 file_path=file_path,
-                success_message="EMR Serverless monitoring finished.",
-                args=args
+                success_message="\nEMR Serverless monitoring finished.",
+                args=args,
             )
             is_continue_monitoring = Prompt.ask(
                 prompt="[bold blue]\nWould you like to repeat running the monitoring script? "
-                       "(e.g. If the job state was still 'pending' / 'scheduled' / 'running', you could wait a few "
-                       "minutes for the job to be in 'success' state, so that you can retrieve the complete logs)",
+                "(e.g. If the job state was still 'pending' / 'scheduled' / 'running', you could wait a few "
+                "minutes for the job to be in 'success' state, so that you can retrieve the complete logs)",
                 choices=["y", "n"],
                 default="y",
             )
@@ -519,7 +530,6 @@ class SparkEmrServerlessCLIExample:
         )
         job_id = self._trigger_emr_serverless_job()
         self._monitor_emr_serverless_job(job_id=job_id)
-
         # TODO - after monitor, write note that they can run the stop_emr_app to stop the app, or that otherwise it will
         #  stop after X minutes automatically, as defined in the pulumi file (+ that it won't charge anything as no resources
         #  are assigned - double check that in AWS docs)

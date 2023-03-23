@@ -6,9 +6,9 @@ from typing import Dict, Any, Tuple, Union
 
 
 def upload_file_to_s3(
-        s3_bucket: str,
-        script_file_path: str,
-        base_dir_client_repo: Union[str, pathlib.Path] = ""
+    s3_bucket: str,
+    script_file_path: str,
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
 ) -> None:
     """
     Upload script file to S3
