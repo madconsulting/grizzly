@@ -30,15 +30,18 @@ class SparkEmrServerlessCLIExample:
         self,
         main_dir: str = "deploy_examples/spark_emr_serverless_example",
         pulumi_subdir: str = "iac_pulumi",
+        code_subdir: str = "main",
     ):
         """
         Initialise SparkEmrServerlessCLIExample class
         :param main_dir: Main directory
         :param pulumi_subdir: Pulumi subdirectory (within main_dir)
+        :param code_subdir: Code subdirectory (within main_dir) with files to deploy venv and package, PySpark example
+                            code and tools to trigger and monitor the EMR Serverless jobs
         """
         self.main_dir = main_dir
-        self.pulumi_subdir = pulumi_subdir
-        self.pulumi_dir = f"{self.main_dir}/{self.pulumi_subdir}"
+        self.pulumi_dir = f"{self.main_dir}/{pulumi_subdir}"
+        self.code_dir = f"{self.main_dir}/{code_subdir}"
         self.pulumi_organization = None
         self.pulumi_project = None
         self.pulumi_stack = None
@@ -295,7 +298,7 @@ class SparkEmrServerlessCLIExample:
                 grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy
             )
         )
-        dst_dir = os.path.abspath(self.main_dir)
+        dst_dir = os.path.abspath(self.code_dir)
         shutil.copytree(
                 src=source_dir,
                 dst=dst_dir,
@@ -303,7 +306,7 @@ class SparkEmrServerlessCLIExample:
             )
 
         print(
-            f"The following files have been copied to the main example directory {self.main_dir}:"
+            f"The following files have been copied to the main example directory {self.code_dir}:"
         )
         sd.seedir(dst_dir, style='lines')
 
