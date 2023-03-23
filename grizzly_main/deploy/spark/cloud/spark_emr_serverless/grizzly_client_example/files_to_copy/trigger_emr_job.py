@@ -1,7 +1,7 @@
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.trigger_emr_job import (
     trigger_emr_job,
 )
-from deploy_examples.spark_emr_serverless_example.main_config import main_config
+from deploy_examples.spark_emr_serverless_example.main.main_config import main_config
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
     get_spark_emr_serverless_config,
 )
@@ -19,7 +19,7 @@ if __name__ in "__main__":
     exec_timeout_min = 20
     # Note: Multiple examples available in the pyspark_example.py script - modify its __main__ to select one example
     # from all the available ones in "grizzly_main/deploy/spark/pyspark_examples" examples available
-    script_path = "deploy_examples/spark_emr_serverless_example/pyspark_example.py"
+    script_path = "deploy_examples/spark_emr_serverless_example/main/pyspark_example.py"
     # --------------------------------------------------------------------------------------------------------------
 
     # Trigger EMR Serverless job

@@ -12,6 +12,7 @@ import seedir as sd
 from rich.prompt import Prompt
 from rich import print as rich_print
 from importlib.machinery import SourceFileLoader
+from typing import Dict, Any
 
 from grizzly_main.path_interations import cd
 import grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
@@ -41,6 +42,7 @@ class SparkEmrServerlessCLIExample:
         """
         self.pulumi_dir = f"{main_dir}/{pulumi_subdir}"
         self.code_dir = f"{main_dir}/{code_subdir}"
+        self.main_config_path = f"{self.code_dir}/main_config.py"
         self.pulumi_organization = None
         self.pulumi_project = None
         self.pulumi_stack = None
@@ -78,6 +80,36 @@ class SparkEmrServerlessCLIExample:
             Prompt.ask(
                 prompt="[bold blue]\nPlease execute the command above in another terminal. "
                 "Afterwards, type enter when you are ready to continue.",
+            )
+
+    @staticmethod
+    def _run_python_script_from_terminal(file_path: str, success_message: str):
+        is_execute_command = Prompt.ask(
+            prompt="[bold blue]\nWould you like me to execute it in this terminal?",
+            choices=["y", "n"],
+            default="y",
+        )
+        if is_execute_command == "y":
+            res = subprocess.run(
+                ["poetry", "run", "python", file_path], stderr=subprocess.PIPE,
+            )
+            if res.returncode != 0:
+                rich_print(
+                    f"[bold red] The following error occurred with:"
+                    f"\n- returncode {res.returncode}"
+                    f"\n- stderr: {res.stderr.decode('utf-8')}"
+                )
+                print(
+                    "Please start again the example addressing the error above, or contact Mad Consulting if you need "
+                    "further support."
+                )
+                sys.exit()
+            else:
+                print(success_message)
+        else:
+            Prompt.ask(
+                prompt=f"[bold blue]\nPlease execute the script {file_path}\n"
+                       "Afterwards, type enter when you are ready to continue.",
             )
 
     @staticmethod
@@ -309,17 +341,23 @@ class SparkEmrServerlessCLIExample:
         )
         sd.seedir(dst_dir, style='lines')
 
+    def _read_main_config(self) -> Dict[str, Any]:
+        """
+        Read main configuration
+        :return: Main configuration dictionary
+        """
+        loader = SourceFileLoader(fullname="main_config_module", path=self.main_config_path)
+        mod = types.ModuleType(loader.name)
+        loader.exec_module(mod)
+        return mod.main_config
+
     def _update_main_config_with_user_params(self) -> None:
         """
         Update main configuration with user parameters already provided as input in this CLI example or obtained from
         their system.
         :return: None
         """
-        file_path = f"{self.code_dir}/main_config.py"
-        loader = SourceFileLoader(fullname="main_config_module", path=file_path)
-        mod = types.ModuleType(loader.name)
-        loader.exec_module(mod)
-        main_config_dict = mod.main_config
+        main_config_dict = self._read_main_config()
         main_config_dict["pulumi_organization"] = self.pulumi_organization
         main_config_dict["pulumi_project"] = self.pulumi_project
         main_config_dict["pulumi_stack"] = self.pulumi_stack
@@ -344,10 +382,10 @@ class SparkEmrServerlessCLIExample:
             .stdout.decode("utf-8")
             .replace("\n", "")
         )
-        with open(file_path, "w") as fp:
+        with open(self.main_config_path, "w") as fp:
             fp.write("main_config = " + json.dumps(main_config_dict))
         print(
-            f"The main_config dictionary in {file_path} has been updated according to your "
+            f"\nThe main_config dictionary in {self.main_config_path} has been updated according to your "
             f"python and poetry versions and the Pulumi information previously provided in this example.\nFeel free "
             f"to revise the main_config dictionary values.\n"
         )
@@ -362,33 +400,10 @@ class SparkEmrServerlessCLIExample:
             f"Now, we are going to run the python script: {file_path}\n"
             f"This will create the venv and package wheel files and push them to s3."
         )
-        is_execute_command = Prompt.ask(
-            prompt="[bold blue]\nWould you like me to execute it in this terminal?",
-            choices=["y", "n"],
-            default="y",
+        self._run_python_script_from_terminal(
+            file_path=file_path,
+            success_message="venv and wheel files successfully created and pushed to s3"
         )
-        if is_execute_command == "y":
-            res = subprocess.run(
-                ["poetry", "run", "python", file_path], stderr=subprocess.PIPE,
-            )
-            if res.returncode != 0:
-                rich_print(
-                    f"[bold red] The following error occurred with:"
-                    f"\n- returncode {res.returncode}"
-                    f"\n- stderr: {res.stderr.decode('utf-8')}"
-                )
-                print(
-                    "Please start again the example addressing the error above, or contact Mad Consulting if you need "
-                    "further support."
-                )
-                sys.exit()
-            else:
-                print("venv and wheel files successfully created and pushed to s3")
-        else:
-            Prompt.ask(
-                prompt=f"[bold blue]\nPlease execute the script {file_path}\n"
-                "Afterwards, type enter when you are ready to continue.",
-            )
 
     def _run_section_2(self) -> None:
         """
@@ -414,6 +429,79 @@ class SparkEmrServerlessCLIExample:
         self._update_main_config_with_user_params()
         self._deploy_venv_and_poetry_package()
 
+    def _trigger_emr_serverless_job(self) -> None:
+        """
+        Trigger EMR Serverless Job
+        :return:
+        """
+        file_path = f"{self.code_dir}/trigger_emr_job.py"
+        print(
+            f"Now, we are going to run the python script: {file_path}\n\n"
+            f"This will trigger the EMR Serverless job using the minimal PySpark code example from: "
+            f"{self.code_dir}/pyspark_example.py\n"
+            f"Note that multiple examples available in the pyspark_example.py script (which are retrieved from the "
+            f"grizzly_main package). Feel free to modify its __main__ to select a different example\n\n"
+            f"The Spark resources used in the EMR job are defined in the main configuration: "
+            f"{self.code_dir}/main_config.py\n"
+            f"For this minimal example, we have very low computational requirements, so the main config has "
+            f"the following specifications for the Spark workers:"
+        )
+        main_config_dict = self._read_main_config()
+        rich_print(main_config_dict["spark_resources_dict"])
+        print("Although not required for this example, feel free to modify the \"spark_resources_dict\" within the "
+              "main_config before triggering the job.")
+        self._run_python_script_from_terminal(
+            file_path=file_path,
+            success_message="EMR Serverless job trigger was successful."
+        )
+
+    def _monitor_emr_serverless_job(self):
+        file_path = f"{self.code_dir}/trigger_emr_job.py"
+        print(
+            f"You can monitor the job from the AWS UI using EMR Studio"
+            f" we are going to run the python script: {file_path}\n"
+            f"This will trigger the EMR Serverless job using the minimal PySpark code example from: "
+            f"{self.code_dir}/pyspark_example.py\n"
+            f"Note that the logs will be stored in the following folder: {self.code_dir}/logs/"
+        )
+        # TODO - need to get job id.
+        is_monitoring_finished = False
+        while not is_monitoring_finished:
+            self._run_python_script_from_terminal(
+                file_path=file_path,
+                success_message="EMR Serverless monitoring finished."
+            )
+            is_continue_monitoring = Prompt.ask(
+                prompt="[bold blue]\nWould you like to repeat running the monitoring script? "
+                       "(e.g. If the job state was still 'pending' / 'scheduled' / 'running', you could wait a few "
+                       "minutes for the job to be in 'success' state, so that you can retrieve the complete logs)",
+                choices=["y", "n"],
+                default="y",
+            )
+            if is_continue_monitoring == "n":
+                is_monitoring_finished = True
+
+    def _run_section_3(self) -> None:
+        """
+        Run section 3 to trigger and monitor a Spark EMR Serverless Job
+        :return: None
+        """
+        rich_print(
+            "[bold yellow]### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n"
+        )
+        print(
+            "In this section we will:\n"
+            "1. Trigger a Spark EMR Serverless job using a minimal PySpark code example.\n"
+            "2. Monitor the Spark EMR Serverless job.\n"
+            "3. [Optionally] Stop the Spark EMR Serverless application once the job has been completed.\n"
+        )
+        self._trigger_emr_serverless_job()
+        self._monitor_emr_serverless_job()
+
+        # TODO - after monitor, write note that they can run the stop_emr_app to stop the app, or that otherwise it will
+        #  stop after X minutes automatically, as defined in the pulumi file (+ that it won't charge anything as no resources
+        #  are assigned - double check that in AWS docs)
+
     def run_example(self) -> None:
         """
         Run CLI example
@@ -421,6 +509,7 @@ class SparkEmrServerlessCLIExample:
         """
         self._run_section_1()
         self._run_section_2()
+        self._run_section_3()
         # TODO - section 3: Trigger and monitor a minimal PySpark example
         # TODO - optional section to show how to do an update with pulumi
         # TODO - optional section to destroy the existing infrastructure and optionally too the stack history in pulumi
