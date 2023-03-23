@@ -39,9 +39,8 @@ class SparkEmrServerlessCLIExample:
         :param code_subdir: Code subdirectory (within main_dir) with files to deploy venv and package, PySpark example
                             code and tools to trigger and monitor the EMR Serverless jobs
         """
-        self.main_dir = main_dir
-        self.pulumi_dir = f"{self.main_dir}/{pulumi_subdir}"
-        self.code_dir = f"{self.main_dir}/{code_subdir}"
+        self.pulumi_dir = f"{main_dir}/{pulumi_subdir}"
+        self.code_dir = f"{main_dir}/{code_subdir}"
         self.pulumi_organization = None
         self.pulumi_project = None
         self.pulumi_stack = None
@@ -316,7 +315,7 @@ class SparkEmrServerlessCLIExample:
         their system.
         :return: None
         """
-        file_path = f"{self.main_dir}/main_config.py"
+        file_path = f"{self.code_dir}/main_config.py"
         loader = SourceFileLoader(fullname="main_config_module", path=file_path)
         mod = types.ModuleType(loader.name)
         loader.exec_module(mod)
@@ -358,7 +357,7 @@ class SparkEmrServerlessCLIExample:
         Deploy venv and poetry package wheel files
         :return: None
         """
-        file_path = f"{self.main_dir}/deploy_venv_and_poetry_package.py"
+        file_path = f"{self.code_dir}/deploy_venv_and_poetry_package.py"
         print(
             f"Now, we are going to run the python script: {file_path}\n"
             f"This will create the venv and package wheel files and push them to s3."
