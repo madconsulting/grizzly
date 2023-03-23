@@ -1,3 +1,4 @@
+import argparse
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.analyse_emr_job import (
     analyse_job_run,
 )
@@ -13,9 +14,21 @@ spark_emr_serverless_config = get_spark_emr_serverless_config(
 )
 
 if __name__ in "__main__":
+
     # Additional Inputs --------------------------------------------------------------------------------------------
     job_run_id = ""
     # --------------------------------------------------------------------------------------------------------------
+
+    # Method to overwrite job_run_id input above calling the script with --job_run_id flag
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--job_run_id', dest='job_run_id', type=str)
+    args, unknown = parser.parse_known_args()
+    job_run_id_arg = args.job_run_id
+    if job_run_id_arg is not None:
+        job_run_id = job_run_id_arg
+
+    if job_run_id == "" or job_run_id is None:
+        raise ValueError("job_run_id needs to be defined.")
 
     # Analyse EMR Serverless job
     analyse_job_run(
