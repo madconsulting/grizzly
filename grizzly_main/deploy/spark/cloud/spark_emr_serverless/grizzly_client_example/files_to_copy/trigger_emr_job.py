@@ -27,5 +27,6 @@ if __name__ in "__main__":
         spark_emr_serverless_config=spark_emr_serverless_config,
         script_file_path=script_path,
         is_update_script_s3=is_update_script_s3,
+        base_dir_client_repo=base_dir_client_repo,
         execution_timeout_min=exec_timeout_min,
     )

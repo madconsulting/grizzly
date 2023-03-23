@@ -8,6 +8,7 @@ import inspect
 import platform
 import subprocess
 import ruamel.yaml
+import seedir as sd
 from rich.prompt import Prompt
 from rich import print as rich_print
 from importlib.machinery import SourceFileLoader
@@ -294,17 +295,17 @@ class SparkEmrServerlessCLIExample:
                 grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy
             )
         )
-        files_list = os.listdir(source_dir)
-        files_exclude = ["__init__.py", "README.txt", "__pycache__"]
-        files_list = [file for file in files_list if file not in files_exclude]
-        for file in files_list:
-            shutil.copyfile(
-                src=f"{source_dir}/{file}",
-                dst=f"{os.path.abspath(self.main_dir)}/{file}",
+        dst_dir = os.path.abspath(self.main_dir)
+        shutil.copytree(
+                src=source_dir,
+                dst=dst_dir,
+                ignore=shutil.ignore_patterns("README.txt", "__pycache__")
             )
+
         print(
-            f"The following files have been copied to the main example directory {self.main_dir}: {files_list}"
+            f"The following files have been copied to the main example directory {self.main_dir}:"
         )
+        sd.seedir(dst_dir, style='lines')
 
     def _update_main_config_with_user_params(self) -> None:
         """

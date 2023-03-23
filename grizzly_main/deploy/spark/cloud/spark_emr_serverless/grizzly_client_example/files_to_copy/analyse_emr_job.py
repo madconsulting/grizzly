@@ -19,5 +19,7 @@ if __name__ in "__main__":
 
     # Analyse EMR Serverless job
     analyse_job_run(
-        spark_emr_serverless_config=spark_emr_serverless_config, job_run_id=job_run_id
+        spark_emr_serverless_config=spark_emr_serverless_config,
+        job_run_id=job_run_id,
+        logs_dir="deploy_examples/spark_emr_serverless_example/job_logs/"
     )

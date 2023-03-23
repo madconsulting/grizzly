@@ -22,19 +22,23 @@ if __name__ == "__main__":
 
     # Inputs
 
-    # - Pyspark example 1
-    example_name = "pyspark_example_1"
-    example_kwargs = {}
+    # # - Pyspark example 1
+    # example_name = "pyspark_example_1"
+    # example_kwargs = {}
+
+    # # - Pyspark example 2
+    # example_name = "pyspark_example_2"
+    # example_kwargs = {}
 
     # - Pyspark example 3
     # Note: By default we are limiting for a single csv file to limit computational costs of the example.
-    # example_name = "pyspark_example_3"
-    # example_kwargs = {
-    #     "year": 2022,
-    #     "is_specific_csv_file_only": True,
-    #     # CSV file name from https://s3.console.aws.amazon.com/s3/buckets/noaa-gsod-pds
-    #     "csv_file_name": "11213099999.csv",
-    # }
+    example_name = "pyspark_example_3"
+    example_kwargs = {
+        "year": 2022,
+        "is_specific_csv_file_only": True,
+        # CSV file name from https://s3.console.aws.amazon.com/s3/buckets/noaa-gsod-pds
+        "csv_file_name": "11213099999.csv",
+    }
 
     # Run pyspark example
     pyspark_example(example_name=example_name, example_kwargs=example_kwargs)

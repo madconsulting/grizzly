@@ -2,6 +2,3 @@ __pycache__
 .pytest*
 venv
 .pyc
-
-grizzly_main/deploy/spark/cloud/spark_emr_serverless/job_logs/*
-!grizzly_main/deploy/spark/cloud/spark_emr_serverless/job_logs/__init__.py
