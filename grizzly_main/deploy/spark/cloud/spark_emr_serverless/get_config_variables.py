@@ -107,6 +107,7 @@ def get_spark_emr_serverless_config(
     :param pulumi_stack: Pulumi stack
     :param spark_resources_dict: Spark resources dictionary
     :param poetry_dir: Poetry directory
+    :param base_dir_client_repo: Base directory of client repository
     :param poetry_package_version: Poetry package version. If a specific version is provided, it will override current
                                    Poetry package (e.g. to run PySpark code using a past deployed version of Poetry)
     :return: Spark EMR Serverless config
@@ -128,10 +129,14 @@ def get_spark_emr_serverless_config(
         stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
     )
     _, venv_file_name = get_venv_file(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=poetry_package_version
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=poetry_package_version,
     )
     _, wheel_file_name = get_poetry_wheel_file(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=poetry_package_version
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=poetry_package_version,
     )
     return {
         "s3_bucket": s3_bucket,

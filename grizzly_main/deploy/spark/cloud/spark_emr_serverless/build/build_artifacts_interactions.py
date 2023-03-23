@@ -11,10 +11,13 @@ base_dir = get_base_dir()
 
 
 # ----------- Poetry functions -----------
-def _get_current_poetry_package_name_and_version(poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = "") -> Tuple[str, str]:
+def _get_current_poetry_package_name_and_version(
+        poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = ""
+) -> Tuple[str, str]:
     """
     Get current Poetry package name and version from pyproject.toml file
     :param poetry_dir: Poetry directory
+    :param base_dir_client_repo: Base directory of client repository
     :return: Current poetry package name and version
     """
     pyproject_path = f"{base_dir_client_repo}"
@@ -56,6 +59,7 @@ def get_poetry_wheel_file(
     """
     Get wheel file name
     :param poetry_dir: Poetry directory
+    :param base_dir_client_repo: Base directory of client repository
     :param file_folder: Wheel file folder
     :param package_version: Poetry package version. By default (None) using the current package version in
                             the pyproject.toml file
@@ -77,6 +81,7 @@ def rename_poetry_wheel_file(
     """
     Get the poetry wheel file for the current Poetry package name and version
     :param poetry_dir: Poetry directory
+    :param base_dir_client_repo: Base directory of client repository
     :return: None
     """
     package_name, package_version = _get_poetry_package_name_and_version(
@@ -131,6 +136,7 @@ def get_venv_file(
     """
     Get venv file name
     :param poetry_dir: Poetry directory
+    :param base_dir_client_repo: Base directory of client repository
     :param file_folder: Venv file folder
     :param package_version: Poetry package version. By default (None) using the current package version in
                             the pyproject.toml file
@@ -147,16 +153,18 @@ def get_venv_file(
 
 def add_package_version_to_venv(
     poetry_dir: str = "",
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_name: str = "pyspark.tar.gz",
 ) -> None:
     """
     Add current Poetry package version to venv file
     :param poetry_dir: Poetry directory
-    :param file_folder: Venv file folder
+    :param base_dir_client_repo: Base directory of client repository
     :param file_name: Venv original file name
     :return: None
     """
-    venv_file_path, new_venv_file_name = get_venv_file(poetry_dir=poetry_dir, package_version=None)
+    venv_file_path, new_venv_file_name = get_venv_file(poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo,
+                                                       package_version=None)
     os.rename(
         f"{venv_file_path}/{file_name}",
         f"{venv_file_path}/{new_venv_file_name}",
