@@ -18,8 +18,8 @@ if __name__ in "__main__":
     is_update_script_s3 = True
     exec_timeout_min = 20
     # Note: Multiple examples available in the pyspark_example.py script - modify its __main__ to select one example
-    # from all the available ones in "deploy/spark/pyspark_examples" examples available
-    script_path = "pyspark_example.py"
+    # from all the available ones in "grizzly_main/deploy/spark/pyspark_examples" examples available
+    script_path = "deploy_examples/spark_emr_serverless_example/pyspark_example.py"
     # --------------------------------------------------------------------------------------------------------------
 
     # Trigger EMR Serverless job

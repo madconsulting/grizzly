@@ -19,7 +19,7 @@ DOCKER_BUILDKIT=1 docker build \
   --build-arg PYTHON_VERSION_SHORT="$PYTHON_VERSION_SHORT" \
   --build-arg POETRY_VERSION="$POETRY_VERSION" \
   --build-arg GRIZZLY_BASE_DIR="$GRIZZLY_BASE_DIR" \
-  --build-arg CLIENT_REPO_BASE_DIR="$CLIENT_REPO_BASE_DIR"
+  --build-arg CLIENT_REPO_BASE_DIR="$CLIENT_REPO_BASE_DIR" \
   -f "$GRIZZLY_BASE_DIR/deploy/spark/cloud/spark_emr_serverless/build/Dockerfile" \
   -o "$GRIZZLY_BASE_DIR" . # current directory (.) as build context + export output files to $GRIZZLY_BASE_DIR
 # TODO - ensure that docker build stops and raises error in -q mode, for now we have disabled quiet mode, to prevent that
