@@ -478,7 +478,7 @@ class SparkEmrServerlessCLIExample:
         return job_id
 
     def _monitor_emr_serverless_job(self, job_id: str):
-        file_path = f"{self.code_dir}/trigger_emr_job.py"
+        file_path = f"{self.code_dir}/analyse_emr_job.py"
         args = f"--job_run_id={job_id}"
         print(
             f"You can monitor the job from the AWS UI using EMR Studio, but we have also provided a script to monitor"
