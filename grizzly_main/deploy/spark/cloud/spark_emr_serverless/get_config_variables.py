@@ -132,11 +132,13 @@ def get_spark_emr_serverless_config(
         poetry_dir=poetry_dir,
         base_dir_client_repo=base_dir_client_repo,
         package_version=poetry_package_version,
+        is_print=False,
     )
     _, wheel_file_name = get_poetry_wheel_file(
         poetry_dir=poetry_dir,
         base_dir_client_repo=base_dir_client_repo,
         package_version=poetry_package_version,
+        is_print=False,
     )
     return {
         "s3_bucket": s3_bucket,

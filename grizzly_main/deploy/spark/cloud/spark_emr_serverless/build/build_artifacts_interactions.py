@@ -55,6 +55,7 @@ def get_poetry_wheel_file(
     base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
     package_version: str = None,
+    is_print: bool = True,
 ) -> Tuple[str, str]:
     """
     Get wheel file name
@@ -63,6 +64,7 @@ def get_poetry_wheel_file(
     :param file_folder: Wheel file folder
     :param package_version: Poetry package version. By default (None) using the current package version in
                             the pyproject.toml file
+    :param is_print: True if printing the wheel file path and name to stdout
     :return: Wheel file name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
@@ -70,7 +72,8 @@ def get_poetry_wheel_file(
     )
     wheel_file_path = f"{base_dir}/{file_folder}"
     wheel_file_name = f"{package_name}-{package_version}.whl"
-    print(f"{wheel_file_path}/{wheel_file_name}")
+    if is_print:
+        print(f"{wheel_file_path}/{wheel_file_name}")
     return wheel_file_path, wheel_file_name
 
 
@@ -132,6 +135,7 @@ def get_venv_file(
     base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     package_version: str = None,
+    is_print: bool = True,
 ) -> Tuple[str, str]:
     """
     Get venv file name
@@ -140,6 +144,7 @@ def get_venv_file(
     :param file_folder: Venv file folder
     :param package_version: Poetry package version. By default (None) using the current package version in
                             the pyproject.toml file
+    :param is_print: True if printing the venv file path and name to stdout
     :return: Venv file path and name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
@@ -147,7 +152,8 @@ def get_venv_file(
     )
     venv_file_path = f"{base_dir}/{file_folder}"
     venv_file_name = f"{package_name}-{package_version}.tar.gz"
-    print(f"{venv_file_path}/{venv_file_name}")
+    if is_print:
+        print(f"{venv_file_path}/{venv_file_name}")
     return venv_file_path, venv_file_name
 
 

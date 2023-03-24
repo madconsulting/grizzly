@@ -321,7 +321,7 @@ class SparkEmrServerlessCLIExample:
         Run Section 1 to deploy the infrastructure via Pulumi
         :return: None
         """
-        rich_print("[bold yellow]### SECTION 1 - Deploy the infrastructure ###\n")
+        rich_print("[bold yellow]\n### SECTION 1 - Deploy the infrastructure ###\n")
         print(
             "In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n"
         )
@@ -430,7 +430,7 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         rich_print(
-            "[bold yellow]### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n"
+            "[bold yellow]\n### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n"
         )
         print(
             "For the EMR Serverless app, a custom Poetry virtual environment and package are used to:\n"
@@ -458,7 +458,7 @@ class SparkEmrServerlessCLIExample:
             f"Now, we are going to run the python script: {file_path}\n\n"
             f"This will trigger the EMR Serverless job using the minimal PySpark code example from: "
             f"{self.code_dir}/pyspark_example.py\n"
-            f"Note that multiple examples available in the pyspark_example.py script (which are retrieved from the "
+            f"Note that multiple examples are available in the pyspark_example.py script (which are retrieved from the "
             f"grizzly_main package). Feel free to modify its __main__ to select a different example\n\n"
             f"The Spark resources used in the EMR job are defined in the main configuration: "
             f"{self.code_dir}/main_config.py\n"
@@ -523,7 +523,7 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         rich_print(
-            "[bold yellow]### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n"
+            "[bold yellow]\n### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n"
         )
         print(
             "In this section we will:\n"
@@ -538,10 +538,10 @@ class SparkEmrServerlessCLIExample:
         else:
             idle_timeout_minutes_equals = f" = {self.idle_timeout_minutes} min"
         print(
-            "Note that the EMR Serverless application will stop automatically after a certain amount of time being "
+            "\nNote that the EMR Serverless application will stop automatically after a certain amount of time being "
             f"idle (as configured in the parameter idle_timeout_minutes{idle_timeout_minutes_equals}, in the Pulumi "
             f"stack config file: {self.stack_config_file}).\n"
-            "Also, note that there won't be any charges for the time where the application is idle without any "
+            "Also, note that there won't be any charges for the time when the application is idle without any "
             "running jobs. But if for any other reason you wanted to manually stop the application, you can do that by "
             f"executing the following script: {self.code_dir}/stop_emr_app.py"
         )
