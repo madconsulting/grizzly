@@ -46,6 +46,8 @@ class SparkEmrServerlessCLIExample:
         self.pulumi_organization = None
         self.pulumi_project = None
         self.pulumi_stack = None
+        self.stack_config_file = None
+        self.idle_timeout_minutes = None
 
     def _ask_user_confirmation_to_execute_pulumi_command(
         self, pulumi_command: str
@@ -237,9 +239,9 @@ class SparkEmrServerlessCLIExample:
         Update the AWS account id in the Pulumi stack configuration (Pulumi.<stack>.yaml)
         :return: None
         """
-        stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
+        self.stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
         print(
-            f"\nIn the stack configuration file ({stack_config_file}), there is the aws_account_id pending to be "
+            f"\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be "
             f"filled. This account requires programmatic access with rights to deploy and manage resources handled "
             f"through Pulumi, as described in: "
             f"https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account"
@@ -247,13 +249,14 @@ class SparkEmrServerlessCLIExample:
         aws_account_id = Prompt.ask(
             prompt="[bold blue]\nPlease type your AWS account id",
         )
-        data = ruamel.yaml.YAML().load(open(stack_config_file, "r"))
+        data = ruamel.yaml.YAML().load(open(self.stack_config_file, "r"))
         data["config"]["aws_account_id"] = aws_account_id
+        self.idle_timeout_minutes = data["config"]["idle_timeout_minutes"]
         yaml = ruamel.yaml.YAML()
-        with open(stack_config_file, "w") as fp:
+        with open(self.stack_config_file, "w") as fp:
             yaml.dump(data, fp)
         print(
-            f"\nThe AWS account has been updated in {stack_config_file}. The file content is printed below:\n"
+            f"\nThe AWS account has been updated in {self.stack_config_file}. The file content is printed below:\n"
         )
         print(yaml.dump(data, sys.stdout))
         print(
@@ -530,9 +533,18 @@ class SparkEmrServerlessCLIExample:
         )
         job_id = self._trigger_emr_serverless_job()
         self._monitor_emr_serverless_job(job_id=job_id)
-        # TODO - after monitor, write note that they can run the stop_emr_app to stop the app, or that otherwise it will
-        #  stop after X minutes automatically, as defined in the pulumi file (+ that it won't charge anything as no resources
-        #  are assigned - double check that in AWS docs)
+        if self.idle_timeout_minutes is None:
+            idle_timeout_minutes_equals = ""
+        else:
+            idle_timeout_minutes_equals = f" = {self.idle_timeout_minutes} min"
+        print(
+            "Note that the EMR Serverless application will stop automatically after a certain amount of time being "
+            f"idle (as configured in the parameter idle_timeout_minutes{idle_timeout_minutes_equals}, in the Pulumi "
+            f"stack config file: {self.stack_config_file}).\n"
+            "Also, note that there won't be any charges for the time where the application is idle without any "
+            "running jobs. But if for any other reason you wanted to manually stop the application, you can do that by "
+            f"executing the following script: {self.code_dir}/stop_emr_app.py"
+        )
 
     def run_example(self) -> None:
         """
@@ -542,7 +554,6 @@ class SparkEmrServerlessCLIExample:
         self._run_section_1()
         self._run_section_2()
         self._run_section_3()
-        # TODO - section 3: Trigger and monitor a minimal PySpark example
         # TODO - optional section to show how to do an update with pulumi
         # TODO - optional section to destroy the existing infrastructure and optionally too the stack history in pulumi
         # TODO - optional section on how to create and run different environments
