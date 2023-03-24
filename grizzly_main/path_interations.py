@@ -19,7 +19,7 @@ def get_base_dir(
     base_dir = pathlib.Path(
         pathlib.Path(path_input).resolve(strict=True)
     )
-    if path_end not in base_dir:
+    if path_end not in str(base_dir):
         raise ValueError(f"path_end={path_end} not present in the input path.")
     is_found = False
     while not is_found:
