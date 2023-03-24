@@ -13,3 +13,4 @@ def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -> None:
     _ = emr_client.stop_application(
         applicationId=spark_emr_serverless_config["emr_serverless"]["app_id"]
     )
+    print("EMR Serverless application stopped.")

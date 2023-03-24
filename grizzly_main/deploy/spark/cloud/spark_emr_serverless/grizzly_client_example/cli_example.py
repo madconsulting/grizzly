@@ -546,6 +546,48 @@ class SparkEmrServerlessCLIExample:
             f"executing the following script: {self.code_dir}/stop_emr_app.py"
         )
 
+    @staticmethod
+    def _run_optional_section() -> None:
+        """
+        Run optional section to trigger and monitor a Spark EMR Serverless Job
+        :return: None
+        """
+        rich_print(
+            "[bold yellow]\n### OPTIONAL SECTIONS  ###\n"
+        )
+        print(
+            "Finally, we provide a list of optional sections, in case you would like further guidelines on some of "
+            "these topics:\n"
+            "A. Update the infrastructure resources.\n"
+            "B. Destroy the infrastructure resources.\n"
+            "C. Deploy a second environment and trigger an EMR Serverless job for that environment.\n"
+        )
+        # TODO - considering explaining the procedure for each option, instead of executing the entire process in
+        #  the terminal, otherwise it might be too much for the user. Things to explain
+        #  For A - just change a parameter (e.g.) Spark worker max parameters and do 'pulumi refresh' + 'pulumi up'
+        #  For B - explain 'pulumi destroy' + optionally deleting Pulumi stack history too.
+        #  For C - create new stack and deploy it + then to trigger job in new env we'll just need to update the
+        #  pulumi_stack in the main_config before triggering.
+        choices = ["A", "B", "C", "exit"]
+        default = "exit"
+        option = Prompt.ask(
+            prompt="[bold blue]\n Please select an optional section or type \"exit\" to finish the example:",
+            choices=choices,
+            default=default,
+        )
+        # TODO - remove this after adding explanations
+        if option in ["A", "B", "C"]:
+            print(f"The tutorial for option {option} is not available yet. "
+                  f"Please contact Mad Consulting if you would like to use this feature, so that it is released asap")
+        is_exit = False
+        while not is_exit:
+            is_exit = Prompt.ask(
+                prompt="[bold blue]\n If you would like to go through another section, please type the corresponding "
+                       "option or type \"exit\" to finish the example:",
+                choices=choices,
+                default=default,
+            )
+
     def run_example(self) -> None:
         """
         Run CLI example
@@ -554,9 +596,7 @@ class SparkEmrServerlessCLIExample:
         self._run_section_1()
         self._run_section_2()
         self._run_section_3()
-        # TODO - optional section to show how to do an update with pulumi
-        # TODO - optional section to destroy the existing infrastructure and optionally too the stack history in pulumi
-        # TODO - optional section on how to create and run different environments
+        self._run_optional_section()
 
 
 # TODO - main below for temp testing
