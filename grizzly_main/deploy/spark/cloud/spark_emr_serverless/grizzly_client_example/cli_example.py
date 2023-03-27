@@ -546,15 +546,17 @@ class SparkEmrServerlessCLIExample:
             f"executing the following script: {self.code_dir}/stop_emr_app.py"
         )
 
-    def _common_steps_guidelines(self, start_num: int, is_select_stack: bool = True) -> str:
+    def _common_steps_guidelines(
+        self, start_num: int, is_select_stack: bool = True
+    ) -> str:
         common_steps_list = [
-            f"Open a new terminal and go to the Pulumi project directory: \"cd {self.pulumi_dir}\"\n",
-            f"If the poetry environment is not activated, execute \"poetry shell\"\n",
+            f'Open a new terminal and go to the Pulumi project directory: "cd {self.pulumi_dir}"\n',
+            f'If the poetry environment is not activated, execute "poetry shell"\n',
         ]
         if is_select_stack:
             common_steps_list.append(
                 f"If the Pulumi project has multiple stacks, select the desired stack with the following command: "
-                f"\"pulumi stack select {self.pulumi_organization}/<pulumi-stack>\"\n"
+                f'"pulumi stack select {self.pulumi_organization}/<pulumi-stack>"\n'
                 f"For example, if we wanted select the initial stack created in this example, we would replace"
                 f"<pulumi-stack> by {self.pulumi_stack} in the command above."
             )
@@ -569,13 +571,14 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         common_steps = self._common_steps_guidelines(start_num=2)
-        print("In order to update the infrastructure via Pulumi, you should follow the steps below:"
-              f"1. Update the Pulumi stack configuration parameters in: {self.stack_config_file}\n"
-              f"{common_steps}"
-              f"5. Execute \"pulumi refresh\" to adopt any potential changes in the cloud provider side to the current"
-              f" Pulumi stack.\n"
-              f"6. Execute \"pulumi up\" to deploy the infrastructure resources updates.\n"
-              )
+        print(
+            "In order to update the infrastructure via Pulumi, you should follow the steps below:"
+            f"1. Update the Pulumi stack configuration parameters in: {self.stack_config_file}\n"
+            f"{common_steps}"
+            f'5. Execute "pulumi refresh" to adopt any potential changes in the cloud provider side to the current'
+            f" Pulumi stack.\n"
+            f'6. Execute "pulumi up" to deploy the infrastructure resources updates.\n'
+        )
 
     def _guidelines_option_b(self) -> None:
         """
@@ -583,19 +586,20 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         common_steps = self._common_steps_guidelines(start_num=1, is_select_stack=False)
-        print("These are the recommended steps to deploy a new environment (in the Pulumi commands we have "
-              "abstracted the stack name to <stack-name>):"
-              f"{common_steps}"
-              f"3. Create a new environment, copying the config from the previous environment: "
-              f"\"pulumi stack init {self.pulumi_organization}/<pulumi-stack> --copy-config-from "
-              f"{self.pulumi_organization}/{self.pulumi_stack}\"\n"
-              f"4. Feel free to  update the parameters in the copied config file: "
-              f"{self.pulumi_dir}/Pulumi.<pulumi-stack>.yaml\n"
-              f"5. Execute \"pulumi up\" to deploy the infrastructure resources for the new stack\n"
-              f"6. To trigger and monitor a PySpark job on this new environment, you just need to update the "
-              f"pulumi_stack value in the main configuration dictionary (in {self.code_dir}/main_config.py). "
-              f"Afterwards, you can follow the same procedure as in Section 3 in this example."
-              )
+        print(
+            "These are the recommended steps to deploy a new environment (in the Pulumi commands we have "
+            "abstracted the stack name to <stack-name>):"
+            f"{common_steps}"
+            f"3. Create a new environment, copying the config from the previous environment: "
+            f'"pulumi stack init {self.pulumi_organization}/<pulumi-stack> --copy-config-from '
+            f'{self.pulumi_organization}/{self.pulumi_stack}"\n'
+            f"4. Feel free to  update the parameters in the copied config file: "
+            f"{self.pulumi_dir}/Pulumi.<pulumi-stack>.yaml\n"
+            f'5. Execute "pulumi up" to deploy the infrastructure resources for the new stack\n'
+            f"6. To trigger and monitor a PySpark job on this new environment, you just need to update the "
+            f"pulumi_stack value in the main configuration dictionary (in {self.code_dir}/main_config.py). "
+            f"Afterwards, you can follow the same procedure as in Section 3 in this example."
+        )
 
     def _guidelines_option_c(self) -> None:
         """
@@ -603,13 +607,14 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         common_steps = self._common_steps_guidelines(start_num=1)
-        print("These are the recommended steps to destroy the infrastructure. Note that this will delete "
-              "permanently all the stack resources, so it is irreversible and should be used with great care.\n"
-              f"{common_steps}"
-              f"4. Execute \"pulumi destroy\" to delete all the existing resources in the stack."
-              f"5. The stack itself has not deleted at this point. If you would like to delete the stack and its "
-              f"config, execute \"pulumi stack rm {self.pulumi_organization}/<pulumi-stack>\"\n"
-              )
+        print(
+            "These are the recommended steps to destroy the infrastructure. Note that this will delete "
+            "permanently all the stack resources, so it is irreversible and should be used with great care.\n"
+            f"{common_steps}"
+            f'4. Execute "pulumi destroy" to delete all the existing resources in the stack.'
+            f"5. The stack itself has not deleted at this point. If you would like to delete the stack and its "
+            f'config, execute "pulumi stack rm {self.pulumi_organization}/<pulumi-stack>"\n'
+        )
 
     @staticmethod
     def _run_optional_section() -> None:
@@ -617,9 +622,7 @@ class SparkEmrServerlessCLIExample:
         Run optional section to trigger and monitor a Spark EMR Serverless Job
         :return: None
         """
-        rich_print(
-            "[bold yellow]\n### OPTIONAL SECTIONS  ###\n"
-        )
+        rich_print("[bold yellow]\n### OPTIONAL SECTIONS  ###\n")
         print(
             "Finally, we provide a list of optional sections, in case you would like further guidelines on some of "
             "these topics:\n"
@@ -635,7 +638,7 @@ class SparkEmrServerlessCLIExample:
         }
         default = "exit"
         option = Prompt.ask(
-            prompt="[bold blue]\n Please select an optional section or type \"exit\" to finish the example:",
+            prompt='[bold blue]\n Please select an optional section or type "exit" to finish the example:',
             choices=choices,
             default=default,
         )
@@ -645,7 +648,7 @@ class SparkEmrServerlessCLIExample:
                 choices_to_func_dict[option]()
             option = Prompt.ask(
                 prompt="[bold blue]\n If you would like to go through another section, please type the corresponding "
-                       "option or type \"exit\" to finish the example:",
+                'option or type "exit" to finish the example:',
                 choices=choices,
                 default=default,
             )
@@ -659,6 +662,10 @@ class SparkEmrServerlessCLIExample:
         self._run_section_2()
         self._run_section_3()
         self._run_optional_section()
+        print(
+            "\nCongratulations! You have successfully completed this example on how to deploy and run PySpark code "
+            "on EMR Serverless."
+        )
 
 
 # TODO - main below for temp testing

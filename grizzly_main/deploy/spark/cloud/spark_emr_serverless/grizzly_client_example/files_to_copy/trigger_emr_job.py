@@ -6,7 +6,9 @@ from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables i
 )
 
 from deploy_examples.spark_emr_serverless_example.main.main_config import main_config
-from deploy_examples.spark_emr_serverless_example.main.get_base_dir import get_client_base_dir
+from deploy_examples.spark_emr_serverless_example.main.get_base_dir import (
+    get_client_base_dir,
+)
 
 base_dir_client_repo = get_client_base_dir()
 spark_emr_serverless_config = get_spark_emr_serverless_config(

@@ -16,7 +16,4 @@ def get_client_base_dir():
     except NameError:
         # Current working directory path
         path_input = pathlib.Path().absolute()
-    return get_base_dir(
-        path_end=main_config["repository_name"],
-        path_input=path_input
-    )
+    return get_base_dir(path_end=main_config["repository_name"], path_input=path_input)
