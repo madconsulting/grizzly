@@ -1,5 +1,3 @@
-import sys
-import pulumi
 from typing import Dict, Any
 
 from grizzly_main.deploy.spark.utils.spark_context import get_spark_context
@@ -8,34 +6,13 @@ from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import (
 )
 
 
-def check_python_version() -> None:
-    """
-    STDOUT to check that the python version corresponds to the one installed in the custom venv used for the job
-    :return: None
-    """
-    print(sys.executable)
-    print(sys.version)
-
-
-def check_imported_package() -> None:
-    """
-    STDOUT to check that an imported package from Poetry (e.g. Pulumi) is in the spark venv
-    :return: None
-    """
-    pulumi.info(
-        msg="Verification that a package from Poetry (e.g. Pulumi) is in the spark venv"
-    )
-
-
 def pyspark_example(example_name: str, example_kwargs: Dict[str, Any]) -> None:
     """
-    Spark example nº 1 - Create and show DataFrame
+    Run a PySpark example available in the following folder: 'grizzly_main.deploy.spark.pyspark_examples'
     :param example_name: Pyspark example name
     :param example_kwargs: Pyspark example kwargs
     :return: None
     """
-    check_python_version()
-    check_imported_package()
     spark = get_spark_context(app_name=example_name, run_mode="emr_serverless")
     pyspark_example_dict[example_name](spark=spark, **example_kwargs)
     spark.stop()
@@ -47,6 +24,10 @@ if __name__ == "__main__":
 
     # # - Pyspark example 1
     # example_name = "pyspark_example_1"
+    # example_kwargs = {}
+
+    # # - Pyspark example 2
+    # example_name = "pyspark_example_2"
     # example_kwargs = {}
 
     # - Pyspark example 3

@@ -1,22 +1,25 @@
-import botocore
 import boto3
+import pathlib
+import botocore
 from datetime import datetime
-from typing import Dict, Any, Tuple
-
-from grizzly_main.path_interations import get_base_dir
+from typing import Dict, Any, Tuple, Union
 
 
-def upload_file_to_s3(s3_bucket: str, script_file_path: str) -> None:
+def upload_file_to_s3(
+    s3_bucket: str,
+    script_file_path: str,
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
+) -> None:
     """
     Upload script file to S3
     :param s3_bucket: S3 bucket id
     :param script_file_path: File path of the script to be run
+    :param base_dir_client_repo: Base directory of client repository
     :return: None
     """
-    base_dir = get_base_dir()
     s3_client = boto3.client("s3")
     s3_client.upload_file(
-        Filename=f"{base_dir}/deploy/dev/spark/cloud/poc_spark_emr_serverless/{script_file_path}",
+        Filename=f"{base_dir_client_repo}/{script_file_path}",
         Bucket=s3_bucket,
         Key=f"code_examples/{script_file_path}",
     )
@@ -96,6 +99,7 @@ def trigger_emr_job(
     spark_emr_serverless_config: Dict[str, Any],
     script_file_path: str,
     is_update_script_s3: bool,
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
     execution_timeout_min: int = None,
 ) -> str:
     """
@@ -103,6 +107,7 @@ def trigger_emr_job(
     :param spark_emr_serverless_config: Spark EMR Serverless config
     :param script_file_path: File path of the script to be run
     :param is_update_script_s3: True if updating the script in s3, False otherwise
+    :param base_dir_client_repo: Base directory of client repository
     :param execution_timeout_min: Execution timeout in minutes
     :return: Job run ID
     """
@@ -110,6 +115,7 @@ def trigger_emr_job(
         upload_file_to_s3(
             s3_bucket=spark_emr_serverless_config["s3_bucket"],
             script_file_path=script_file_path,
+            base_dir_client_repo=base_dir_client_repo,
         )
     emr_app_id = spark_emr_serverless_config["emr_serverless"]["app_id"]
     emr_client = boto3.client("emr-serverless")

@@ -2,10 +2,9 @@ import os
 import gzip
 import boto3
 import shutil
+import pathlib
 import botocore
-from typing import Dict, Any
-
-from grizzly_main.path_interations import get_base_dir
+from typing import Dict, Any, Union
 
 
 def download_logs_from_s3(
@@ -13,7 +12,8 @@ def download_logs_from_s3(
     emr_app_id: str,
     job_run_id: str,
     job_name: str,
-    local_dir: str = "deploy/dev/spark/cloud/spark_emr_serverless/job_logs",
+    logs_dir: str,
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
 ) -> None:
     """
     Download Spark logs from s3
@@ -21,14 +21,15 @@ def download_logs_from_s3(
     :param emr_app_id: EMR Serverless application ID
     :param job_run_id: Job run id
     :param job_name: Job name
-    :param local_dir: Relative directory path in the local file system where to store the downloaded logs
+    :param logs_dir: Relative directory path in the client repository where to store the downloaded logs
+    :param base_dir_client_repo: Base directory of client repository
     :return: None
     """
     s3 = boto3.resource("s3")
     bucket = s3.Bucket(name=s3_bucket)
     common_log_path = f"{job_name}/applications/{emr_app_id}/jobs/{job_run_id}/"
     s3_folder = f"logs/{common_log_path}"
-    target_base_dir = f"{get_base_dir()}/{local_dir}/{common_log_path}"
+    target_base_dir = f"{base_dir_client_repo}/{logs_dir}/{common_log_path}"
     print(f"Job logs stored in the following folder: {target_base_dir}")
     for obj in bucket.objects.filter(Prefix=s3_folder):
         target = os.path.join(target_base_dir, os.path.relpath(obj.key, s3_folder))
@@ -54,7 +55,10 @@ def download_logs_from_s3(
 
 
 def analyse_job_run(
-    spark_emr_serverless_config: Dict[str, Any], job_run_id: str
+    spark_emr_serverless_config: Dict[str, Any],
+    job_run_id: str,
+    logs_dir: str,
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
 ) -> None:
     """
     Get information regarding a job ID
@@ -67,6 +71,8 @@ def analyse_job_run(
 
     :param spark_emr_serverless_config: Spark EMR Serverless config
     :param job_run_id: EMR Serverless job run ID
+    :param logs_dir: Relative directory path in the client repository where to store the downloaded logs
+    :param base_dir_client_repo: Base directory of client repository
     :return: None
     """
     # https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/job-states.html
@@ -114,4 +120,6 @@ def analyse_job_run(
             emr_app_id=spark_emr_serverless_config["emr_serverless"]["app_id"],
             job_run_id=job_run_id,
             job_name=job_name,
+            logs_dir=logs_dir,
+            base_dir_client_repo=base_dir_client_repo,
         )

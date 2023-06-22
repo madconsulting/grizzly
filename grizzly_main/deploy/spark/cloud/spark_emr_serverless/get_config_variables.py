@@ -1,4 +1,5 @@
-from typing import Dict, Any, Tuple
+import pathlib
+from typing import Dict, Any, Tuple, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
     get_poetry_wheel_file,
@@ -94,6 +95,7 @@ def get_spark_emr_serverless_config(
     pulumi_stack: str,
     spark_resources_dict: Dict[str, Any],
     poetry_dir: str,
+    base_dir_client_repo: Union[str, pathlib.Path],
     poetry_package_version: str = None,
     **kwargs,
 ) -> Dict[str, Any]:
@@ -105,6 +107,7 @@ def get_spark_emr_serverless_config(
     :param pulumi_stack: Pulumi stack
     :param spark_resources_dict: Spark resources dictionary
     :param poetry_dir: Poetry directory
+    :param base_dir_client_repo: Base directory of client repository
     :param poetry_package_version: Poetry package version. If a specific version is provided, it will override current
                                    Poetry package (e.g. to run PySpark code using a past deployed version of Poetry)
     :return: Spark EMR Serverless config
@@ -125,11 +128,17 @@ def get_spark_emr_serverless_config(
     job_role_arm = get_job_role_arm_from_pulumi(
         stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
     )
-    venv_file_name = get_venv_file(
-        poetry_dir=poetry_dir, package_version=poetry_package_version
+    _, venv_file_name = get_venv_file(
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=poetry_package_version,
+        is_print=False,
     )
-    wheel_file_name = get_poetry_wheel_file(
-        poetry_dir=poetry_dir, package_version=poetry_package_version
+    _, wheel_file_name = get_poetry_wheel_file(
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=poetry_package_version,
+        is_print=False,
     )
     return {
         "s3_bucket": s3_bucket,

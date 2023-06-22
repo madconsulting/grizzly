@@ -25,6 +25,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_
     os.environ["POETRY_VERSION"] = main_config["poetry_version"]
     os.environ["POETRY_DIR"] = main_config["poetry_dir"]
     os.environ["GRIZZLY_BASE_DIR"] = str(base_dir)
+    os.environ["CLIENT_REPO_BASE_DIR"] = str(base_dir_client_repo)
     pulumi_organization = main_config["pulumi_organization"]
     pulumi_project = main_config["pulumi_project"]
     pulumi_stack = main_config["pulumi_stack"]
