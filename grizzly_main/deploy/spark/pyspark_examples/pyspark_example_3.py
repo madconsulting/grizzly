@@ -3,7 +3,7 @@ This is inspired in the Pyspark code example from
 https://github.com/aws-samples/emr-serverless-samples/blob/main/examples/pyspark/extreme_weather.py
 """
 
-from pyspark.sql import SparkSession, DataFrame, Row
+from pyspark.sql import DataFrame, Row, SparkSession
 from pyspark.sql import functions as F
 
 
@@ -75,5 +75,6 @@ def pyspark_example_3(
     for stat in stats_to_gather:
         max_row = find_largest(df, stat["column_name"])
         print(
-            f"  {stat['description']}: {max_row[stat['column_name']]}{stat['units']} on {max_row.DATE} at {max_row.NAME} ({max_row.LATITUDE}, {max_row.LONGITUDE})"
+            f"  {stat['description']}: {max_row[stat['column_name']]}{stat['units']} on"
+            f" {max_row.DATE} at {max_row.NAME} ({max_row.LATITUDE}, {max_row.LONGITUDE})"
         )

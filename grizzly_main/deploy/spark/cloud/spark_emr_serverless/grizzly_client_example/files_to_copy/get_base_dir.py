@@ -1,8 +1,8 @@
 import pathlib
 
-from grizzly_main.path_interations import get_base_dir
-
 from deploy_examples.spark_emr_serverless_example.main.main_config import main_config
+
+from grizzly_main.path_interations import get_base_dir
 
 
 def get_client_base_dir():

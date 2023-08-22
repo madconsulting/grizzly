@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # -- Software Stack Version
 
 SPARK_VERSION="3.3.0"

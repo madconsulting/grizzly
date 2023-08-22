@@ -16,9 +16,7 @@ def get_base_dir(
     """
     if path_input is None:
         path_input = pathlib.Path(__file__).absolute()
-    base_dir = pathlib.Path(
-        pathlib.Path(path_input).resolve(strict=True)
-    )
+    base_dir = pathlib.Path(pathlib.Path(path_input).resolve(strict=True))
     if path_end not in str(base_dir):
         raise ValueError(f"path_end={path_end} not present in the input path.")
     is_found = False
@@ -32,6 +30,7 @@ def get_base_dir(
 
 class cd:
     """Context manager for changing the current working directory"""
+
     def __init__(self, new_path):
         self.new_path = os.path.expanduser(new_path)
 

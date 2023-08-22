@@ -1,10 +1,11 @@
-import os
 import gzip
-import boto3
-import shutil
+import os
 import pathlib
+import shutil
+from typing import Any, Dict, Union
+
+import boto3
 import botocore
-from typing import Dict, Any, Union
 
 
 def download_logs_from_s3(
@@ -46,7 +47,7 @@ def download_logs_from_s3(
             os.remove(target)
         # Print the stdout logs from the driver
         if "SPARK_DRIVER/stdout" in target:
-            print(f"Printing below the Spark driver stdout logs:")
+            print("Printing below the Spark driver stdout logs:")
             print("-" * 50, end="\n\n")
             with open(target.replace(".gz", ".txt"), encoding="utf8") as f:
                 for line in f:

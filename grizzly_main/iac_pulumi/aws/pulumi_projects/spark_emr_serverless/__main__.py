@@ -1,7 +1,7 @@
 import pulumi
-from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import (
-    create_spark_emr_serverless_architecture,
-)
+
+from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import \
+    create_spark_emr_serverless_architecture
 
 config = pulumi.Config()
 stack_name = pulumi.get_stack()
@@ -18,5 +18,7 @@ create_spark_emr_serverless_architecture(
         "arn:aws:s3:::noaa-gsod-pds",
         "arn:aws:s3:::noaa-gsod-pds/*",
     ],
-    tags={"environment": stack_name,},
+    tags={
+        "environment": stack_name,
+    },
 )

@@ -1,25 +1,25 @@
-import re
-import os
-import sys
-import json
-import types
-import shutil
 import inspect
+import json
+import os
 import platform
+import re
+import shutil
 import subprocess
+import sys
+import types
+from importlib.machinery import SourceFileLoader
+from typing import Any, Dict, Optional
+
 import ruamel.yaml
 import seedir as sd
-from rich.prompt import Prompt
 from rich import print as rich_print
-from importlib.machinery import SourceFileLoader
-from typing import Dict, Any, Optional
+from rich.prompt import Prompt
 
-from grizzly_main.path_interations import cd
-import grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy
-from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import (
-    create_spark_emr_serverless_architecture,
-)
+import grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
+from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import \
+    create_spark_emr_serverless_architecture
+from grizzly_main.path_interations import cd
 
 
 class SparkEmrServerlessCLIExample:
@@ -64,7 +64,10 @@ class SparkEmrServerlessCLIExample:
         )
         if is_execute_command == "y":
             with cd(self.pulumi_dir):
-                res = subprocess.run(pulumi_command.split(), stderr=subprocess.PIPE,)
+                res = subprocess.run(
+                    pulumi_command.split(),
+                    stderr=subprocess.PIPE,
+                )
                 if res.returncode != 0:
                     rich_print(
                         f"[bold red] The following error occurred with:"
@@ -104,7 +107,11 @@ class SparkEmrServerlessCLIExample:
             command = ["poetry", "run", "python", file_path]
             if args:
                 command += args.split()
-            res = subprocess.run(command, stdout=stdout, stderr=subprocess.PIPE,)
+            res = subprocess.run(
+                command,
+                stdout=stdout,
+                stderr=subprocess.PIPE,
+            )
             if res.returncode != 0:
                 rich_print(
                     f"[bold red] The following error occurred with:"
@@ -142,9 +149,9 @@ class SparkEmrServerlessCLIExample:
         )
         if is_first_time == "y":
             print(
-                f"\nThen I recommend you to complete the following tutorial beforehand: "
-                f"https://www.pulumi.com/docs/get-started/aws/begin/. After completing this tutorial, you should "
-                f"have the prerequisites for this section, which are:"
+                "\nThen I recommend you to complete the following tutorial beforehand: "
+                "https://www.pulumi.com/docs/get-started/aws/begin/. After completing this tutorial, you should "
+                "have the prerequisites for this section, which are:"
             )
             print("- A Pulumi account with access to your AWS account.")
             print(
@@ -161,7 +168,7 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         self.pulumi_project = Prompt.ask(
-            prompt=f"[bold blue]\nPlease type the Pulumi Project name",
+            prompt="[bold blue]\nPlease type the Pulumi Project name",
             default="spark_emr_serverless",
         )
         print(
@@ -551,13 +558,13 @@ class SparkEmrServerlessCLIExample:
     ) -> str:
         common_steps_list = [
             f'Open a new terminal and go to the Pulumi project directory: "cd {self.pulumi_dir}"\n',
-            f'If the poetry environment is not activated, execute "poetry shell"\n',
+            'If the poetry environment is not activated, execute "poetry shell"\n',
         ]
         if is_select_stack:
             common_steps_list.append(
-                f"If the Pulumi project has multiple stacks, select the desired stack with the following command: "
+                "If the Pulumi project has multiple stacks, select the desired stack with the following command: "
                 f'"pulumi stack select {self.pulumi_organization}/<pulumi-stack>"\n'
-                f"For example, if we wanted select the initial stack created in this example, we would replace"
+                "For example, if we wanted select the initial stack created in this example, we would replace"
                 f"<pulumi-stack> by {self.pulumi_stack} in the command above."
             )
         common_steps = ""

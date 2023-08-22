@@ -1,5 +1,6 @@
+from typing import Any, Dict
+
 import boto3
-from typing import Dict, Any
 
 
 def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -> None:

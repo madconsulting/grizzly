@@ -1,8 +1,9 @@
-import boto3
 import pathlib
-import botocore
 from datetime import datetime
-from typing import Dict, Any, Tuple, Union
+from typing import Any, Dict, Tuple, Union
+
+import boto3
+import botocore
 
 
 def upload_file_to_s3(
@@ -26,7 +27,9 @@ def upload_file_to_s3(
 
 
 def start_emr_app(
-    emr_client: botocore.client.BaseClient, emr_app_id: str, emr_app_name: str,
+    emr_client: botocore.client.BaseClient,
+    emr_app_id: str,
+    emr_app_name: str,
 ) -> None:
     """
     Start EMR Serverless application - the app needs to be in STARTED mode in order to be able to run a job
@@ -55,7 +58,7 @@ def define_job_run_args(
     :param script_file_path: File path of the script to be run
     :param emr_app_id: EMR Serverless application ID
     :param execution_timeout_min: Execution timeout in minutes
-    :return: 
+    :return:
     """
     job_driver = {
         "sparkSubmit": {

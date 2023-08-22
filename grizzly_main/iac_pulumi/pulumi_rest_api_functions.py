@@ -1,18 +1,19 @@
+import json
+import logging
 import os
 import sys
-import json
+from typing import Any, Dict
+
 import requests
-import logging
-from typing import Dict, Any
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 def get_pulumi_stack_state(
-        pulumi_organization: str,
-        pulumi_project: str,
-        pulumi_stack: str,
-        is_allow_input_token: bool = False
+    pulumi_organization: str,
+    pulumi_project: str,
+    pulumi_stack: str,
+    is_allow_input_token: bool = False,
 ) -> Dict[str, Any]:
     """
     Get the stack state using the Pulumi REST API
@@ -29,8 +30,10 @@ def get_pulumi_stack_state(
         msg = "PULUMI_ACCESS_TOKEN environment variable not defined."
         if is_allow_input_token:
             logging.warning(msg)
-            pulumi_access_token = input("Please run the process again with the PULUMI_ACCESS_TOKEN env var defined,"
-                                        " or input the value here:")
+            pulumi_access_token = input(
+                "Please run the process again with the PULUMI_ACCESS_TOKEN env var defined,"
+                " or input the value here:"
+            )
         else:
             raise ValueError(msg)
     response = requests.get(
@@ -49,6 +52,5 @@ if __name__ == "__main__":
         pulumi_organization="victor-vila",
         pulumi_project="spark_emr_serverless",
         is_allow_input_token=True,
-        pulumi_stack="dev"
+        pulumi_stack="dev",
     )
-

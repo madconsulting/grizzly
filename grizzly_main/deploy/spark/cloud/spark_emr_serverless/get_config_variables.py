@@ -1,15 +1,15 @@
 import pathlib
-from typing import Dict, Any, Tuple, Union
+from typing import Any, Dict, Tuple, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
-    get_poetry_wheel_file,
-    get_venv_file,
-)
+    get_poetry_wheel_file, get_venv_file)
 from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_state
 
 
 def _find_single_pulumi_resource_based_on_type(
-    stack_state_dict: Dict[str, Any], resource_type: str, project_stack_name: str = "",
+    stack_state_dict: Dict[str, Any],
+    resource_type: str,
+    project_stack_name: str = "",
 ) -> Dict[str, Any]:
     """
     Find single Pulumi resource corresponding to a given resource type.
@@ -41,7 +41,8 @@ def _find_single_pulumi_resource_based_on_type(
 
 
 def get_s3_bucket_id_from_pulumi(
-    stack_state_dict: Dict[str, Any], project_stack_name: str = "",
+    stack_state_dict: Dict[str, Any],
+    project_stack_name: str = "",
 ) -> str:
     """
     Get s3 bucket id from Pulumi
@@ -57,7 +58,8 @@ def get_s3_bucket_id_from_pulumi(
 
 
 def get_emr_serverless_app_from_pulumi(
-    stack_state_dict: Dict[str, Any], project_stack_name: str = "",
+    stack_state_dict: Dict[str, Any],
+    project_stack_name: str = "",
 ) -> Tuple[str, str]:
     """
     Get EMR Serverless application details from Pulumi
@@ -74,7 +76,8 @@ def get_emr_serverless_app_from_pulumi(
 
 
 def get_job_role_arm_from_pulumi(
-    stack_state_dict: Dict[str, Any], project_stack_name: str = "",
+    stack_state_dict: Dict[str, Any],
+    project_stack_name: str = "",
 ) -> str:
     """
     Get job role ARN from Pulumi
@@ -120,13 +123,16 @@ def get_spark_emr_serverless_config(
     )
     project_stack_name = f"{pulumi_organization}/{pulumi_project}/{pulumi_stack}"
     s3_bucket = get_s3_bucket_id_from_pulumi(
-        stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
+        stack_state_dict=stack_state_dict,
+        project_stack_name=project_stack_name,
     )
     app_id, app_name = get_emr_serverless_app_from_pulumi(
-        stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
+        stack_state_dict=stack_state_dict,
+        project_stack_name=project_stack_name,
     )
     job_role_arm = get_job_role_arm_from_pulumi(
-        stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
+        stack_state_dict=stack_state_dict,
+        project_stack_name=project_stack_name,
     )
     _, venv_file_name = get_venv_file(
         poetry_dir=poetry_dir,

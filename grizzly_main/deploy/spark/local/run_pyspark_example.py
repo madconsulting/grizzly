@@ -1,9 +1,7 @@
-from typing import Dict, Any
+from typing import Any, Dict
 
+from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
 from grizzly_main.deploy.spark.utils.spark_context import get_spark_context
-from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import (
-    pyspark_example_dict,
-)
 
 
 def run_pyspark_example(
@@ -22,7 +20,6 @@ def run_pyspark_example(
 
 
 if __name__ == "__main__":
-
     # Inputs
     is_run_on_cluster = True
     example_name = "pyspark_example_1"

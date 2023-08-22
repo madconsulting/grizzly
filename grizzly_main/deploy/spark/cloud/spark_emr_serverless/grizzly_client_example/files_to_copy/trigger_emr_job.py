@@ -1,14 +1,8 @@
-from grizzly_main.deploy.spark.cloud.spark_emr_serverless.trigger_emr_job import (
-    trigger_emr_job,
-)
-from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
-    get_spark_emr_serverless_config,
-)
-
+from deploy_examples.spark_emr_serverless_example.main.get_base_dir import get_client_base_dir
 from deploy_examples.spark_emr_serverless_example.main.main_config import main_config
-from deploy_examples.spark_emr_serverless_example.main.get_base_dir import (
-    get_client_base_dir,
-)
+
+from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import get_spark_emr_serverless_config
+from grizzly_main.deploy.spark.cloud.spark_emr_serverless.trigger_emr_job import trigger_emr_job
 
 base_dir_client_repo = get_client_base_dir()
 spark_emr_serverless_config = get_spark_emr_serverless_config(

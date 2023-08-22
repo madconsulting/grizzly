@@ -1,11 +1,14 @@
 import json
+from typing import Any, Dict, List, Tuple
+
 import pulumi
 import pulumi_aws as aws
-from typing import List, Dict, Any, Tuple
 
 
 def create_s3_bucket(
-    resource_prefix_name: str, is_bucket_encryption: bool, tags: Dict[str, Any] = None,
+    resource_prefix_name: str,
+    is_bucket_encryption: bool,
+    tags: Dict[str, Any] = None,
 ) -> aws.s3.Bucket:
     """
     Create a s3 bucket
@@ -17,7 +20,9 @@ def create_s3_bucket(
     s3_bucket = aws.s3.Bucket(
         f"{resource_prefix_name}-bucket",
         acl="private",
-        versioning=aws.s3.BucketVersioningArgs(enabled=True,),
+        versioning=aws.s3.BucketVersioningArgs(
+            enabled=True,
+        ),
         tags=tags,
         force_destroy=True,  # To be able to delete a not empty bucket
     )
@@ -37,7 +42,8 @@ def create_s3_bucket(
 
 
 def create_iam_role(
-    resource_prefix_name: str, tags: Dict[str, Any] = None,
+    resource_prefix_name: str,
+    tags: Dict[str, Any] = None,
 ) -> aws.iam.Role:
     """
     Create IAM role to allow jobs submitted to the Amazon EMR Serverless application to access other AWS services
@@ -162,7 +168,8 @@ def create_emr_serverless_app(
             enabled=True
         ),
         auto_stop_configuration=aws.emrserverless.ApplicationAutoStopConfigurationArgs(
-            enabled=True, idle_timeout_minutes=idle_timeout_minutes,
+            enabled=True,
+            idle_timeout_minutes=idle_timeout_minutes,
         ),
         release_label="emr-6.8.0",
         tags=tags,

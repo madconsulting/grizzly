@@ -1,10 +1,12 @@
 import os
-import sys
-import pprint
-import tomlkit
 import pathlib
-from zipfile import ZipFile
+import pprint
+import sys
 from typing import Tuple, Union
+from zipfile import ZipFile
+
+import tomlkit
+
 from grizzly_main.path_interations import get_base_dir
 
 base_dir = get_base_dir()
@@ -12,7 +14,7 @@ base_dir = get_base_dir()
 
 # ----------- Poetry functions -----------
 def _get_current_poetry_package_name_and_version(
-        poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = ""
+    poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = ""
 ) -> Tuple[str, str]:
     """
     Get current Poetry package name and version from pyproject.toml file
@@ -31,7 +33,9 @@ def _get_current_poetry_package_name_and_version(
 
 
 def _get_poetry_package_name_and_version(
-    poetry_dir: str = "", base_dir_client_repo: Union[str, pathlib.Path] = "", package_version: str = None
+    poetry_dir: str = "",
+    base_dir_client_repo: Union[str, pathlib.Path] = "",
+    package_version: str = None,
 ) -> Tuple[str, str]:
     """
     Get Poetry package name and version from pyproject.toml file (or overwritten by input)
@@ -43,7 +47,9 @@ def _get_poetry_package_name_and_version(
     (
         package_name,
         current_package_version,
-    ) = _get_current_poetry_package_name_and_version(poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo)
+    ) = _get_current_poetry_package_name_and_version(
+        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo
+    )
     if package_version is None:
         package_version = current_package_version
     return package_name, package_version
@@ -68,7 +74,9 @@ def get_poetry_wheel_file(
     :return: Wheel file name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=package_version
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=package_version,
     )
     wheel_file_path = f"{base_dir}/{file_folder}"
     wheel_file_name = f"{package_name}-{package_version}.whl"
@@ -88,16 +96,22 @@ def rename_poetry_wheel_file(
     :return: None
     """
     package_name, package_version = _get_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=None
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=None,
     )
     wheel_file_path, new_wheel_file_name = get_poetry_wheel_file(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=None
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=None,
     )
     built_files = os.listdir(path=wheel_file_path)
     current_package_wheel_file = [
         file_name
         for file_name in built_files
-        if file_name.replace("_", "-").startswith(f"{package_name.replace('_', '-')}-{package_version}-py3")
+        if file_name.replace("_", "-").startswith(
+            f"{package_name.replace('_', '-')}-{package_version}-py3"
+        )
         and file_name.endswith(".whl")
     ]
     if len(current_package_wheel_file) == 0:
@@ -148,7 +162,9 @@ def get_venv_file(
     :return: Venv file path and name
     """
     package_name, package_version = _get_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo, package_version=package_version
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=package_version,
     )
     venv_file_path = f"{base_dir}/{file_folder}"
     venv_file_name = f"{package_name}-{package_version}.tar.gz"
@@ -169,8 +185,11 @@ def add_package_version_to_venv(
     :param file_name: Venv original file name
     :return: None
     """
-    venv_file_path, new_venv_file_name = get_venv_file(poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo,
-                                                       package_version=None)
+    venv_file_path, new_venv_file_name = get_venv_file(
+        poetry_dir=poetry_dir,
+        base_dir_client_repo=base_dir_client_repo,
+        package_version=None,
+    )
     os.rename(
         f"{venv_file_path}/{file_name}",
         f"{venv_file_path}/{new_venv_file_name}",
