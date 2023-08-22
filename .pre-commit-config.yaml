@@ -37,7 +37,7 @@ repos:
     rev: v5.10.1
     hooks:
       - id: isort # Import sorting
-# Note: black needs to run after isort, otherwise isort will modify black changes in the imports.
+        args: ["--profile", "black"] # black compatibility
 -   repo: https://github.com/psf/black
     rev: 23.7.0
     hooks:

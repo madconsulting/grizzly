@@ -5,18 +5,14 @@ import subprocess
 from typing import Any, Dict, Union
 
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.build
-from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
-    get_s3_bucket_id_from_pulumi,
-)
+from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import get_s3_bucket_id_from_pulumi
 from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_state
 from grizzly_main.path_interations import cd, get_base_dir
 
 base_dir = get_base_dir()
 
 
-def deploy_venv_and_poetry_package(
-    main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]
-) -> None:
+def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -> None:
     """
     Deploy virtual environment and poetry package wheel files
     :param main_config: Main configuration dictionary
@@ -42,9 +38,7 @@ def deploy_venv_and_poetry_package(
         stack_state_dict=stack_state_dict,
         project_stack_name=f"{pulumi_organization}/{pulumi_project}/{pulumi_stack}",
     )
-    build_dir = os.path.dirname(
-        inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.build)
-    )
+    build_dir = os.path.dirname(inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.build))
     build_file_path = os.path.abspath(f"{build_dir}/build.sh")
     with cd(base_dir_client_repo):
         subprocess.call(["sh", build_file_path])

@@ -23,9 +23,7 @@ def _find_single_pulumi_resource_based_on_type(
     selected_resource_dict = None
     if "deployment" not in stack_state_dict.keys():
         print(f"Stack state dictionary: {stack_state_dict}")
-        raise ValueError(
-            "Stack state dictionary does not contain deployed resources information"
-        )
+        raise ValueError("Stack state dictionary does not contain deployed resources information")
     for resource_dict in stack_state_dict["deployment"]["resources"]:
         if resource_dict["type"] == resource_type:
             if selected_resource_dict is not None:
@@ -36,9 +34,7 @@ def _find_single_pulumi_resource_based_on_type(
             else:
                 selected_resource_dict = resource_dict
     if selected_resource_dict is None:
-        raise ValueError(
-            f"resource of type {resource_type} not found in Pulumi stack {project_stack_name}."
-        )
+        raise ValueError(f"resource of type {resource_type} not found in Pulumi stack {project_stack_name}.")
     return selected_resource_dict
 
 
@@ -179,9 +175,7 @@ def get_spark_emr_serverless_config(
             "spark.driver.memory": f"{spark_resources_dict['driver']['memory_in_GB']}g",
             "spark.driver.disk": spark_resources_dict["driver"]["disk_in_GB"],
             "spark.executor.cores": str(spark_resources_dict["executor"]["num_cores"]),
-            "spark.executor.instances": str(
-                spark_resources_dict["executor"]["instances"]
-            ),
+            "spark.executor.instances": str(spark_resources_dict["executor"]["instances"]),
             "spark.executor.memory": f"{spark_resources_dict['executor']['memory_in_GB']}g",
             "spark.executor.disk": spark_resources_dict["executor"]["disk_in_GB"],
         },

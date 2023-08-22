@@ -4,9 +4,7 @@ from subprocess import check_output
 from pyspark.conf import SparkConf
 from pyspark.sql import SparkSession
 
-from grizzly_main.deploy.spark.utils.spark_local_cluster_context_config import (
-    spark_local_cluster_context_config,
-)
+from grizzly_main.deploy.spark.utils.spark_local_cluster_context_config import spark_local_cluster_context_config
 
 
 def get_spark_context(
@@ -26,14 +24,10 @@ def get_spark_context(
     if run_mode == "local_single_worker":
         config_var_list += [("spark.master", "local")]
     elif run_mode == "local_cluster":
-        SPARK_DRIVER_HOST = (
-            check_output(["hostname", "-i"]).decode(encoding="utf-8").strip()
-        )
+        SPARK_DRIVER_HOST = check_output(["hostname", "-i"]).decode(encoding="utf-8").strip()
         # See: https://github.com/bitnami/bitnami-docker-spark/issues/18#issuecomment-701487655
         os.environ["SPARK_LOCAL_IP"] = SPARK_DRIVER_HOST
-        config_var_list += [
-            (k, v) for k, v in spark_local_cluster_context_config.items()
-        ] + [
+        config_var_list += [(k, v) for k, v in spark_local_cluster_context_config.items()] + [
             # spark.master = spark://<ip of master node>:<port of master node>
             (
                 "spark.master",

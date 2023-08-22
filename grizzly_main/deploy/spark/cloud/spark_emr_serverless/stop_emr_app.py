@@ -11,7 +11,5 @@ def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -> None:
     :return: pyspark.tar.gz
     """
     emr_client = boto3.client("emr-serverless")
-    _ = emr_client.stop_application(
-        applicationId=spark_emr_serverless_config["emr_serverless"]["app_id"]
-    )
+    _ = emr_client.stop_application(applicationId=spark_emr_serverless_config["emr_serverless"]["app_id"])
     print("EMR Serverless application stopped.")

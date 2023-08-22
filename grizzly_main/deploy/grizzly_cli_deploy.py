@@ -17,9 +17,7 @@ def explain_cli_format():
         default="y",
     )
     if is_explain_legend == "y":
-        print(
-            "\n - Guidelines will appear in the standard format of your terminal (same as this line)"
-        )
+        print("\n - Guidelines will appear in the standard format of your terminal (same as this line)")
         rich_print(" - [bold][blue]The inputs will be requested with prompts in blue")
         rich_print(" - [bold][magenta]The request choices will be in magenta within []")
         rich_print(

@@ -1,14 +1,10 @@
 from typing import Any, Dict
 
-from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import (
-    pyspark_example_dict,
-)
+from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
 from grizzly_main.deploy.spark.utils.spark_context import get_spark_context
 
 
-def run_pyspark_example(
-    example_name: str, example_kwargs: Dict[str, Any], run_mode: str
-) -> None:
+def run_pyspark_example(example_name: str, example_kwargs: Dict[str, Any], run_mode: str) -> None:
     """
     Run pyspark example
     :param example_name: Pyspark example name
@@ -33,6 +29,4 @@ if __name__ == "__main__":
         run_mode = "local_cluster"
     else:
         run_mode = "local_single_worker"
-    run_pyspark_example(
-        example_name=example_name, example_kwargs=example_kwargs, run_mode=run_mode
-    )
+    run_pyspark_example(example_name=example_name, example_kwargs=example_kwargs, run_mode=run_mode)

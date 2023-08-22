@@ -27,14 +27,14 @@ def create_s3_bucket(
         force_destroy=True,  # To be able to delete a not empty bucket
     )
     if is_bucket_encryption:
-        # Disable black formatting, to prevent using a line
+        # Disable black formatting, to prevent having a longer line than allowed
         # fmt: off
         aws.s3.BucketServerSideEncryptionConfigurationV2(
             f"{resource_prefix_name}-bucket_encryption",
             bucket=s3_bucket.bucket,
             rules=[
                 aws.s3.BucketServerSideEncryptionConfigurationV2RuleArgs(
-                    apply_server_side_encryption_by_default=
+                    apply_server_side_encryption_by_default=  # noqa: E251
                     aws.s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs(
                         sse_algorithm="AES256",
                     ),
@@ -135,9 +135,7 @@ def create_iam_role_policy(
         # Note: Need to define the get_access_role_policy_details function to pass the bucket.arn. Otherwise an Output
         # is not JSON serializable
         policy=pulumi.Output.all(s3_bucket_arn, additional_read_access_resources).apply(
-            lambda args: get_access_role_policy_details(
-                s3_bucket_arn=args[0], additional_read_access_resources=args[1]
-            )
+            lambda args: get_access_role_policy_details(s3_bucket_arn=args[0], additional_read_access_resources=args[1])
         ),
     )
 
@@ -168,9 +166,7 @@ def create_emr_serverless_app(
             memory=f"{max_memory_gb} GB",
             disk=f"{max_disk_gb} GB",
         ),
-        auto_start_configuration=aws.emrserverless.ApplicationAutoStartConfigurationArgs(
-            enabled=True
-        ),
+        auto_start_configuration=aws.emrserverless.ApplicationAutoStartConfigurationArgs(enabled=True),
         auto_stop_configuration=aws.emrserverless.ApplicationAutoStopConfigurationArgs(
             enabled=True,
             idle_timeout_minutes=idle_timeout_minutes,
@@ -190,9 +186,7 @@ def create_spark_emr_serverless_architecture(
     additional_read_access_resources: List[str] = None,
     is_bucket_encryption: bool = True,
     tags: Dict[str, Any] = None,
-) -> Tuple[
-    aws.s3.Bucket, aws.iam.Role, aws.iam.RolePolicy, aws.emrserverless.Application
-]:
+) -> Tuple[aws.s3.Bucket, aws.iam.Role, aws.iam.RolePolicy, aws.emrserverless.Application]:
     """
     Creates the following infrastructure is required to run Spark on AWS with EMR Serverless:
     - S3 bucket

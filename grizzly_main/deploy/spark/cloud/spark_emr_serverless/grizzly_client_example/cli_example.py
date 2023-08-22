@@ -50,9 +50,7 @@ class SparkEmrServerlessCLIExample:
         self.stack_config_file = None
         self.idle_timeout_minutes = None
 
-    def _ask_user_confirmation_to_execute_pulumi_command(
-        self, pulumi_command: str
-    ) -> None:
+    def _ask_user_confirmation_to_execute_pulumi_command(self, pulumi_command: str) -> None:
         """
         Ask user for confirmation to execute a given pulumi command
         :param pulumi_command: Pulumi command
@@ -186,23 +184,14 @@ class SparkEmrServerlessCLIExample:
         Copy pulumi files to client repository within self.pulumi_dir
         :return: None
         """
-        source_dir = os.path.dirname(
-            inspect.getfile(
-                grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
-            )
-        )
+        source_dir = os.path.dirname(inspect.getfile(grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless))
         files_list = os.listdir(source_dir)
         # Keep only "dev" environment file name
         files_list = [
             file
             for file in files_list
             if not (
-                (
-                    file.startswith("Pulumi.")
-                    and file.endswith(".yaml")
-                    and "dev" not in file
-                )
-                and file != "Pulumi.yaml"
+                (file.startswith("Pulumi.") and file.endswith(".yaml") and "dev" not in file) and file != "Pulumi.yaml"
             )
             and file != "__pycache__"
         ]
@@ -211,9 +200,7 @@ class SparkEmrServerlessCLIExample:
             os.makedirs(self.pulumi_dir)
         else:
             if os.listdir(self.pulumi_dir):
-                raise ValueError(
-                    f"Destination directory {self.pulumi_dir} is not empty"
-                )
+                raise ValueError(f"Destination directory {self.pulumi_dir} is not empty")
         new_file_list = []
         for file in files_list:
             if file == "Pulumi.dev.yaml":
@@ -223,9 +210,7 @@ class SparkEmrServerlessCLIExample:
             new_file_dir = f"{os.path.abspath(self.pulumi_dir)}/{new_file}"
             shutil.copyfile(src=f"{source_dir}/{file}", dst=new_file_dir)
             new_file_list.append(new_file)
-        print(
-            f"The folowing files have been created in {self.pulumi_dir}: {new_file_list}"
-        )
+        print(f"The folowing files have been created in {self.pulumi_dir}: {new_file_list}")
 
     def _update_pulumi_project_name(self) -> None:
         """
@@ -238,9 +223,7 @@ class SparkEmrServerlessCLIExample:
         yaml = ruamel.yaml.YAML()
         with open(config_file, "w") as fp:
             yaml.dump(data, fp)
-        print(
-            f"The Pulumi Project name {self.pulumi_project} has been updated in the 'Pulumi.yaml' file."
-        )
+        print(f"The Pulumi Project name {self.pulumi_project} has been updated in the 'Pulumi.yaml' file.")
 
     def _update_aws_account_id(self) -> None:
         """
@@ -263,9 +246,7 @@ class SparkEmrServerlessCLIExample:
         yaml = ruamel.yaml.YAML()
         with open(self.stack_config_file, "w") as fp:
             yaml.dump(data, fp)
-        print(
-            f"\nThe AWS account has been updated in {self.stack_config_file}. The file content is printed below:\n"
-        )
+        print(f"\nThe AWS account has been updated in {self.stack_config_file}. The file content is printed below:\n")
         print(yaml.dump(data, sys.stdout))
         print(
             "\nFeel free to modify the other configuration parameters, such as the maximum computational resources "
@@ -289,9 +270,7 @@ class SparkEmrServerlessCLIExample:
         Create a Pulumi stack if it does not exist already, otherwise select that stack
         :return: None
         """
-        print(
-            "\nNow we are going to create a new stack (or select it, if already exists) using the following command:"
-        )
+        print("\nNow we are going to create a new stack (or select it, if already exists) using the following command:")
         rich_print("\n[bold italic]pulumi stack select <org-name>/<stack> --create")
         print(
             "\nNote that <org-name> can be either the Pulumi organization where the stack will be created, or your "
@@ -303,9 +282,7 @@ class SparkEmrServerlessCLIExample:
         )
         pulumi_command = f"pulumi stack select {self.pulumi_organization}/{self.pulumi_stack} --create"
         rich_print(f"\nPulumi command: [bold italic]{pulumi_command}")
-        self._ask_user_confirmation_to_execute_pulumi_command(
-            pulumi_command=pulumi_command
-        )
+        self._ask_user_confirmation_to_execute_pulumi_command(pulumi_command=pulumi_command)
 
     def _deploy_infrastructure(self) -> None:
         """
@@ -313,16 +290,10 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         pulumi_command = "pulumi up"
-        print(
-            f"\nNow we are going to deploy the infrastructure for the {self.pulumi_stack} stack"
-        )
+        print(f"\nNow we are going to deploy the infrastructure for the {self.pulumi_stack} stack")
         rich_print(f"\n[bold italic]{pulumi_command}")
-        print(
-            "\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_up/"
-        )
-        self._ask_user_confirmation_to_execute_pulumi_command(
-            pulumi_command=pulumi_command
-        )
+        print("\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_up/")
+        self._ask_user_confirmation_to_execute_pulumi_command(pulumi_command=pulumi_command)
 
     def _run_section_1(self) -> None:
         """
@@ -330,9 +301,7 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         rich_print("[bold yellow]\n### SECTION 1 - Deploy the infrastructure ###\n")
-        print(
-            "In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n"
-        )
+        print("In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n")
         self._recommend_pulumi_get_started_tutorial()
         self._set_pulumi_project_and_stack()
         self._copy_pulumi_files()
@@ -340,9 +309,7 @@ class SparkEmrServerlessCLIExample:
         self._update_aws_account_id()
         self._create_pulumi_stack()
         self._deploy_infrastructure()
-        print(
-            "The infrastructure required to run PySpark code on EMR Serverless has been successfully deployed"
-        )
+        print("The infrastructure required to run PySpark code on EMR Serverless has been successfully deployed")
 
     def _copy_files_for_minimal_example(self) -> None:
         """
@@ -350,9 +317,7 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         source_dir = os.path.dirname(
-            inspect.getfile(
-                grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy
-            )
+            inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy)
         )
         dst_dir = os.path.abspath(self.code_dir)
         shutil.copytree(
@@ -361,9 +326,7 @@ class SparkEmrServerlessCLIExample:
             ignore=shutil.ignore_patterns("README.txt", "__pycache__"),
         )
 
-        print(
-            f"The following files have been copied to the main example directory {self.code_dir}:"
-        )
+        print(f"The following files have been copied to the main example directory {self.code_dir}:")
         sd.seedir(dst_dir, style="lines")
 
     def _read_main_config(self) -> Dict[str, Any]:
@@ -371,9 +334,7 @@ class SparkEmrServerlessCLIExample:
         Read main configuration
         :return: Main configuration dictionary
         """
-        loader = SourceFileLoader(
-            fullname="main_config_module", path=self.main_config_path
-        )
+        loader = SourceFileLoader(fullname="main_config_module", path=self.main_config_path)
         mod = types.ModuleType(loader.name)
         loader.exec_module(mod)
         return mod.main_config
@@ -388,9 +349,7 @@ class SparkEmrServerlessCLIExample:
         main_config_dict["pulumi_organization"] = self.pulumi_organization
         main_config_dict["pulumi_project"] = self.pulumi_project
         main_config_dict["pulumi_stack"] = self.pulumi_stack
-        poetry_version = subprocess.run(
-            ["poetry", "-V"], stdout=subprocess.PIPE
-        ).stdout.decode("utf-8")
+        poetry_version = subprocess.run(["poetry", "-V"], stdout=subprocess.PIPE).stdout.decode("utf-8")
         regex_version = r"version (\d+\.\d+\.\d+[a-z]?\d?)"
         try:
             poetry_version = re.search(regex_version, poetry_version).group(1)
@@ -437,9 +396,7 @@ class SparkEmrServerlessCLIExample:
         Run section 2 to deploy the virtual environment and package wheel files
         :return: None
         """
-        rich_print(
-            "[bold yellow]\n### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n"
-        )
+        rich_print("[bold yellow]\n### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n")
         print(
             "For the EMR Serverless app, a custom Poetry virtual environment and package are used to:\n"
             "- Handle all the package dependencies and versioning.\n"
@@ -494,9 +451,7 @@ class SparkEmrServerlessCLIExample:
         else:
             job_id = out_partitioned[-1].replace("\n", "")
             if job_id.isspace():
-                raise ValueError(
-                    f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}"
-                )
+                raise ValueError(f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}")
         return job_id
 
     def _monitor_emr_serverless_job(self, job_id: str):
@@ -530,9 +485,7 @@ class SparkEmrServerlessCLIExample:
         Run section 3 to trigger and monitor a Spark EMR Serverless Job
         :return: None
         """
-        rich_print(
-            "[bold yellow]\n### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n"
-        )
+        rich_print("[bold yellow]\n### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n")
         print(
             "In this section we will:\n"
             "1. Trigger a Spark EMR Serverless job using a minimal PySpark code example.\n"
@@ -554,9 +507,7 @@ class SparkEmrServerlessCLIExample:
             f"executing the following script: {self.code_dir}/stop_emr_app.py"
         )
 
-    def _common_steps_guidelines(
-        self, start_num: int, is_select_stack: bool = True
-    ) -> str:
+    def _common_steps_guidelines(self, start_num: int, is_select_stack: bool = True) -> str:
         common_steps_list = [
             f'Open a new terminal and go to the Pulumi project directory: "cd {self.pulumi_dir}"\n',
             'If the poetry environment is not activated, execute "poetry shell"\n',

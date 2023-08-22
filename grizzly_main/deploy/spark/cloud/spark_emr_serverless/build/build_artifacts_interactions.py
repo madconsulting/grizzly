@@ -47,9 +47,7 @@ def _get_poetry_package_name_and_version(
     (
         package_name,
         current_package_version,
-    ) = _get_current_poetry_package_name_and_version(
-        poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo
-    )
+    ) = _get_current_poetry_package_name_and_version(poetry_dir=poetry_dir, base_dir_client_repo=base_dir_client_repo)
     if package_version is None:
         package_version = current_package_version
     return package_name, package_version
@@ -109,15 +107,12 @@ def rename_poetry_wheel_file(
     current_package_wheel_file = [
         file_name
         for file_name in built_files
-        if file_name.replace("_", "-").startswith(
-            f"{package_name.replace('_', '-')}-{package_version}-py3"
-        )
+        if file_name.replace("_", "-").startswith(f"{package_name.replace('_', '-')}-{package_version}-py3")
         and file_name.endswith(".whl")
     ]
     if len(current_package_wheel_file) == 0:
         raise ValueError(
-            f"No wheel file has been found for current package {package_name} and "
-            f"version {package_version}"
+            f"No wheel file has been found for current package {package_name} and " f"version {package_version}"
         )
     elif len(current_package_wheel_file) == 1:
         wheel_file_name = current_package_wheel_file[0]

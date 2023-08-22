@@ -38,6 +38,18 @@ mypy = "1.5.1"
 flake8 = "6.1.0"
 pylint = "2.17.5"
 
+[tool.black]
+line-length = 120
+
+[tool.flake8]
+max-line-length = 120
+
+[tool.isort]
+line_length = 120
+
+[tool.pylint.format]
+max-line-length = 120
+
 [build-system]
 requires = ["poetry-core>=1.2.0b3"]
 build-backend = "poetry.core.masonry.api"

@@ -38,9 +38,7 @@ def start_emr_app(
     :param emr_app_name: EMR Serverless app name
     :return: None
     """
-    emr_app_details = emr_client.get_application(applicationId=emr_app_id)[
-        "application"
-    ]
+    emr_app_details = emr_client.get_application(applicationId=emr_app_id)["application"]
     print(f"{emr_app_name} - details:")
     print(emr_app_details)
     _ = emr_client.start_application(applicationId=emr_app_id)
@@ -67,22 +65,13 @@ def define_job_run_args(
     }
     if len(spark_emr_serverless_config["spark_submit_parameters"]) > 0:
         spark_submit_parameters = " ".join(
-            [
-                f"--conf {k}={v}"
-                for k, v in spark_emr_serverless_config[
-                    "spark_submit_parameters"
-                ].items()
-            ]
+            [f"--conf {k}={v}" for k, v in spark_emr_serverless_config["spark_submit_parameters"].items()]
         )
-        job_driver["sparkSubmit"].update(
-            {"sparkSubmitParameters": spark_submit_parameters}
-        )
+        job_driver["sparkSubmit"].update({"sparkSubmitParameters": spark_submit_parameters})
     job_name = f"{script_file_path.replace('/', '__')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     job_args = {
         "applicationId": emr_app_id,
-        "executionRoleArn": spark_emr_serverless_config["emr_serverless"][
-            "job_role_arn"
-        ],
+        "executionRoleArn": spark_emr_serverless_config["emr_serverless"]["job_role_arn"],
         "jobDriver": job_driver,
         "configurationOverrides": {
             "monitoringConfiguration": {

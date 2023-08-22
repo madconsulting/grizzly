@@ -31,8 +31,7 @@ def get_pulumi_stack_state(
         if is_allow_input_token:
             logging.warning(msg)
             pulumi_access_token = input(
-                "Please run the process again with the PULUMI_ACCESS_TOKEN env var defined,"
-                " or input the value here:"
+                "Please run the process again with the PULUMI_ACCESS_TOKEN env var defined," " or input the value here:"
             )
         else:
             raise ValueError(msg)
@@ -41,7 +40,7 @@ def get_pulumi_stack_state(
         headers={
             "Accept": "application/vnd.pulumi+8",
             "Content-Type": "application/json",
-            f"Authorization": f"token {pulumi_access_token}",
+            "Authorization": f"token {pulumi_access_token}",
         },
     )
     return json.loads(response.text)
