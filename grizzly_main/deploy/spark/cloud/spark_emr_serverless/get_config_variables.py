@@ -2,7 +2,9 @@ import pathlib
 from typing import Any, Dict, Tuple, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
-    get_poetry_wheel_file, get_venv_file)
+    get_poetry_wheel_file,
+    get_venv_file,
+)
 from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_state
 
 

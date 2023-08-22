@@ -5,7 +5,9 @@ import subprocess
 from typing import Any, Dict, Union
 
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.build
-from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import get_s3_bucket_id_from_pulumi
+from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import (
+    get_s3_bucket_id_from_pulumi,
+)
 from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_state
 from grizzly_main.path_interations import cd, get_base_dir
 

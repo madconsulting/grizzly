@@ -17,8 +17,9 @@ from rich.prompt import Prompt
 
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy
 import grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
-from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import \
-    create_spark_emr_serverless_architecture
+from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import (
+    create_spark_emr_serverless_architecture,
+)
 from grizzly_main.path_interations import cd
 
 

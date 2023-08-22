@@ -4,7 +4,9 @@ from subprocess import check_output
 from pyspark.conf import SparkConf
 from pyspark.sql import SparkSession
 
-from grizzly_main.deploy.spark.utils.spark_local_cluster_context_config import spark_local_cluster_context_config
+from grizzly_main.deploy.spark.utils.spark_local_cluster_context_config import (
+    spark_local_cluster_context_config,
+)
 
 
 def get_spark_context(

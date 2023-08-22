@@ -27,17 +27,21 @@ def create_s3_bucket(
         force_destroy=True,  # To be able to delete a not empty bucket
     )
     if is_bucket_encryption:
+        # Disable black formatting, to prevent using a line
+        # fmt: off
         aws.s3.BucketServerSideEncryptionConfigurationV2(
             f"{resource_prefix_name}-bucket_encryption",
             bucket=s3_bucket.bucket,
             rules=[
                 aws.s3.BucketServerSideEncryptionConfigurationV2RuleArgs(
-                    apply_server_side_encryption_by_default=aws.s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs(
+                    apply_server_side_encryption_by_default=
+                    aws.s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs(
                         sse_algorithm="AES256",
                     ),
                 )
             ],
         )
+    # fmt: off
     return s3_bucket
 
 

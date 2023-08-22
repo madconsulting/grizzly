@@ -1,7 +1,8 @@
 import pulumi
 
-from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import \
-    create_spark_emr_serverless_architecture
+from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import (
+    create_spark_emr_serverless_architecture,
+)
 
 config = pulumi.Config()
 stack_name = pulumi.get_stack()
