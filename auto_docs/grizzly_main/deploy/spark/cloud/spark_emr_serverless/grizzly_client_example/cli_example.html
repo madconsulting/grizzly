@@ -1,0 +1,1350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import inspect
+import json
+import os
+import platform
+import re
+import shutil
+import subprocess
+import sys
+import types
+from importlib.machinery import SourceFileLoader
+from typing import Any, Dict, Optional
+
+import ruamel.yaml
+import seedir as sd
+from rich import print as rich_print
+from rich.prompt import Prompt
+
+import grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy
+import grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless
+from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless import (
+    create_spark_emr_serverless_architecture,
+)
+from grizzly_main.path_interations import cd
+
+
+class SparkEmrServerlessCLIExample:
+    &#34;&#34;&#34;
+    CLI example to deploy and run PySpark code on EMR Serverless
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        main_dir: str = &#34;deploy_examples/spark_emr_serverless_example&#34;,
+        pulumi_subdir: str = &#34;iac_pulumi&#34;,
+        code_subdir: str = &#34;main&#34;,
+    ):
+        &#34;&#34;&#34;
+        Initialise SparkEmrServerlessCLIExample class
+        :param main_dir: Main directory
+        :param pulumi_subdir: Pulumi subdirectory (within main_dir)
+        :param code_subdir: Code subdirectory (within main_dir) with files to deploy venv and package, PySpark example
+                            code and tools to trigger and monitor the EMR Serverless jobs
+        &#34;&#34;&#34;
+        self.pulumi_dir = f&#34;{main_dir}/{pulumi_subdir}&#34;
+        self.code_dir = f&#34;{main_dir}/{code_subdir}&#34;
+        self.main_config_path = f&#34;{self.code_dir}/main_config.py&#34;
+        self.pulumi_organization = None
+        self.pulumi_project = None
+        self.pulumi_stack = None
+        self.stack_config_file = None
+        self.idle_timeout_minutes = None
+
+    def _ask_user_confirmation_to_execute_pulumi_command(self, pulumi_command: str) -&gt; None:
+        &#34;&#34;&#34;
+        Ask user for confirmation to execute a given pulumi command
+        :param pulumi_command: Pulumi command
+        :return: None
+        &#34;&#34;&#34;
+        is_execute_command = Prompt.ask(
+            prompt=&#34;[bold blue]\nWould you like me to execute the command above in this terminal?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if is_execute_command == &#34;y&#34;:
+            with cd(self.pulumi_dir):
+                res = subprocess.run(
+                    pulumi_command.split(),
+                    stderr=subprocess.PIPE,
+                )
+                if res.returncode != 0:
+                    rich_print(
+                        f&#34;[bold red] The following error occurred with:&#34;
+                        f&#34;\n- returncode {res.returncode}&#34;
+                        f&#34;\n- stderr: {res.stderr.decode(&#39;utf-8&#39;)}&#34;
+                    )
+                    print(
+                        &#34;Please start again the example addressing the Pulumi error above, or contact Mad Consulting &#34;
+                        &#34;if you need further support.&#34;
+                    )
+                    sys.exit()
+                else:
+                    print(&#34;Pulumi command executed successfully&#34;)
+        else:
+            Prompt.ask(
+                prompt=&#34;[bold blue]\nPlease execute the command above in another terminal. &#34;
+                &#34;Afterwards, type enter when you are ready to continue.&#34;,
+            )
+
+    @staticmethod
+    def _run_python_script_from_terminal(
+        file_path: str,
+        success_message: str,
+        is_capture_output: bool = False,
+        args: str = None,
+    ) -&gt; Optional[str]:
+        is_execute_command = Prompt.ask(
+            prompt=&#34;[bold blue]\nWould you like me to execute it in this terminal?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if is_execute_command == &#34;y&#34;:
+            if is_capture_output:
+                stdout = subprocess.PIPE
+            else:
+                stdout = None
+            command = [&#34;poetry&#34;, &#34;run&#34;, &#34;python&#34;, file_path]
+            if args:
+                command += args.split()
+            res = subprocess.run(
+                command,
+                stdout=stdout,
+                stderr=subprocess.PIPE,
+            )
+            if res.returncode != 0:
+                rich_print(
+                    f&#34;[bold red] The following error occurred with:&#34;
+                    f&#34;\n- returncode {res.returncode}&#34;
+                    f&#34;\n- stderr: {res.stderr.decode(&#39;utf-8&#39;)}&#34;
+                )
+                print(
+                    &#34;Please start again the example addressing the error above, or contact Mad Consulting if you need &#34;
+                    &#34;further support.&#34;
+                )
+                sys.exit()
+            else:
+                print(success_message)
+        else:
+            Prompt.ask(
+                prompt=f&#34;[bold blue]\nPlease execute the script {file_path}\n&#34;
+                &#34;Afterwards, type enter when you are ready to continue.&#34;,
+            )
+        if is_capture_output:
+            stdout = res.stdout.decode(&#34;utf-8&#34;)
+            print(stdout)
+            return stdout
+
+    @staticmethod
+    def _recommend_pulumi_get_started_tutorial() -&gt; None:
+        &#34;&#34;&#34;
+        Ask if this is the first time the user uses Pulumi. In such case, recommend the AWS Get Started tutorial
+        from Pulumi
+        :return: None
+        &#34;&#34;&#34;
+        is_first_time = Prompt.ask(
+            prompt=&#34;[bold blue]Is this the first time you use Pulumi to deploy AWS infrastructure?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if is_first_time == &#34;y&#34;:
+            print(
+                &#34;\nThen I recommend you to complete the following tutorial beforehand: &#34;
+                &#34;https://www.pulumi.com/docs/get-started/aws/begin/. After completing this tutorial, you should &#34;
+                &#34;have the prerequisites for this section, which are:&#34;
+            )
+            print(&#34;- A Pulumi account with access to your AWS account.&#34;)
+            print(
+                &#34;- Basic knowledge on how to create a Pulumi project and use basic pulumi commands to manage your &#34;
+                &#34;infrastructure programmatically.&#34;
+            )
+            Prompt.ask(
+                prompt=&#34;[bold blue]\nPlease type enter when you are ready to continue&#34;,
+            )
+
+    def _set_pulumi_project_and_stack(self) -&gt; None:
+        &#34;&#34;&#34;
+        Set Pulumi project and stack names
+        :return: None
+        &#34;&#34;&#34;
+        self.pulumi_project = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type the Pulumi Project name&#34;,
+            default=&#34;spark_emr_serverless&#34;,
+        )
+        print(
+            &#34;\nWe will use a single environment for this example. We will also name the Pulumi Stack as the &#34;
+            &#34;environment name.&#34;
+        )
+        self.pulumi_stack = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type the environment / stack name&#34;,
+            default=&#34;dev&#34;,
+        )
+
+    def _copy_pulumi_files(self) -&gt; None:
+        &#34;&#34;&#34;
+        Copy pulumi files to client repository within self.pulumi_dir
+        :return: None
+        &#34;&#34;&#34;
+        source_dir = os.path.dirname(inspect.getfile(grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless))
+        files_list = os.listdir(source_dir)
+        # Keep only &#34;dev&#34; environment file name
+        files_list = [
+            file
+            for file in files_list
+            if not (
+                (file.startswith(&#34;Pulumi.&#34;) and file.endswith(&#34;.yaml&#34;) and &#34;dev&#34; not in file) and file != &#34;Pulumi.yaml&#34;
+            )
+            and file != &#34;__pycache__&#34;
+        ]
+        print(f&#34;\nThe Pulumi code will be copied from the directory: {source_dir}&#34;)
+        if not os.path.exists(self.pulumi_dir):
+            os.makedirs(self.pulumi_dir)
+        else:
+            if os.listdir(self.pulumi_dir):
+                raise ValueError(f&#34;Destination directory {self.pulumi_dir} is not empty&#34;)
+        new_file_list = []
+        for file in files_list:
+            if file == &#34;Pulumi.dev.yaml&#34;:
+                new_file = file.replace(&#34;dev&#34;, self.pulumi_stack)
+            else:
+                new_file = file
+            new_file_dir = f&#34;{os.path.abspath(self.pulumi_dir)}/{new_file}&#34;
+            shutil.copyfile(src=f&#34;{source_dir}/{file}&#34;, dst=new_file_dir)
+            new_file_list.append(new_file)
+        print(f&#34;The folowing files have been created in {self.pulumi_dir}: {new_file_list}&#34;)
+
+    def _update_pulumi_project_name(self) -&gt; None:
+        &#34;&#34;&#34;
+        Update the Pulumi project name in the Pulumi project configuration (Pulumi.yaml)
+        :return: None
+        &#34;&#34;&#34;
+        config_file = f&#34;{self.pulumi_dir}/Pulumi.yaml&#34;
+        data = ruamel.yaml.YAML().load(open(config_file, &#34;r&#34;))
+        data[&#34;name&#34;] = self.pulumi_project
+        yaml = ruamel.yaml.YAML()
+        with open(config_file, &#34;w&#34;) as fp:
+            yaml.dump(data, fp)
+        print(f&#34;The Pulumi Project name {self.pulumi_project} has been updated in the &#39;Pulumi.yaml&#39; file.&#34;)
+
+    def _update_aws_account_id(self) -&gt; None:
+        &#34;&#34;&#34;
+        Update the AWS account id in the Pulumi stack configuration (Pulumi.&lt;stack&gt;.yaml)
+        :return: None
+        &#34;&#34;&#34;
+        self.stack_config_file = f&#34;{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml&#34;
+        print(
+            f&#34;\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be &#34;
+            f&#34;filled. This account requires programmatic access with rights to deploy and manage resources handled &#34;
+            f&#34;through Pulumi, as described in: &#34;
+            f&#34;https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account&#34;
+        )
+        aws_account_id = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type your AWS account id&#34;,
+        )
+        data = ruamel.yaml.YAML().load(open(self.stack_config_file, &#34;r&#34;))
+        data[&#34;config&#34;][&#34;aws_account_id&#34;] = aws_account_id
+        self.idle_timeout_minutes = data[&#34;config&#34;][&#34;idle_timeout_minutes&#34;]
+        yaml = ruamel.yaml.YAML()
+        with open(self.stack_config_file, &#34;w&#34;) as fp:
+            yaml.dump(data, fp)
+        print(f&#34;\nThe AWS account has been updated in {self.stack_config_file}. The file content is printed below:\n&#34;)
+        print(yaml.dump(data, sys.stdout))
+        print(
+            &#34;\nFeel free to modify the other configuration parameters, such as the maximum computational resources &#34;
+            &#34;for the Spark workers, but this is not required to run this example.&#34;
+        )
+        more_info = Prompt.ask(
+            prompt=&#34;[bold blue]\nWould you like more information about the configuration parameters?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if more_info == &#34;y&#34;:
+            print(
+                &#34;\nYou can find the explanation of the parameters in the docstrings of the &#34;
+                f&#34;&#39;create_spark_emr_serverless_architecture&#39; function used in {self.pulumi_dir}/__main__.py &#34;
+            )
+            print(&#34;print(create_spark_emr_serverless_architecture.__doc__)\n&#34;)
+            print(create_spark_emr_serverless_architecture.__doc__)
+
+    def _create_pulumi_stack(self) -&gt; None:
+        &#34;&#34;&#34;
+        Create a Pulumi stack if it does not exist already, otherwise select that stack
+        :return: None
+        &#34;&#34;&#34;
+        print(&#34;\nNow we are going to create a new stack (or select it, if already exists) using the following command:&#34;)
+        rich_print(&#34;\n[bold italic]pulumi stack select &lt;org-name&gt;/&lt;stack&gt; --create&#34;)
+        print(
+            &#34;\nNote that &lt;org-name&gt; can be either the Pulumi organization where the stack will be created, or your &#34;
+            &#34;\nPulumi individual Account ID if you don&#39;t belong to an organization.&#34;
+            &#34;\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_stack_select/&#34;
+        )
+        self.pulumi_organization = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type the target &lt;org-name&gt;&#34;,
+        )
+        pulumi_command = f&#34;pulumi stack select {self.pulumi_organization}/{self.pulumi_stack} --create&#34;
+        rich_print(f&#34;\nPulumi command: [bold italic]{pulumi_command}&#34;)
+        self._ask_user_confirmation_to_execute_pulumi_command(pulumi_command=pulumi_command)
+
+    def _deploy_infrastructure(self) -&gt; None:
+        &#34;&#34;&#34;
+        Deploy the infrastructure via Pulumi
+        :return: None
+        &#34;&#34;&#34;
+        pulumi_command = &#34;pulumi up&#34;
+        print(f&#34;\nNow we are going to deploy the infrastructure for the {self.pulumi_stack} stack&#34;)
+        rich_print(f&#34;\n[bold italic]{pulumi_command}&#34;)
+        print(&#34;\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_up/&#34;)
+        self._ask_user_confirmation_to_execute_pulumi_command(pulumi_command=pulumi_command)
+
+    def _run_section_1(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run Section 1 to deploy the infrastructure via Pulumi
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### SECTION 1 - Deploy the infrastructure ###\n&#34;)
+        print(&#34;In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n&#34;)
+        self._recommend_pulumi_get_started_tutorial()
+        self._set_pulumi_project_and_stack()
+        self._copy_pulumi_files()
+        self._update_pulumi_project_name()
+        self._update_aws_account_id()
+        self._create_pulumi_stack()
+        self._deploy_infrastructure()
+        print(&#34;The infrastructure required to run PySpark code on EMR Serverless has been successfully deployed&#34;)
+
+    def _copy_files_for_minimal_example(self) -&gt; None:
+        &#34;&#34;&#34;
+        Copy files to deploy, trigger and monitor a minimal PySpark example
+        :return: None
+        &#34;&#34;&#34;
+        source_dir = os.path.dirname(
+            inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy)
+        )
+        dst_dir = os.path.abspath(self.code_dir)
+        shutil.copytree(
+            src=source_dir,
+            dst=dst_dir,
+            ignore=shutil.ignore_patterns(&#34;README.txt&#34;, &#34;__pycache__&#34;),
+        )
+
+        print(f&#34;The following files have been copied to the main example directory {self.code_dir}:&#34;)
+        sd.seedir(dst_dir, style=&#34;lines&#34;)
+
+    def _read_main_config(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Read main configuration
+        :return: Main configuration dictionary
+        &#34;&#34;&#34;
+        loader = SourceFileLoader(fullname=&#34;main_config_module&#34;, path=self.main_config_path)
+        mod = types.ModuleType(loader.name)
+        loader.exec_module(mod)
+        return mod.main_config
+
+    def _update_main_config_with_user_params(self) -&gt; None:
+        &#34;&#34;&#34;
+        Update main configuration with user parameters already provided as input in this CLI example or obtained from
+        their system.
+        :return: None
+        &#34;&#34;&#34;
+        main_config_dict = self._read_main_config()
+        main_config_dict[&#34;pulumi_organization&#34;] = self.pulumi_organization
+        main_config_dict[&#34;pulumi_project&#34;] = self.pulumi_project
+        main_config_dict[&#34;pulumi_stack&#34;] = self.pulumi_stack
+        poetry_version = subprocess.run([&#34;poetry&#34;, &#34;-V&#34;], stdout=subprocess.PIPE).stdout.decode(&#34;utf-8&#34;)
+        regex_version = r&#34;version (\d+\.\d+\.\d+[a-z]?\d?)&#34;
+        try:
+            poetry_version = re.search(regex_version, poetry_version).group(1)
+        except AttributeError:
+            raise ValueError(
+                f&#34;Revise if poetry version from str &#39;{poetry_version}&#39; matches the regex format: {regex_version}&#34;
+            )
+        main_config_dict[&#34;poetry_version&#34;] = poetry_version
+        main_config_dict[&#34;python_version&#34;] = platform.python_version()
+        main_config_dict[&#34;repository_name&#34;] = (
+            subprocess.run(
+                &#34;basename `git rev-parse --show-toplevel`&#34;,
+                shell=True,
+                stdout=subprocess.PIPE,
+            )
+            .stdout.decode(&#34;utf-8&#34;)
+            .replace(&#34;\n&#34;, &#34;&#34;)
+        )
+        with open(self.main_config_path, &#34;w&#34;) as fp:
+            fp.write(&#34;main_config = &#34; + json.dumps(main_config_dict))
+        print(
+            f&#34;\nThe main_config dictionary in {self.main_config_path} has been updated according to your &#34;
+            f&#34;python and poetry versions and the Pulumi information previously provided in this example.\nFeel free &#34;
+            f&#34;to revise the main_config dictionary values.\n&#34;
+        )
+
+    def _deploy_venv_and_poetry_package(self) -&gt; None:
+        &#34;&#34;&#34;
+        Deploy venv and poetry package wheel files
+        :return: None
+        &#34;&#34;&#34;
+        file_path = f&#34;{self.code_dir}/deploy_venv_and_poetry_package.py&#34;
+        print(
+            f&#34;Now, we are going to run the python script: {file_path}\n&#34;
+            f&#34;This will create the venv and package wheel files and push them to s3.&#34;
+        )
+        self._run_python_script_from_terminal(
+            file_path=file_path,
+            success_message=&#34;venv and wheel files successfully created and pushed to s3&#34;,
+        )
+
+    def _run_section_2(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run section 2 to deploy the virtual environment and package wheel files
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n&#34;)
+        print(
+            &#34;For the EMR Serverless app, a custom Poetry virtual environment and package are used to:\n&#34;
+            &#34;- Handle all the package dependencies and versioning.\n&#34;
+            &#34;- Package all the files from the repository in a single wheel file, which will allow to have relative &#34;
+            &#34;imports and thus, use modular code across all the repo.\n&#34;
+        )
+        print(
+            &#34;In this section we will:\n&#34;
+            &#34;1. Copy all the required files to run and monitor a minimal PySpark example on EMR Serverless.\n&#34;
+            &#34;2. Create the venv and package wheel files and push them to the S3 bucket (already deployed in Section 1&#34;
+            &#34; using Pulumi)\n&#34;
+        )
+        self._copy_files_for_minimal_example()
+        self._update_main_config_with_user_params()
+        self._deploy_venv_and_poetry_package()
+
+    def _trigger_emr_serverless_job(self) -&gt; str:
+        &#34;&#34;&#34;
+        Trigger EMR Serverless Job
+        :return:
+        &#34;&#34;&#34;
+        file_path = f&#34;{self.code_dir}/trigger_emr_job.py&#34;
+        print(
+            f&#34;Now, we are going to run the python script: {file_path}\n\n&#34;
+            f&#34;This will trigger the EMR Serverless job using the minimal PySpark code example from: &#34;
+            f&#34;{self.code_dir}/pyspark_example.py\n&#34;
+            f&#34;Note that multiple examples are available in the pyspark_example.py script (which are retrieved from the &#34;
+            f&#34;grizzly_main package). Feel free to modify its __main__ to select a different example\n\n&#34;
+            f&#34;The Spark resources used in the EMR job are defined in the main configuration: &#34;
+            f&#34;{self.code_dir}/main_config.py\n&#34;
+            f&#34;For this minimal example, we have very low computational requirements, so the main config has &#34;
+            f&#34;the following specifications for the Spark workers:&#34;
+        )
+        main_config_dict = self._read_main_config()
+        rich_print(main_config_dict[&#34;spark_resources_dict&#34;])
+        print(
+            &#39;Although not required for this example, feel free to modify the &#34;spark_resources_dict&#34; within the &#39;
+            &#34;main_config before triggering the job.&#34;
+        )
+        trigger_output = self._run_python_script_from_terminal(
+            file_path=file_path,
+            success_message=&#34;EMR Serverless job trigger was successful. Logs from trigger script:&#34;,
+            is_capture_output=True,
+        )
+        out_partitioned = trigger_output.rpartition(&#34;, and id: &#34;)
+        if len(out_partitioned) != 3:
+            raise ValueError(
+                &#34;The prints in script to trigger EMR job might have been modified. We are relying on those&#34;
+                &#34;to get the job id. Please, revise that the last print corresponds to: \n&#34;
+                &#34;&#39;, and id: {job_run_id}&#39;&#34;
+            )
+        else:
+            job_id = out_partitioned[-1].replace(&#34;\n&#34;, &#34;&#34;)
+            if job_id.isspace():
+                raise ValueError(f&#34;Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}&#34;)
+        return job_id
+
+    def _monitor_emr_serverless_job(self, job_id: str):
+        file_path = f&#34;{self.code_dir}/analyse_emr_job.py&#34;
+        args = f&#34;--job_run_id={job_id}&#34;
+        print(
+            f&#34;\nYou can monitor the job from the AWS UI using EMR Studio, but we have also provided a script to &#34;
+            f&#34;monitor directly the job using the python AWS SDK: {file_path}\n&#34;
+            f&#34;Note 1: The logs will be stored in the following folder: {self.code_dir}/logs/\n&#34;
+            f&#34;Note 2: We are passing the following argument for the job id: {args}&#34;
+        )
+        is_monitoring_finished = False
+        while not is_monitoring_finished:
+            self._run_python_script_from_terminal(
+                file_path=file_path,
+                success_message=&#34;\nEMR Serverless monitoring finished.&#34;,
+                args=args,
+            )
+            is_continue_monitoring = Prompt.ask(
+                prompt=&#34;[bold blue]\nWould you like to repeat running the monitoring script? &#34;
+                &#34;(e.g. If the job state was still &#39;pending&#39; / &#39;scheduled&#39; / &#39;running&#39;, you could wait a few &#34;
+                &#34;minutes for the job to be in &#39;success&#39; state, so that you can retrieve the complete logs)&#34;,
+                choices=[&#34;y&#34;, &#34;n&#34;],
+                default=&#34;y&#34;,
+            )
+            if is_continue_monitoring == &#34;n&#34;:
+                is_monitoring_finished = True
+
+    def _run_section_3(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run section 3 to trigger and monitor a Spark EMR Serverless Job
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n&#34;)
+        print(
+            &#34;In this section we will:\n&#34;
+            &#34;1. Trigger a Spark EMR Serverless job using a minimal PySpark code example.\n&#34;
+            &#34;2. Monitor the Spark EMR Serverless job.\n&#34;
+            &#34;3. [Optionally] Stop the Spark EMR Serverless application once the job has been completed.\n&#34;
+        )
+        job_id = self._trigger_emr_serverless_job()
+        self._monitor_emr_serverless_job(job_id=job_id)
+        if self.idle_timeout_minutes is None:
+            idle_timeout_minutes_equals = &#34;&#34;
+        else:
+            idle_timeout_minutes_equals = f&#34; = {self.idle_timeout_minutes} min&#34;
+        print(
+            &#34;\nNote that the EMR Serverless application will stop automatically after a certain amount of time being &#34;
+            f&#34;idle (as configured in the parameter idle_timeout_minutes{idle_timeout_minutes_equals}, in the Pulumi &#34;
+            f&#34;stack config file: {self.stack_config_file}).\n&#34;
+            &#34;Also, note that there won&#39;t be any charges for the time when the application is idle without any &#34;
+            &#34;running jobs. But if for any other reason you wanted to manually stop the application, you can do that by &#34;
+            f&#34;executing the following script: {self.code_dir}/stop_emr_app.py&#34;
+        )
+
+    def _common_steps_guidelines(self, start_num: int, is_select_stack: bool = True) -&gt; str:
+        common_steps_list = [
+            f&#39;Open a new terminal and go to the Pulumi project directory: &#34;cd {self.pulumi_dir}&#34;\n&#39;,
+            &#39;If the poetry environment is not activated, execute &#34;poetry shell&#34;\n&#39;,
+        ]
+        if is_select_stack:
+            common_steps_list.append(
+                &#34;If the Pulumi project has multiple stacks, select the desired stack with the following command: &#34;
+                f&#39;&#34;pulumi stack select {self.pulumi_organization}/&lt;pulumi-stack&gt;&#34;\n&#39;
+                &#34;For example, if we wanted select the initial stack created in this example, we would replace&#34;
+                f&#34;&lt;pulumi-stack&gt; by {self.pulumi_stack} in the command above.&#34;
+            )
+        common_steps = &#34;&#34;
+        for i, step in enumerate(common_steps_list):
+            common_steps += f&#34;{i+start_num}. step&#34;
+        return common_steps
+
+    def _guidelines_option_a(self) -&gt; None:
+        &#34;&#34;&#34;
+        Guidelines for option A - Update the infrastructure resources
+        :return: None
+        &#34;&#34;&#34;
+        common_steps = self._common_steps_guidelines(start_num=2)
+        print(
+            &#34;In order to update the infrastructure via Pulumi, you should follow the steps below:&#34;
+            f&#34;1. Update the Pulumi stack configuration parameters in: {self.stack_config_file}\n&#34;
+            f&#34;{common_steps}&#34;
+            f&#39;5. Execute &#34;pulumi refresh&#34; to adopt any potential changes in the cloud provider side to the current&#39;
+            f&#34; Pulumi stack.\n&#34;
+            f&#39;6. Execute &#34;pulumi up&#34; to deploy the infrastructure resources updates.\n&#39;
+        )
+
+    def _guidelines_option_b(self) -&gt; None:
+        &#34;&#34;&#34;
+        Guidelines for option B - Deploy a new environment and run Spark job on this environment
+        :return: None
+        &#34;&#34;&#34;
+        common_steps = self._common_steps_guidelines(start_num=1, is_select_stack=False)
+        print(
+            &#34;These are the recommended steps to deploy a new environment (in the Pulumi commands we have &#34;
+            &#34;abstracted the stack name to &lt;stack-name&gt;):&#34;
+            f&#34;{common_steps}&#34;
+            f&#34;3. Create a new environment, copying the config from the previous environment: &#34;
+            f&#39;&#34;pulumi stack init {self.pulumi_organization}/&lt;pulumi-stack&gt; --copy-config-from &#39;
+            f&#39;{self.pulumi_organization}/{self.pulumi_stack}&#34;\n&#39;
+            f&#34;4. Feel free to  update the parameters in the copied config file: &#34;
+            f&#34;{self.pulumi_dir}/Pulumi.&lt;pulumi-stack&gt;.yaml\n&#34;
+            f&#39;5. Execute &#34;pulumi up&#34; to deploy the infrastructure resources for the new stack\n&#39;
+            f&#34;6. To trigger and monitor a PySpark job on this new environment, you just need to update the &#34;
+            f&#34;pulumi_stack value in the main configuration dictionary (in {self.code_dir}/main_config.py). &#34;
+            f&#34;Afterwards, you can follow the same procedure as in Section 3 in this example.&#34;
+        )
+
+    def _guidelines_option_c(self) -&gt; None:
+        &#34;&#34;&#34;
+        Guidelines for option C - Destroy a stack and its infrastructure resources
+        :return: None
+        &#34;&#34;&#34;
+        common_steps = self._common_steps_guidelines(start_num=1)
+        print(
+            &#34;These are the recommended steps to destroy the infrastructure. Note that this will delete &#34;
+            &#34;permanently all the stack resources, so it is irreversible and should be used with great care.\n&#34;
+            f&#34;{common_steps}&#34;
+            f&#39;4. Execute &#34;pulumi destroy&#34; to delete all the existing resources in the stack.&#39;
+            f&#34;5. The stack itself has not deleted at this point. If you would like to delete the stack and its &#34;
+            f&#39;config, execute &#34;pulumi stack rm {self.pulumi_organization}/&lt;pulumi-stack&gt;&#34;\n&#39;
+        )
+
+    @staticmethod
+    def _run_optional_section() -&gt; None:
+        &#34;&#34;&#34;
+        Run optional section to trigger and monitor a Spark EMR Serverless Job
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### OPTIONAL SECTIONS  ###\n&#34;)
+        print(
+            &#34;Finally, we provide a list of optional sections, in case you would like further guidelines on some of &#34;
+            &#34;these topics:\n&#34;
+            &#34;A. Update the infrastructure resources.\n&#34;
+            &#34;B. Deploy a new environment and trigger an EMR Serverless job for that environment.\n&#34;
+            &#34;C. Destroy the infrastructure resources.\n&#34;
+        )
+        choices = [&#34;A&#34;, &#34;B&#34;, &#34;C&#34;, &#34;exit&#34;]
+        choices_to_func_dict = {
+            &#34;A&#34;: self._guidelines_option_a,
+            &#34;B&#34;: self._guidelines_option_b,
+            &#34;C&#34;: self._guidelines_option_c,
+        }
+        default = &#34;exit&#34;
+        option = Prompt.ask(
+            prompt=&#39;[bold blue]\n Please select an optional section or type &#34;exit&#34; to finish the example:&#39;,
+            choices=choices,
+            default=default,
+        )
+        is_exit = False
+        while not is_exit:
+            if option != &#34;exit&#34;:
+                choices_to_func_dict[option]()
+            option = Prompt.ask(
+                prompt=&#34;[bold blue]\n If you would like to go through another section, please type the corresponding &#34;
+                &#39;option or type &#34;exit&#34; to finish the example:&#39;,
+                choices=choices,
+                default=default,
+            )
+
+    def run_example(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run CLI example
+        :return: None
+        &#34;&#34;&#34;
+        self._run_section_1()
+        self._run_section_2()
+        self._run_section_3()
+        self._run_optional_section()
+        print(
+            &#34;\nCongratulations! You have successfully completed this example on how to deploy and run PySpark code &#34;
+            &#34;on EMR Serverless.&#34;
+        )
+
+
+# TODO - main below for temp testing
+if __name__ in &#34;__main__&#34;:
+    self = SparkEmrServerlessCLIExample()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example.SparkEmrServerlessCLIExample"><code class="flex name class">
+<span>class <span class="ident">SparkEmrServerlessCLIExample</span></span>
+<span>(</span><span>main_dir: str = 'deploy_examples/spark_emr_serverless_example', pulumi_subdir: str = 'iac_pulumi', code_subdir: str = 'main')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>CLI example to deploy and run PySpark code on EMR Serverless</p>
+<p>Initialise SparkEmrServerlessCLIExample class
+:param main_dir: Main directory
+:param pulumi_subdir: Pulumi subdirectory (within main_dir)
+:param code_subdir: Code subdirectory (within main_dir) with files to deploy venv and package, PySpark example
+code and tools to trigger and monitor the EMR Serverless jobs</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SparkEmrServerlessCLIExample:
+    &#34;&#34;&#34;
+    CLI example to deploy and run PySpark code on EMR Serverless
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        main_dir: str = &#34;deploy_examples/spark_emr_serverless_example&#34;,
+        pulumi_subdir: str = &#34;iac_pulumi&#34;,
+        code_subdir: str = &#34;main&#34;,
+    ):
+        &#34;&#34;&#34;
+        Initialise SparkEmrServerlessCLIExample class
+        :param main_dir: Main directory
+        :param pulumi_subdir: Pulumi subdirectory (within main_dir)
+        :param code_subdir: Code subdirectory (within main_dir) with files to deploy venv and package, PySpark example
+                            code and tools to trigger and monitor the EMR Serverless jobs
+        &#34;&#34;&#34;
+        self.pulumi_dir = f&#34;{main_dir}/{pulumi_subdir}&#34;
+        self.code_dir = f&#34;{main_dir}/{code_subdir}&#34;
+        self.main_config_path = f&#34;{self.code_dir}/main_config.py&#34;
+        self.pulumi_organization = None
+        self.pulumi_project = None
+        self.pulumi_stack = None
+        self.stack_config_file = None
+        self.idle_timeout_minutes = None
+
+    def _ask_user_confirmation_to_execute_pulumi_command(self, pulumi_command: str) -&gt; None:
+        &#34;&#34;&#34;
+        Ask user for confirmation to execute a given pulumi command
+        :param pulumi_command: Pulumi command
+        :return: None
+        &#34;&#34;&#34;
+        is_execute_command = Prompt.ask(
+            prompt=&#34;[bold blue]\nWould you like me to execute the command above in this terminal?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if is_execute_command == &#34;y&#34;:
+            with cd(self.pulumi_dir):
+                res = subprocess.run(
+                    pulumi_command.split(),
+                    stderr=subprocess.PIPE,
+                )
+                if res.returncode != 0:
+                    rich_print(
+                        f&#34;[bold red] The following error occurred with:&#34;
+                        f&#34;\n- returncode {res.returncode}&#34;
+                        f&#34;\n- stderr: {res.stderr.decode(&#39;utf-8&#39;)}&#34;
+                    )
+                    print(
+                        &#34;Please start again the example addressing the Pulumi error above, or contact Mad Consulting &#34;
+                        &#34;if you need further support.&#34;
+                    )
+                    sys.exit()
+                else:
+                    print(&#34;Pulumi command executed successfully&#34;)
+        else:
+            Prompt.ask(
+                prompt=&#34;[bold blue]\nPlease execute the command above in another terminal. &#34;
+                &#34;Afterwards, type enter when you are ready to continue.&#34;,
+            )
+
+    @staticmethod
+    def _run_python_script_from_terminal(
+        file_path: str,
+        success_message: str,
+        is_capture_output: bool = False,
+        args: str = None,
+    ) -&gt; Optional[str]:
+        is_execute_command = Prompt.ask(
+            prompt=&#34;[bold blue]\nWould you like me to execute it in this terminal?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if is_execute_command == &#34;y&#34;:
+            if is_capture_output:
+                stdout = subprocess.PIPE
+            else:
+                stdout = None
+            command = [&#34;poetry&#34;, &#34;run&#34;, &#34;python&#34;, file_path]
+            if args:
+                command += args.split()
+            res = subprocess.run(
+                command,
+                stdout=stdout,
+                stderr=subprocess.PIPE,
+            )
+            if res.returncode != 0:
+                rich_print(
+                    f&#34;[bold red] The following error occurred with:&#34;
+                    f&#34;\n- returncode {res.returncode}&#34;
+                    f&#34;\n- stderr: {res.stderr.decode(&#39;utf-8&#39;)}&#34;
+                )
+                print(
+                    &#34;Please start again the example addressing the error above, or contact Mad Consulting if you need &#34;
+                    &#34;further support.&#34;
+                )
+                sys.exit()
+            else:
+                print(success_message)
+        else:
+            Prompt.ask(
+                prompt=f&#34;[bold blue]\nPlease execute the script {file_path}\n&#34;
+                &#34;Afterwards, type enter when you are ready to continue.&#34;,
+            )
+        if is_capture_output:
+            stdout = res.stdout.decode(&#34;utf-8&#34;)
+            print(stdout)
+            return stdout
+
+    @staticmethod
+    def _recommend_pulumi_get_started_tutorial() -&gt; None:
+        &#34;&#34;&#34;
+        Ask if this is the first time the user uses Pulumi. In such case, recommend the AWS Get Started tutorial
+        from Pulumi
+        :return: None
+        &#34;&#34;&#34;
+        is_first_time = Prompt.ask(
+            prompt=&#34;[bold blue]Is this the first time you use Pulumi to deploy AWS infrastructure?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if is_first_time == &#34;y&#34;:
+            print(
+                &#34;\nThen I recommend you to complete the following tutorial beforehand: &#34;
+                &#34;https://www.pulumi.com/docs/get-started/aws/begin/. After completing this tutorial, you should &#34;
+                &#34;have the prerequisites for this section, which are:&#34;
+            )
+            print(&#34;- A Pulumi account with access to your AWS account.&#34;)
+            print(
+                &#34;- Basic knowledge on how to create a Pulumi project and use basic pulumi commands to manage your &#34;
+                &#34;infrastructure programmatically.&#34;
+            )
+            Prompt.ask(
+                prompt=&#34;[bold blue]\nPlease type enter when you are ready to continue&#34;,
+            )
+
+    def _set_pulumi_project_and_stack(self) -&gt; None:
+        &#34;&#34;&#34;
+        Set Pulumi project and stack names
+        :return: None
+        &#34;&#34;&#34;
+        self.pulumi_project = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type the Pulumi Project name&#34;,
+            default=&#34;spark_emr_serverless&#34;,
+        )
+        print(
+            &#34;\nWe will use a single environment for this example. We will also name the Pulumi Stack as the &#34;
+            &#34;environment name.&#34;
+        )
+        self.pulumi_stack = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type the environment / stack name&#34;,
+            default=&#34;dev&#34;,
+        )
+
+    def _copy_pulumi_files(self) -&gt; None:
+        &#34;&#34;&#34;
+        Copy pulumi files to client repository within self.pulumi_dir
+        :return: None
+        &#34;&#34;&#34;
+        source_dir = os.path.dirname(inspect.getfile(grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless))
+        files_list = os.listdir(source_dir)
+        # Keep only &#34;dev&#34; environment file name
+        files_list = [
+            file
+            for file in files_list
+            if not (
+                (file.startswith(&#34;Pulumi.&#34;) and file.endswith(&#34;.yaml&#34;) and &#34;dev&#34; not in file) and file != &#34;Pulumi.yaml&#34;
+            )
+            and file != &#34;__pycache__&#34;
+        ]
+        print(f&#34;\nThe Pulumi code will be copied from the directory: {source_dir}&#34;)
+        if not os.path.exists(self.pulumi_dir):
+            os.makedirs(self.pulumi_dir)
+        else:
+            if os.listdir(self.pulumi_dir):
+                raise ValueError(f&#34;Destination directory {self.pulumi_dir} is not empty&#34;)
+        new_file_list = []
+        for file in files_list:
+            if file == &#34;Pulumi.dev.yaml&#34;:
+                new_file = file.replace(&#34;dev&#34;, self.pulumi_stack)
+            else:
+                new_file = file
+            new_file_dir = f&#34;{os.path.abspath(self.pulumi_dir)}/{new_file}&#34;
+            shutil.copyfile(src=f&#34;{source_dir}/{file}&#34;, dst=new_file_dir)
+            new_file_list.append(new_file)
+        print(f&#34;The folowing files have been created in {self.pulumi_dir}: {new_file_list}&#34;)
+
+    def _update_pulumi_project_name(self) -&gt; None:
+        &#34;&#34;&#34;
+        Update the Pulumi project name in the Pulumi project configuration (Pulumi.yaml)
+        :return: None
+        &#34;&#34;&#34;
+        config_file = f&#34;{self.pulumi_dir}/Pulumi.yaml&#34;
+        data = ruamel.yaml.YAML().load(open(config_file, &#34;r&#34;))
+        data[&#34;name&#34;] = self.pulumi_project
+        yaml = ruamel.yaml.YAML()
+        with open(config_file, &#34;w&#34;) as fp:
+            yaml.dump(data, fp)
+        print(f&#34;The Pulumi Project name {self.pulumi_project} has been updated in the &#39;Pulumi.yaml&#39; file.&#34;)
+
+    def _update_aws_account_id(self) -&gt; None:
+        &#34;&#34;&#34;
+        Update the AWS account id in the Pulumi stack configuration (Pulumi.&lt;stack&gt;.yaml)
+        :return: None
+        &#34;&#34;&#34;
+        self.stack_config_file = f&#34;{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml&#34;
+        print(
+            f&#34;\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be &#34;
+            f&#34;filled. This account requires programmatic access with rights to deploy and manage resources handled &#34;
+            f&#34;through Pulumi, as described in: &#34;
+            f&#34;https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account&#34;
+        )
+        aws_account_id = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type your AWS account id&#34;,
+        )
+        data = ruamel.yaml.YAML().load(open(self.stack_config_file, &#34;r&#34;))
+        data[&#34;config&#34;][&#34;aws_account_id&#34;] = aws_account_id
+        self.idle_timeout_minutes = data[&#34;config&#34;][&#34;idle_timeout_minutes&#34;]
+        yaml = ruamel.yaml.YAML()
+        with open(self.stack_config_file, &#34;w&#34;) as fp:
+            yaml.dump(data, fp)
+        print(f&#34;\nThe AWS account has been updated in {self.stack_config_file}. The file content is printed below:\n&#34;)
+        print(yaml.dump(data, sys.stdout))
+        print(
+            &#34;\nFeel free to modify the other configuration parameters, such as the maximum computational resources &#34;
+            &#34;for the Spark workers, but this is not required to run this example.&#34;
+        )
+        more_info = Prompt.ask(
+            prompt=&#34;[bold blue]\nWould you like more information about the configuration parameters?&#34;,
+            choices=[&#34;y&#34;, &#34;n&#34;],
+            default=&#34;y&#34;,
+        )
+        if more_info == &#34;y&#34;:
+            print(
+                &#34;\nYou can find the explanation of the parameters in the docstrings of the &#34;
+                f&#34;&#39;create_spark_emr_serverless_architecture&#39; function used in {self.pulumi_dir}/__main__.py &#34;
+            )
+            print(&#34;print(create_spark_emr_serverless_architecture.__doc__)\n&#34;)
+            print(create_spark_emr_serverless_architecture.__doc__)
+
+    def _create_pulumi_stack(self) -&gt; None:
+        &#34;&#34;&#34;
+        Create a Pulumi stack if it does not exist already, otherwise select that stack
+        :return: None
+        &#34;&#34;&#34;
+        print(&#34;\nNow we are going to create a new stack (or select it, if already exists) using the following command:&#34;)
+        rich_print(&#34;\n[bold italic]pulumi stack select &lt;org-name&gt;/&lt;stack&gt; --create&#34;)
+        print(
+            &#34;\nNote that &lt;org-name&gt; can be either the Pulumi organization where the stack will be created, or your &#34;
+            &#34;\nPulumi individual Account ID if you don&#39;t belong to an organization.&#34;
+            &#34;\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_stack_select/&#34;
+        )
+        self.pulumi_organization = Prompt.ask(
+            prompt=&#34;[bold blue]\nPlease type the target &lt;org-name&gt;&#34;,
+        )
+        pulumi_command = f&#34;pulumi stack select {self.pulumi_organization}/{self.pulumi_stack} --create&#34;
+        rich_print(f&#34;\nPulumi command: [bold italic]{pulumi_command}&#34;)
+        self._ask_user_confirmation_to_execute_pulumi_command(pulumi_command=pulumi_command)
+
+    def _deploy_infrastructure(self) -&gt; None:
+        &#34;&#34;&#34;
+        Deploy the infrastructure via Pulumi
+        :return: None
+        &#34;&#34;&#34;
+        pulumi_command = &#34;pulumi up&#34;
+        print(f&#34;\nNow we are going to deploy the infrastructure for the {self.pulumi_stack} stack&#34;)
+        rich_print(f&#34;\n[bold italic]{pulumi_command}&#34;)
+        print(&#34;\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_up/&#34;)
+        self._ask_user_confirmation_to_execute_pulumi_command(pulumi_command=pulumi_command)
+
+    def _run_section_1(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run Section 1 to deploy the infrastructure via Pulumi
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### SECTION 1 - Deploy the infrastructure ###\n&#34;)
+        print(&#34;In this section we will walk you through the steps to deploy the infrastructure as code using Pulumi.\n&#34;)
+        self._recommend_pulumi_get_started_tutorial()
+        self._set_pulumi_project_and_stack()
+        self._copy_pulumi_files()
+        self._update_pulumi_project_name()
+        self._update_aws_account_id()
+        self._create_pulumi_stack()
+        self._deploy_infrastructure()
+        print(&#34;The infrastructure required to run PySpark code on EMR Serverless has been successfully deployed&#34;)
+
+    def _copy_files_for_minimal_example(self) -&gt; None:
+        &#34;&#34;&#34;
+        Copy files to deploy, trigger and monitor a minimal PySpark example
+        :return: None
+        &#34;&#34;&#34;
+        source_dir = os.path.dirname(
+            inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy)
+        )
+        dst_dir = os.path.abspath(self.code_dir)
+        shutil.copytree(
+            src=source_dir,
+            dst=dst_dir,
+            ignore=shutil.ignore_patterns(&#34;README.txt&#34;, &#34;__pycache__&#34;),
+        )
+
+        print(f&#34;The following files have been copied to the main example directory {self.code_dir}:&#34;)
+        sd.seedir(dst_dir, style=&#34;lines&#34;)
+
+    def _read_main_config(self) -&gt; Dict[str, Any]:
+        &#34;&#34;&#34;
+        Read main configuration
+        :return: Main configuration dictionary
+        &#34;&#34;&#34;
+        loader = SourceFileLoader(fullname=&#34;main_config_module&#34;, path=self.main_config_path)
+        mod = types.ModuleType(loader.name)
+        loader.exec_module(mod)
+        return mod.main_config
+
+    def _update_main_config_with_user_params(self) -&gt; None:
+        &#34;&#34;&#34;
+        Update main configuration with user parameters already provided as input in this CLI example or obtained from
+        their system.
+        :return: None
+        &#34;&#34;&#34;
+        main_config_dict = self._read_main_config()
+        main_config_dict[&#34;pulumi_organization&#34;] = self.pulumi_organization
+        main_config_dict[&#34;pulumi_project&#34;] = self.pulumi_project
+        main_config_dict[&#34;pulumi_stack&#34;] = self.pulumi_stack
+        poetry_version = subprocess.run([&#34;poetry&#34;, &#34;-V&#34;], stdout=subprocess.PIPE).stdout.decode(&#34;utf-8&#34;)
+        regex_version = r&#34;version (\d+\.\d+\.\d+[a-z]?\d?)&#34;
+        try:
+            poetry_version = re.search(regex_version, poetry_version).group(1)
+        except AttributeError:
+            raise ValueError(
+                f&#34;Revise if poetry version from str &#39;{poetry_version}&#39; matches the regex format: {regex_version}&#34;
+            )
+        main_config_dict[&#34;poetry_version&#34;] = poetry_version
+        main_config_dict[&#34;python_version&#34;] = platform.python_version()
+        main_config_dict[&#34;repository_name&#34;] = (
+            subprocess.run(
+                &#34;basename `git rev-parse --show-toplevel`&#34;,
+                shell=True,
+                stdout=subprocess.PIPE,
+            )
+            .stdout.decode(&#34;utf-8&#34;)
+            .replace(&#34;\n&#34;, &#34;&#34;)
+        )
+        with open(self.main_config_path, &#34;w&#34;) as fp:
+            fp.write(&#34;main_config = &#34; + json.dumps(main_config_dict))
+        print(
+            f&#34;\nThe main_config dictionary in {self.main_config_path} has been updated according to your &#34;
+            f&#34;python and poetry versions and the Pulumi information previously provided in this example.\nFeel free &#34;
+            f&#34;to revise the main_config dictionary values.\n&#34;
+        )
+
+    def _deploy_venv_and_poetry_package(self) -&gt; None:
+        &#34;&#34;&#34;
+        Deploy venv and poetry package wheel files
+        :return: None
+        &#34;&#34;&#34;
+        file_path = f&#34;{self.code_dir}/deploy_venv_and_poetry_package.py&#34;
+        print(
+            f&#34;Now, we are going to run the python script: {file_path}\n&#34;
+            f&#34;This will create the venv and package wheel files and push them to s3.&#34;
+        )
+        self._run_python_script_from_terminal(
+            file_path=file_path,
+            success_message=&#34;venv and wheel files successfully created and pushed to s3&#34;,
+        )
+
+    def _run_section_2(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run section 2 to deploy the virtual environment and package wheel files
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### SECTION 2 -  Deploy the virtual environment and package wheel files ###\n&#34;)
+        print(
+            &#34;For the EMR Serverless app, a custom Poetry virtual environment and package are used to:\n&#34;
+            &#34;- Handle all the package dependencies and versioning.\n&#34;
+            &#34;- Package all the files from the repository in a single wheel file, which will allow to have relative &#34;
+            &#34;imports and thus, use modular code across all the repo.\n&#34;
+        )
+        print(
+            &#34;In this section we will:\n&#34;
+            &#34;1. Copy all the required files to run and monitor a minimal PySpark example on EMR Serverless.\n&#34;
+            &#34;2. Create the venv and package wheel files and push them to the S3 bucket (already deployed in Section 1&#34;
+            &#34; using Pulumi)\n&#34;
+        )
+        self._copy_files_for_minimal_example()
+        self._update_main_config_with_user_params()
+        self._deploy_venv_and_poetry_package()
+
+    def _trigger_emr_serverless_job(self) -&gt; str:
+        &#34;&#34;&#34;
+        Trigger EMR Serverless Job
+        :return:
+        &#34;&#34;&#34;
+        file_path = f&#34;{self.code_dir}/trigger_emr_job.py&#34;
+        print(
+            f&#34;Now, we are going to run the python script: {file_path}\n\n&#34;
+            f&#34;This will trigger the EMR Serverless job using the minimal PySpark code example from: &#34;
+            f&#34;{self.code_dir}/pyspark_example.py\n&#34;
+            f&#34;Note that multiple examples are available in the pyspark_example.py script (which are retrieved from the &#34;
+            f&#34;grizzly_main package). Feel free to modify its __main__ to select a different example\n\n&#34;
+            f&#34;The Spark resources used in the EMR job are defined in the main configuration: &#34;
+            f&#34;{self.code_dir}/main_config.py\n&#34;
+            f&#34;For this minimal example, we have very low computational requirements, so the main config has &#34;
+            f&#34;the following specifications for the Spark workers:&#34;
+        )
+        main_config_dict = self._read_main_config()
+        rich_print(main_config_dict[&#34;spark_resources_dict&#34;])
+        print(
+            &#39;Although not required for this example, feel free to modify the &#34;spark_resources_dict&#34; within the &#39;
+            &#34;main_config before triggering the job.&#34;
+        )
+        trigger_output = self._run_python_script_from_terminal(
+            file_path=file_path,
+            success_message=&#34;EMR Serverless job trigger was successful. Logs from trigger script:&#34;,
+            is_capture_output=True,
+        )
+        out_partitioned = trigger_output.rpartition(&#34;, and id: &#34;)
+        if len(out_partitioned) != 3:
+            raise ValueError(
+                &#34;The prints in script to trigger EMR job might have been modified. We are relying on those&#34;
+                &#34;to get the job id. Please, revise that the last print corresponds to: \n&#34;
+                &#34;&#39;, and id: {job_run_id}&#39;&#34;
+            )
+        else:
+            job_id = out_partitioned[-1].replace(&#34;\n&#34;, &#34;&#34;)
+            if job_id.isspace():
+                raise ValueError(f&#34;Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}&#34;)
+        return job_id
+
+    def _monitor_emr_serverless_job(self, job_id: str):
+        file_path = f&#34;{self.code_dir}/analyse_emr_job.py&#34;
+        args = f&#34;--job_run_id={job_id}&#34;
+        print(
+            f&#34;\nYou can monitor the job from the AWS UI using EMR Studio, but we have also provided a script to &#34;
+            f&#34;monitor directly the job using the python AWS SDK: {file_path}\n&#34;
+            f&#34;Note 1: The logs will be stored in the following folder: {self.code_dir}/logs/\n&#34;
+            f&#34;Note 2: We are passing the following argument for the job id: {args}&#34;
+        )
+        is_monitoring_finished = False
+        while not is_monitoring_finished:
+            self._run_python_script_from_terminal(
+                file_path=file_path,
+                success_message=&#34;\nEMR Serverless monitoring finished.&#34;,
+                args=args,
+            )
+            is_continue_monitoring = Prompt.ask(
+                prompt=&#34;[bold blue]\nWould you like to repeat running the monitoring script? &#34;
+                &#34;(e.g. If the job state was still &#39;pending&#39; / &#39;scheduled&#39; / &#39;running&#39;, you could wait a few &#34;
+                &#34;minutes for the job to be in &#39;success&#39; state, so that you can retrieve the complete logs)&#34;,
+                choices=[&#34;y&#34;, &#34;n&#34;],
+                default=&#34;y&#34;,
+            )
+            if is_continue_monitoring == &#34;n&#34;:
+                is_monitoring_finished = True
+
+    def _run_section_3(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run section 3 to trigger and monitor a Spark EMR Serverless Job
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### SECTION 3 - Trigger and monitor a Spark EMR Serverless Job ###\n&#34;)
+        print(
+            &#34;In this section we will:\n&#34;
+            &#34;1. Trigger a Spark EMR Serverless job using a minimal PySpark code example.\n&#34;
+            &#34;2. Monitor the Spark EMR Serverless job.\n&#34;
+            &#34;3. [Optionally] Stop the Spark EMR Serverless application once the job has been completed.\n&#34;
+        )
+        job_id = self._trigger_emr_serverless_job()
+        self._monitor_emr_serverless_job(job_id=job_id)
+        if self.idle_timeout_minutes is None:
+            idle_timeout_minutes_equals = &#34;&#34;
+        else:
+            idle_timeout_minutes_equals = f&#34; = {self.idle_timeout_minutes} min&#34;
+        print(
+            &#34;\nNote that the EMR Serverless application will stop automatically after a certain amount of time being &#34;
+            f&#34;idle (as configured in the parameter idle_timeout_minutes{idle_timeout_minutes_equals}, in the Pulumi &#34;
+            f&#34;stack config file: {self.stack_config_file}).\n&#34;
+            &#34;Also, note that there won&#39;t be any charges for the time when the application is idle without any &#34;
+            &#34;running jobs. But if for any other reason you wanted to manually stop the application, you can do that by &#34;
+            f&#34;executing the following script: {self.code_dir}/stop_emr_app.py&#34;
+        )
+
+    def _common_steps_guidelines(self, start_num: int, is_select_stack: bool = True) -&gt; str:
+        common_steps_list = [
+            f&#39;Open a new terminal and go to the Pulumi project directory: &#34;cd {self.pulumi_dir}&#34;\n&#39;,
+            &#39;If the poetry environment is not activated, execute &#34;poetry shell&#34;\n&#39;,
+        ]
+        if is_select_stack:
+            common_steps_list.append(
+                &#34;If the Pulumi project has multiple stacks, select the desired stack with the following command: &#34;
+                f&#39;&#34;pulumi stack select {self.pulumi_organization}/&lt;pulumi-stack&gt;&#34;\n&#39;
+                &#34;For example, if we wanted select the initial stack created in this example, we would replace&#34;
+                f&#34;&lt;pulumi-stack&gt; by {self.pulumi_stack} in the command above.&#34;
+            )
+        common_steps = &#34;&#34;
+        for i, step in enumerate(common_steps_list):
+            common_steps += f&#34;{i+start_num}. step&#34;
+        return common_steps
+
+    def _guidelines_option_a(self) -&gt; None:
+        &#34;&#34;&#34;
+        Guidelines for option A - Update the infrastructure resources
+        :return: None
+        &#34;&#34;&#34;
+        common_steps = self._common_steps_guidelines(start_num=2)
+        print(
+            &#34;In order to update the infrastructure via Pulumi, you should follow the steps below:&#34;
+            f&#34;1. Update the Pulumi stack configuration parameters in: {self.stack_config_file}\n&#34;
+            f&#34;{common_steps}&#34;
+            f&#39;5. Execute &#34;pulumi refresh&#34; to adopt any potential changes in the cloud provider side to the current&#39;
+            f&#34; Pulumi stack.\n&#34;
+            f&#39;6. Execute &#34;pulumi up&#34; to deploy the infrastructure resources updates.\n&#39;
+        )
+
+    def _guidelines_option_b(self) -&gt; None:
+        &#34;&#34;&#34;
+        Guidelines for option B - Deploy a new environment and run Spark job on this environment
+        :return: None
+        &#34;&#34;&#34;
+        common_steps = self._common_steps_guidelines(start_num=1, is_select_stack=False)
+        print(
+            &#34;These are the recommended steps to deploy a new environment (in the Pulumi commands we have &#34;
+            &#34;abstracted the stack name to &lt;stack-name&gt;):&#34;
+            f&#34;{common_steps}&#34;
+            f&#34;3. Create a new environment, copying the config from the previous environment: &#34;
+            f&#39;&#34;pulumi stack init {self.pulumi_organization}/&lt;pulumi-stack&gt; --copy-config-from &#39;
+            f&#39;{self.pulumi_organization}/{self.pulumi_stack}&#34;\n&#39;
+            f&#34;4. Feel free to  update the parameters in the copied config file: &#34;
+            f&#34;{self.pulumi_dir}/Pulumi.&lt;pulumi-stack&gt;.yaml\n&#34;
+            f&#39;5. Execute &#34;pulumi up&#34; to deploy the infrastructure resources for the new stack\n&#39;
+            f&#34;6. To trigger and monitor a PySpark job on this new environment, you just need to update the &#34;
+            f&#34;pulumi_stack value in the main configuration dictionary (in {self.code_dir}/main_config.py). &#34;
+            f&#34;Afterwards, you can follow the same procedure as in Section 3 in this example.&#34;
+        )
+
+    def _guidelines_option_c(self) -&gt; None:
+        &#34;&#34;&#34;
+        Guidelines for option C - Destroy a stack and its infrastructure resources
+        :return: None
+        &#34;&#34;&#34;
+        common_steps = self._common_steps_guidelines(start_num=1)
+        print(
+            &#34;These are the recommended steps to destroy the infrastructure. Note that this will delete &#34;
+            &#34;permanently all the stack resources, so it is irreversible and should be used with great care.\n&#34;
+            f&#34;{common_steps}&#34;
+            f&#39;4. Execute &#34;pulumi destroy&#34; to delete all the existing resources in the stack.&#39;
+            f&#34;5. The stack itself has not deleted at this point. If you would like to delete the stack and its &#34;
+            f&#39;config, execute &#34;pulumi stack rm {self.pulumi_organization}/&lt;pulumi-stack&gt;&#34;\n&#39;
+        )
+
+    @staticmethod
+    def _run_optional_section() -&gt; None:
+        &#34;&#34;&#34;
+        Run optional section to trigger and monitor a Spark EMR Serverless Job
+        :return: None
+        &#34;&#34;&#34;
+        rich_print(&#34;[bold yellow]\n### OPTIONAL SECTIONS  ###\n&#34;)
+        print(
+            &#34;Finally, we provide a list of optional sections, in case you would like further guidelines on some of &#34;
+            &#34;these topics:\n&#34;
+            &#34;A. Update the infrastructure resources.\n&#34;
+            &#34;B. Deploy a new environment and trigger an EMR Serverless job for that environment.\n&#34;
+            &#34;C. Destroy the infrastructure resources.\n&#34;
+        )
+        choices = [&#34;A&#34;, &#34;B&#34;, &#34;C&#34;, &#34;exit&#34;]
+        choices_to_func_dict = {
+            &#34;A&#34;: self._guidelines_option_a,
+            &#34;B&#34;: self._guidelines_option_b,
+            &#34;C&#34;: self._guidelines_option_c,
+        }
+        default = &#34;exit&#34;
+        option = Prompt.ask(
+            prompt=&#39;[bold blue]\n Please select an optional section or type &#34;exit&#34; to finish the example:&#39;,
+            choices=choices,
+            default=default,
+        )
+        is_exit = False
+        while not is_exit:
+            if option != &#34;exit&#34;:
+                choices_to_func_dict[option]()
+            option = Prompt.ask(
+                prompt=&#34;[bold blue]\n If you would like to go through another section, please type the corresponding &#34;
+                &#39;option or type &#34;exit&#34; to finish the example:&#39;,
+                choices=choices,
+                default=default,
+            )
+
+    def run_example(self) -&gt; None:
+        &#34;&#34;&#34;
+        Run CLI example
+        :return: None
+        &#34;&#34;&#34;
+        self._run_section_1()
+        self._run_section_2()
+        self._run_section_3()
+        self._run_optional_section()
+        print(
+            &#34;\nCongratulations! You have successfully completed this example on how to deploy and run PySpark code &#34;
+            &#34;on EMR Serverless.&#34;
+        )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example.SparkEmrServerlessCLIExample.run_example"><code class="name flex">
+<span>def <span class="ident">run_example</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run CLI example
+:return: None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_example(self) -&gt; None:
+    &#34;&#34;&#34;
+    Run CLI example
+    :return: None
+    &#34;&#34;&#34;
+    self._run_section_1()
+    self._run_section_2()
+    self._run_section_3()
+    self._run_optional_section()
+    print(
+        &#34;\nCongratulations! You have successfully completed this example on how to deploy and run PySpark code &#34;
+        &#34;on EMR Serverless.&#34;
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example" href="index.html">grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example.SparkEmrServerlessCLIExample" href="#grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example.SparkEmrServerlessCLIExample">SparkEmrServerlessCLIExample</a></code></h4>
+<ul class="">
+<li><code><a title="grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example.SparkEmrServerlessCLIExample.run_example" href="#grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.cli_example.SparkEmrServerlessCLIExample.run_example">run_example</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
