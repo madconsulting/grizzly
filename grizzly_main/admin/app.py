@@ -17,6 +17,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    """
+    The above function renders the "index.html" template using Jinja and returns the rendered output with a status code of
+    200.
+    :return: the rendered output of the "index.html" template and a status code of 200.
+    """
     template = jinja_env.get_template("index.html")
     output = template.render()
     return output, 200
@@ -24,4 +29,8 @@ def index():
 
 @app.route("/version")
 def version():
+    """
+    The function returns the value of the `__version__` variable as a dictionary with a key "msg".
+    :return: a dictionary with a key "msg" and a value that is the value of the "__version__" variable.
+    """
     return {"msg": f"{__version__}"}

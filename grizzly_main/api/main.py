@@ -13,12 +13,23 @@ app = FastAPI(title="Grizzly API")
 
 
 @app.route("/")
-def hello_grizzly(root_path):
+def hello_grizzly(root_path: str):
+    """
+    The function `hello_grizzly` returns a JSON response with the message "hello grizzly_main" and a status code of 200.
+
+    :param root_path: The root path is the base directory or folder where the code is located. It is used to specify the
+    location of files or resources relative to the root path
+    :return: a JSON response with the message "hello grizzly_main" and a status code of 200.
+    """
     return JSONResponse({"msg": "hello grizzly_main"}, status_code=200)
 
 
 @app.route("/docs")
 def docs():
+    """
+    The function `docs()` returns the Swagger UI HTML code with specified parameters.
+    :return: the Swagger UI HTML code.
+    """
     return get_swagger_ui_html(
         openapi_url=app.openapi_url,
         title="Grizzly - Swagger UI",

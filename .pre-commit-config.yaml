@@ -43,3 +43,20 @@ repos:
     rev: 23.7.0
     hooks:
       - id: black # Code formatting.
+# Using packages installed in poetry environments for hooks where we did not get expected behaviours using
+# github repo hooks.
+- repo: local
+  hooks:
+      - id: interrogate # Check docstrings coverage
+        name: interrogate
+        language: system
+        entry: sh
+        # 95% docstring coverage required, ignoring __init__.py modules and module-level docstrings
+        # Note: use -vv for extended verbosity
+        args: [ "-c",
+            "poetry run python3 -m interrogate --fail-under 95 --ignore-init-module --ignore-module -v"]
+      - id: pdoc # Auto-documentation in HTML format
+        name: pdoc
+        language: system
+        entry: sh
+        args: [ "-c", "poetry run python3 -m pdoc --html -f grizzly_main -o auto_docs --skip-errors" ]

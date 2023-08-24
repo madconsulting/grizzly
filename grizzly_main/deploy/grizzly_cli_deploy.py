@@ -10,6 +10,11 @@ app = typer.Typer(rich_markup_mode="rich")
 
 
 def explain_cli_format():
+    """
+    The function `explain_cli_format()` asks the user if they would like an explanation of the formatting used in the
+    command-line interface (CLI), and if so, it provides guidelines for the formatting. After that, it prints "Let's start
+    the example!" as a message.
+    """
     is_explain_legend = Prompt.ask(
         prompt="[bold][blue]\nBefore we start the example, would you like an explanation of the formatting used "
         "in the cli?",

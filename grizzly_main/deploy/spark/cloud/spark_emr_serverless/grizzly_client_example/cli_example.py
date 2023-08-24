@@ -93,6 +93,14 @@ class SparkEmrServerlessCLIExample:
         is_capture_output: bool = False,
         args: str = None,
     ) -> Optional[str]:
+        """
+        Run python script from terminal
+        :param file_path: File path
+        :param success_message: Message to be printed if script runs successfully
+        :param is_capture_output: True if we are capturing the output of the logic run, False otherwise
+        :param args: Additional arguments
+        :return:
+        """
         is_execute_command = Prompt.ask(
             prompt="[bold blue]\nWould you like me to execute it in this terminal?",
             choices=["y", "n"],
@@ -416,7 +424,7 @@ class SparkEmrServerlessCLIExample:
     def _trigger_emr_serverless_job(self) -> str:
         """
         Trigger EMR Serverless Job
-        :return:
+        :return: Job ID
         """
         file_path = f"{self.code_dir}/trigger_emr_job.py"
         print(
@@ -454,7 +462,14 @@ class SparkEmrServerlessCLIExample:
                 raise ValueError(f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}")
         return job_id
 
-    def _monitor_emr_serverless_job(self, job_id: str):
+    def _monitor_emr_serverless_job(self, job_id: str) -> None:
+        """
+        Monitor the progress of an EMR serverless job and provides a script to monitor the job
+        using the Python AWS SDK.
+
+        :param job_id: ID of the EMR serverless job that you want to monitor
+        :return: None
+        """
         file_path = f"{self.code_dir}/analyse_emr_job.py"
         args = f"--job_run_id={job_id}"
         print(
@@ -508,6 +523,17 @@ class SparkEmrServerlessCLIExample:
         )
 
     def _common_steps_guidelines(self, start_num: int, is_select_stack: bool = True) -> str:
+        """
+        The function `_common_steps_guidelines` returns a string containing common steps for a Pulumi project,
+        including  selecting a stack if necessary.
+
+        :param start_num: The `start_num` parameter is an integer that represents the starting number for the steps in the
+        list. It is used to generate step numbers for each item in the `common_steps_list`
+        :param is_select_stack: The `is_select_stack` parameter is a boolean flag that determines whether or not to include
+        the step for selecting a stack in the common steps list. If `is_select_stack` is `True`, the step for selecting a
+        stack will be included. If `is_select_stack` is `False`,, defaults to True
+        :return: a string that contains a list of common steps or instructions.
+        """
         common_steps_list = [
             f'Open a new terminal and go to the Pulumi project directory: "cd {self.pulumi_dir}"\n',
             'If the poetry environment is not activated, execute "poetry shell"\n',
@@ -627,6 +653,6 @@ class SparkEmrServerlessCLIExample:
         )
 
 
-# TODO - main below for temp testing
-if __name__ in "__main__":
-    self = SparkEmrServerlessCLIExample()
+# For debugging purposes:
+# if __name__ in "__main__":
+#     self = SparkEmrServerlessCLIExample()

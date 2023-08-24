@@ -45,6 +45,11 @@ app = Flask(__name__)
 
 @app.route(&#34;/&#34;)
 def index():
+    &#34;&#34;&#34;
+    The above function renders the &#34;index.html&#34; template using Jinja and returns the rendered output with a status code of
+    200.
+    :return: the rendered output of the &#34;index.html&#34; template and a status code of 200.
+    &#34;&#34;&#34;
     template = jinja_env.get_template(&#34;index.html&#34;)
     output = template.render()
     return output, 200
@@ -52,6 +57,10 @@ def index():
 
 @app.route(&#34;/version&#34;)
 def version():
+    &#34;&#34;&#34;
+    The function returns the value of the `__version__` variable as a dictionary with a key &#34;msg&#34;.
+    :return: a dictionary with a key &#34;msg&#34; and a value that is the value of the &#34;__version__&#34; variable.
+    &#34;&#34;&#34;
     return {&#34;msg&#34;: f&#34;{__version__}&#34;}</code></pre>
 </details>
 </section>
@@ -66,13 +75,20 @@ def version():
 <span>def <span class="ident">index</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>The above function renders the "index.html" template using Jinja and returns the rendered output with a status code of
+200.
+:return: the rendered output of the "index.html" template and a status code of 200.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@app.route(&#34;/&#34;)
 def index():
+    &#34;&#34;&#34;
+    The above function renders the &#34;index.html&#34; template using Jinja and returns the rendered output with a status code of
+    200.
+    :return: the rendered output of the &#34;index.html&#34; template and a status code of 200.
+    &#34;&#34;&#34;
     template = jinja_env.get_template(&#34;index.html&#34;)
     output = template.render()
     return output, 200</code></pre>
@@ -82,13 +98,18 @@ def index():
 <span>def <span class="ident">version</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>The function returns the value of the <code>__version__</code> variable as a dictionary with a key "msg".
+:return: a dictionary with a key "msg" and a value that is the value of the "<strong>version</strong>" variable.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@app.route(&#34;/version&#34;)
 def version():
+    &#34;&#34;&#34;
+    The function returns the value of the `__version__` variable as a dictionary with a key &#34;msg&#34;.
+    :return: a dictionary with a key &#34;msg&#34; and a value that is the value of the &#34;__version__&#34; variable.
+    &#34;&#34;&#34;
     return {&#34;msg&#34;: f&#34;{__version__}&#34;}</code></pre>
 </details>
 </dd>
