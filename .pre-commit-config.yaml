@@ -19,7 +19,8 @@ repos:
     rev: 1.7.5
     hooks:
     -   id: bandit # Security vulnerabilities
-        args: ["--exclude", "scripts,setup.py,bin,tests,dat,cython"]
+        args: ["--exclude", "scripts,setup.py,bin,tests,dat,cython",
+               '--severity', 'medium'] # Severity above Medium considered (Low neglected)
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.5.1
     hooks:

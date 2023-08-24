@@ -42,6 +42,7 @@ def get_pulumi_stack_state(
             "Content-Type": "application/json",
             "Authorization": f"token {pulumi_access_token}",
         },
+        timeout=30,
     )
     return json.loads(response.text)
 
