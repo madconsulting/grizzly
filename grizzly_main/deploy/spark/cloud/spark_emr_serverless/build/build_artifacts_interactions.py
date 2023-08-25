@@ -2,7 +2,7 @@ import os
 import pathlib
 import pprint
 import sys
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union
 from zipfile import ZipFile
 
 import tomlkit
@@ -27,15 +27,15 @@ def _get_current_poetry_package_name_and_version(
         pyproject_path += f"/{poetry_dir}"
     with open(os.path.abspath(f"{pyproject_path}/pyproject.toml")) as pyproject:
         file_contents = pyproject.read()
-    package_name = tomlkit.parse(file_contents)["tool"]["poetry"]["name"]
-    package_version = tomlkit.parse(file_contents)["tool"]["poetry"]["version"]
-    return package_name, package_version
+    package_name = tomlkit.parse(file_contents)["tool"]["poetry"]["name"]  # type: ignore
+    package_version = tomlkit.parse(file_contents)["tool"]["poetry"]["version"]  # type: ignore
+    return package_name, package_version  # type: ignore
 
 
 def _get_poetry_package_name_and_version(
     poetry_dir: str = "",
     base_dir_client_repo: Union[str, pathlib.Path] = "",
-    package_version: str = None,
+    package_version: Optional[str] = None,
 ) -> Tuple[str, str]:
     """
     Get Poetry package name and version from pyproject.toml file (or overwritten by input)
@@ -58,7 +58,7 @@ def get_poetry_wheel_file(
     poetry_dir: str = "",
     base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
-    package_version: str = None,
+    package_version: Optional[str] = None,
     is_print: bool = True,
 ) -> Tuple[str, str]:
     """
@@ -143,7 +143,7 @@ def get_venv_file(
     poetry_dir: str = "",
     base_dir_client_repo: Union[str, pathlib.Path] = "",
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
-    package_version: str = None,
+    package_version: Optional[str] = None,
     is_print: bool = True,
 ) -> Tuple[str, str]:
     """

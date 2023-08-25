@@ -28,7 +28,7 @@
 </summary>
 <pre><code class="python">import pathlib
 from datetime import datetime
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
 import boto3
 import botocore
@@ -76,7 +76,7 @@ def define_job_run_args(
     spark_emr_serverless_config: Dict[str, Any],
     script_file_path: str,
     emr_app_id: str,
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -&gt; Tuple[str, Dict[str, Any]]:
     &#34;&#34;&#34;
     Define job run arguments
@@ -120,7 +120,7 @@ def trigger_emr_job(
     script_file_path: str,
     is_update_script_s3: bool,
     base_dir_client_repo: Union[str, pathlib.Path] = &#34;&#34;,
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -&gt; str:
     &#34;&#34;&#34;
     Trigger EMR Serverless job
@@ -164,7 +164,7 @@ def trigger_emr_job(
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.trigger_emr_job.define_job_run_args"><code class="name flex">
-<span>def <span class="ident">define_job_run_args</span></span>(<span>spark_emr_serverless_config: Dict[str, Any], script_file_path: str, emr_app_id: str, execution_timeout_min: int = None) ‑> Tuple[str, Dict[str, Any]]</span>
+<span>def <span class="ident">define_job_run_args</span></span>(<span>spark_emr_serverless_config: Dict[str, Any], script_file_path: str, emr_app_id: str, execution_timeout_min: Optional[int] = None) ‑> Tuple[str, Dict[str, Any]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Define job run arguments
@@ -181,7 +181,7 @@ def trigger_emr_job(
     spark_emr_serverless_config: Dict[str, Any],
     script_file_path: str,
     emr_app_id: str,
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -&gt; Tuple[str, Dict[str, Any]]:
     &#34;&#34;&#34;
     Define job run arguments
@@ -252,7 +252,7 @@ def trigger_emr_job(
 </details>
 </dd>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.trigger_emr_job.trigger_emr_job"><code class="name flex">
-<span>def <span class="ident">trigger_emr_job</span></span>(<span>spark_emr_serverless_config: Dict[str, Any], script_file_path: str, is_update_script_s3: bool, base_dir_client_repo: Union[str, pathlib.Path] = '', execution_timeout_min: int = None) ‑> str</span>
+<span>def <span class="ident">trigger_emr_job</span></span>(<span>spark_emr_serverless_config: Dict[str, Any], script_file_path: str, is_update_script_s3: bool, base_dir_client_repo: Union[str, pathlib.Path] = '', execution_timeout_min: Optional[int] = None) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Trigger EMR Serverless job
@@ -271,7 +271,7 @@ def trigger_emr_job(
     script_file_path: str,
     is_update_script_s3: bool,
     base_dir_client_repo: Union[str, pathlib.Path] = &#34;&#34;,
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -&gt; str:
     &#34;&#34;&#34;
     Trigger EMR Serverless job

@@ -51,7 +51,7 @@ def pyspark_example_2(spark: SparkSession) -&gt; None:
         ]
     )  # an RDD of Vectors
     # Calculate the correlation matrix using Pearson&#39;s method.
-    print(Statistics.corr(data, method=&#34;pearson&#34;))</code></pre>
+    print(Statistics.corr(data, method=&#34;pearson&#34;))  # type: ignore</code></pre>
 </details>
 </section>
 <section>
@@ -93,7 +93,7 @@ Based on: <a href="https://github.com/apache/spark/blob/master/examples/src/main
         ]
     )  # an RDD of Vectors
     # Calculate the correlation matrix using Pearson&#39;s method.
-    print(Statistics.corr(data, method=&#34;pearson&#34;))</code></pre>
+    print(Statistics.corr(data, method=&#34;pearson&#34;))  # type: ignore</code></pre>
 </details>
 </dd>
 </dl>

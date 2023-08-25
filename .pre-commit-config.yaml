@@ -15,25 +15,6 @@ repos:
     -   id: check-yaml
     -   id: debug-statements
     -   id: detect-private-key
--   repo: https://github.com/PyCQA/bandit
-    rev: 1.7.5
-    hooks:
-    -   id: bandit # Security vulnerabilities
-        args: ["--exclude", "scripts,setup.py,bin,tests,dat,cython",
-               '--severity', 'medium'] # Severity above Medium considered (Low neglected)
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.1
-    hooks:
-    -   id: mypy # Static type checking
-        exclude: ^tests/,^dat/,^cython/
--   repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
-    hooks:
-    -   id: flake8 # Code linting -> Focuses on PEP 8 style and basic style issues
--   repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.7.2
-    hooks:
-    -   id: pylint # Code linting -> Deep code analysis for bugs, standards, and quality
 -   repo: https://github.com/pre-commit/mirrors-isort # Using isort mirror to prevent import error
     rev: v5.10.1
     hooks:
@@ -43,6 +24,32 @@ repos:
     rev: 23.7.0
     hooks:
       - id: black # Code formatting.
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+    -   id: bandit # Security vulnerabilities
+        args: ["--exclude", "scripts,setup.py,bin,tests,dat,cython",
+               '--severity', 'medium'] # Severity above Medium considered (Low neglected)
+# Using mypy installed in poetry environment as we did not get expected behaviours using github repo hook
+- repo: local
+  hooks:
+      - id: mypy # Check docstrings coverage
+        name: mypy
+        language: system
+        entry: sh
+        # Analysing grizzly_main package; skip checking import statements for modules that are missing
+        # type annotations (to not fail due to external packages imported with missing annotations)
+        args: [ "-c",
+                "poetry run python3 -m mypy -p grizzly_main --ignore-missing-imports" ]
+-   repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+    -   id: flake8 # Code linting -> Focuses on PEP 8 style and basic style issues
+# TODO - exclude documentation warnings from pylint: we are using interrogate for that
+-   repo: https://github.com/PyCQA/pylint
+    rev: pylint-2.7.2
+    hooks:
+    -   id: pylint # Code linting -> Deep code analysis for bugs, standards, and quality
 # Using packages installed in poetry environments for hooks where we did not get expected behaviours using
 # github repo hooks.
 - repo: local
@@ -55,8 +62,8 @@ repos:
         # Note: use -vv for extended verbosity
         args: [ "-c",
             "poetry run python3 -m interrogate --fail-under 95 --ignore-init-module --ignore-module -v"]
-      - id: pdoc # Auto-documentation in HTML format
-        name: pdoc
+      - id: pdoc3 # Auto-documentation in HTML format
+        name: pdoc3
         language: system
         entry: sh
         args: [ "-c", "poetry run python3 -m pdoc --html -f grizzly_main -o auto_docs --skip-errors" ]

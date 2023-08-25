@@ -40,7 +40,7 @@ def pyspark_example(example_name: str, example_kwargs: Dict[str, Any]) -&gt; Non
     :return: None
     &#34;&#34;&#34;
     spark = get_spark_context(app_name=example_name, run_mode=&#34;emr_serverless&#34;)
-    pyspark_example_dict[example_name](spark=spark, **example_kwargs)
+    pyspark_example_dict[example_name](spark=spark, **example_kwargs)  # type: ignore
     spark.stop()
 
 
@@ -96,7 +96,7 @@ if __name__ == &#34;__main__&#34;:
     :return: None
     &#34;&#34;&#34;
     spark = get_spark_context(app_name=example_name, run_mode=&#34;emr_serverless&#34;)
-    pyspark_example_dict[example_name](spark=spark, **example_kwargs)
+    pyspark_example_dict[example_name](spark=spark, **example_kwargs)  # type: ignore
     spark.stop()</code></pre>
 </details>
 </dd>

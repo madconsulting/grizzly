@@ -27,7 +27,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import json
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import pulumi
 import pulumi_aws as aws
@@ -36,7 +36,7 @@ import pulumi_aws as aws
 def create_s3_bucket(
     resource_prefix_name: str,
     is_bucket_encryption: bool,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; aws.s3.Bucket:
     &#34;&#34;&#34;
     Create a s3 bucket
@@ -75,7 +75,7 @@ def create_s3_bucket(
 
 def create_iam_role(
     resource_prefix_name: str,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; aws.iam.Role:
     &#34;&#34;&#34;
     Create IAM role to allow jobs submitted to the Amazon EMR Serverless application to access other AWS services
@@ -103,7 +103,7 @@ def create_iam_role(
 
 
 def get_access_role_policy_details(
-    s3_bucket_arn: aws.s3.Bucket.arn, additional_read_access_resources: List[str] = None
+    s3_bucket_arn: str, additional_read_access_resources: Optional[List[str]] = None
 ) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;
     Get access IAM role policy details
@@ -146,7 +146,7 @@ def create_iam_role_policy(
     resource_prefix_name: str,
     s3_bucket: aws.s3.Bucket,
     iam_role: aws.iam.Role,
-    additional_read_access_resources: List[str] = None,
+    additional_read_access_resources: Optional[List[str]] = None,
 ) -&gt; aws.iam.RolePolicy:
     &#34;&#34;&#34;
     Create IAM Role Policy
@@ -163,7 +163,9 @@ def create_iam_role_policy(
         # Note: Need to define the get_access_role_policy_details function to pass the bucket.arn. Otherwise an Output
         # is not JSON serializable
         policy=pulumi.Output.all(s3_bucket_arn, additional_read_access_resources).apply(
-            lambda args: get_access_role_policy_details(s3_bucket_arn=args[0], additional_read_access_resources=args[1])
+            lambda args: get_access_role_policy_details(  # type: ignore
+                s3_bucket_arn=args[0], additional_read_access_resources=args[1]
+            )
         ),
     )
 
@@ -174,7 +176,7 @@ def create_emr_serverless_app(
     max_memory_gb: int,
     max_disk_gb: int,
     idle_timeout_minutes: int = 60,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; aws.emrserverless.Application:
     &#34;&#34;&#34;
     Create EMR Serverless app
@@ -211,9 +213,9 @@ def create_spark_emr_serverless_architecture(
     max_memory_gb: int,
     max_disk_gb: int,
     idle_timeout_minutes: int = 60,
-    additional_read_access_resources: List[str] = None,
+    additional_read_access_resources: Optional[List[str]] = None,
     is_bucket_encryption: bool = True,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; Tuple[aws.s3.Bucket, aws.iam.Role, aws.iam.RolePolicy, aws.emrserverless.Application]:
     &#34;&#34;&#34;
     Creates the following infrastructure is required to run Spark on AWS with EMR Serverless:
@@ -264,7 +266,7 @@ def create_spark_emr_serverless_architecture(
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless.create_emr_serverless_app"><code class="name flex">
-<span>def <span class="ident">create_emr_serverless_app</span></span>(<span>resource_prefix_name: str, max_vcpu: int, max_memory_gb: int, max_disk_gb: int, idle_timeout_minutes: int = 60, tags: Dict[str, Any] = None) ‑> pulumi_aws.emrserverless.application.Application</span>
+<span>def <span class="ident">create_emr_serverless_app</span></span>(<span>resource_prefix_name: str, max_vcpu: int, max_memory_gb: int, max_disk_gb: int, idle_timeout_minutes: int = 60, tags: Optional[Dict[str, Any]] = None) ‑> pulumi_aws.emrserverless.application.Application</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create EMR Serverless app
@@ -285,7 +287,7 @@ def create_spark_emr_serverless_architecture(
     max_memory_gb: int,
     max_disk_gb: int,
     idle_timeout_minutes: int = 60,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; aws.emrserverless.Application:
     &#34;&#34;&#34;
     Create EMR Serverless app
@@ -317,7 +319,7 @@ def create_spark_emr_serverless_architecture(
 </details>
 </dd>
 <dt id="grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless.create_iam_role"><code class="name flex">
-<span>def <span class="ident">create_iam_role</span></span>(<span>resource_prefix_name: str, tags: Dict[str, Any] = None) ‑> pulumi_aws.iam.role.Role</span>
+<span>def <span class="ident">create_iam_role</span></span>(<span>resource_prefix_name: str, tags: Optional[Dict[str, Any]] = None) ‑> pulumi_aws.iam.role.Role</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create IAM role to allow jobs submitted to the Amazon EMR Serverless application to access other AWS services
@@ -331,7 +333,7 @@ on our behalf
 </summary>
 <pre><code class="python">def create_iam_role(
     resource_prefix_name: str,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; aws.iam.Role:
     &#34;&#34;&#34;
     Create IAM role to allow jobs submitted to the Amazon EMR Serverless application to access other AWS services
@@ -359,7 +361,7 @@ on our behalf
 </details>
 </dd>
 <dt id="grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless.create_iam_role_policy"><code class="name flex">
-<span>def <span class="ident">create_iam_role_policy</span></span>(<span>resource_prefix_name: str, s3_bucket: pulumi_aws.s3.bucket.Bucket, iam_role: pulumi_aws.iam.role.Role, additional_read_access_resources: List[str] = None) ‑> pulumi_aws.iam.role_policy.RolePolicy</span>
+<span>def <span class="ident">create_iam_role_policy</span></span>(<span>resource_prefix_name: str, s3_bucket: pulumi_aws.s3.bucket.Bucket, iam_role: pulumi_aws.iam.role.Role, additional_read_access_resources: Optional[List[str]] = None) ‑> pulumi_aws.iam.role_policy.RolePolicy</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create IAM Role Policy
@@ -376,7 +378,7 @@ on our behalf
     resource_prefix_name: str,
     s3_bucket: aws.s3.Bucket,
     iam_role: aws.iam.Role,
-    additional_read_access_resources: List[str] = None,
+    additional_read_access_resources: Optional[List[str]] = None,
 ) -&gt; aws.iam.RolePolicy:
     &#34;&#34;&#34;
     Create IAM Role Policy
@@ -393,13 +395,15 @@ on our behalf
         # Note: Need to define the get_access_role_policy_details function to pass the bucket.arn. Otherwise an Output
         # is not JSON serializable
         policy=pulumi.Output.all(s3_bucket_arn, additional_read_access_resources).apply(
-            lambda args: get_access_role_policy_details(s3_bucket_arn=args[0], additional_read_access_resources=args[1])
+            lambda args: get_access_role_policy_details(  # type: ignore
+                s3_bucket_arn=args[0], additional_read_access_resources=args[1]
+            )
         ),
     )</code></pre>
 </details>
 </dd>
 <dt id="grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless.create_s3_bucket"><code class="name flex">
-<span>def <span class="ident">create_s3_bucket</span></span>(<span>resource_prefix_name: str, is_bucket_encryption: bool, tags: Dict[str, Any] = None) ‑> pulumi_aws.s3.bucket.Bucket</span>
+<span>def <span class="ident">create_s3_bucket</span></span>(<span>resource_prefix_name: str, is_bucket_encryption: bool, tags: Optional[Dict[str, Any]] = None) ‑> pulumi_aws.s3.bucket.Bucket</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create a s3 bucket
@@ -414,7 +418,7 @@ on our behalf
 <pre><code class="python">def create_s3_bucket(
     resource_prefix_name: str,
     is_bucket_encryption: bool,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; aws.s3.Bucket:
     &#34;&#34;&#34;
     Create a s3 bucket
@@ -452,7 +456,7 @@ on our behalf
 </details>
 </dd>
 <dt id="grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless.create_spark_emr_serverless_architecture"><code class="name flex">
-<span>def <span class="ident">create_spark_emr_serverless_architecture</span></span>(<span>resource_prefix_name: str, max_vcpu: int, max_memory_gb: int, max_disk_gb: int, idle_timeout_minutes: int = 60, additional_read_access_resources: List[str] = None, is_bucket_encryption: bool = True, tags: Dict[str, Any] = None) ‑> Tuple[pulumi_aws.s3.bucket.Bucket, pulumi_aws.iam.role.Role, pulumi_aws.iam.role_policy.RolePolicy, pulumi_aws.emrserverless.application.Application]</span>
+<span>def <span class="ident">create_spark_emr_serverless_architecture</span></span>(<span>resource_prefix_name: str, max_vcpu: int, max_memory_gb: int, max_disk_gb: int, idle_timeout_minutes: int = 60, additional_read_access_resources: Optional[List[str]] = None, is_bucket_encryption: bool = True, tags: Optional[Dict[str, Any]] = None) ‑> Tuple[pulumi_aws.s3.bucket.Bucket, pulumi_aws.iam.role.Role, pulumi_aws.iam.role_policy.RolePolicy, pulumi_aws.emrserverless.application.Application]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates the following infrastructure is required to run Spark on AWS with EMR Serverless:
@@ -481,9 +485,9 @@ from this architecture.
     max_memory_gb: int,
     max_disk_gb: int,
     idle_timeout_minutes: int = 60,
-    additional_read_access_resources: List[str] = None,
+    additional_read_access_resources: Optional[List[str]] = None,
     is_bucket_encryption: bool = True,
-    tags: Dict[str, Any] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ) -&gt; Tuple[aws.s3.Bucket, aws.iam.Role, aws.iam.RolePolicy, aws.emrserverless.Application]:
     &#34;&#34;&#34;
     Creates the following infrastructure is required to run Spark on AWS with EMR Serverless:
@@ -527,7 +531,7 @@ from this architecture.
 </details>
 </dd>
 <dt id="grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless.get_access_role_policy_details"><code class="name flex">
-<span>def <span class="ident">get_access_role_policy_details</span></span>(<span>s3_bucket_arn: <property object at 0x7f43d00faf90>, additional_read_access_resources: List[str] = None) ‑> Dict[str, Any]</span>
+<span>def <span class="ident">get_access_role_policy_details</span></span>(<span>s3_bucket_arn: str, additional_read_access_resources: Optional[List[str]] = None) ‑> Dict[str, Any]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get access IAM role policy details
@@ -539,7 +543,7 @@ from this architecture.
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_access_role_policy_details(
-    s3_bucket_arn: aws.s3.Bucket.arn, additional_read_access_resources: List[str] = None
+    s3_bucket_arn: str, additional_read_access_resources: Optional[List[str]] = None
 ) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;
     Get access IAM role policy details

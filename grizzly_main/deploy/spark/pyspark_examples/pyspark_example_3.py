@@ -2,6 +2,7 @@
 This is inspired in the Pyspark code example from
 https://github.com/aws-samples/emr-serverless-samples/blob/main/examples/pyspark/extreme_weather.py
 """
+from typing import Optional
 
 from pyspark.sql import DataFrame, Row, SparkSession
 from pyspark.sql import functions as F
@@ -21,7 +22,7 @@ def find_largest(df: DataFrame, col_name: str) -> Row:
         .filter(~F.col(col_name).isin([99.99, 999.9, 9999.9]))
         .orderBy(F.desc(col_name))
         .limit(1)
-        .first()
+        .first()  # type: ignore
     )
 
 
@@ -29,7 +30,7 @@ def pyspark_example_3(
     spark: SparkSession,
     year: int,
     is_specific_csv_file_only: bool,
-    csv_file_name: str = None,
+    csv_file_name: Optional[str] = None,
 ):
     """
     Pyspark example nº 3 - extreme-weather

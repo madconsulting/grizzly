@@ -12,7 +12,7 @@ def pyspark_example(example_name: str, example_kwargs: Dict[str, Any]) -> None:
     :return: None
     """
     spark = get_spark_context(app_name=example_name, run_mode="emr_serverless")
-    pyspark_example_dict[example_name](spark=spark, **example_kwargs)
+    pyspark_example_dict[example_name](spark=spark, **example_kwargs)  # type: ignore
     spark.stop()
 
 

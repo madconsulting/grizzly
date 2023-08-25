@@ -18,8 +18,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     """
-    The above function renders the "index.html" template using Jinja and returns the rendered output with a status code of
-    200.
+    The above function renders the "index.html" template using Jinja and returns the rendered output
+    with a status code of 200.
     :return: the rendered output of the "index.html" template and a status code of 200.
     """
     template = jinja_env.get_template("index.html")

@@ -4,7 +4,7 @@ import os
 import sys
 from typing import Any, Dict
 
-import requests
+import requests  # type: ignore
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 

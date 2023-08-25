@@ -27,7 +27,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import pathlib
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
     get_poetry_wheel_file,
@@ -125,7 +125,7 @@ def get_spark_emr_serverless_config(
     spark_resources_dict: Dict[str, Any],
     poetry_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path],
-    poetry_package_version: str = None,
+    poetry_package_version: Optional[str] = None,
     **kwargs,
 ) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;
@@ -306,7 +306,7 @@ def get_spark_emr_serverless_config(
 </details>
 </dd>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables.get_spark_emr_serverless_config"><code class="name flex">
-<span>def <span class="ident">get_spark_emr_serverless_config</span></span>(<span>pulumi_organization: str, pulumi_project: str, pulumi_stack: str, spark_resources_dict: Dict[str, Any], poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path], poetry_package_version: str = None, **kwargs) ‑> Dict[str, Any]</span>
+<span>def <span class="ident">get_spark_emr_serverless_config</span></span>(<span>pulumi_organization: str, pulumi_project: str, pulumi_stack: str, spark_resources_dict: Dict[str, Any], poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path], poetry_package_version: Optional[str] = None, **kwargs) ‑> Dict[str, Any]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get Spark EMR Serverless config.
@@ -331,7 +331,7 @@ Poetry package (e.g. to run PySpark code using a past deployed version of Poetry
     spark_resources_dict: Dict[str, Any],
     poetry_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path],
-    poetry_package_version: str = None,
+    poetry_package_version: Optional[str] = None,
     **kwargs,
 ) -&gt; Dict[str, Any]:
     &#34;&#34;&#34;

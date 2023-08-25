@@ -8,7 +8,7 @@ import subprocess
 import sys
 import types
 from importlib.machinery import SourceFileLoader
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, no_type_check
 
 import ruamel.yaml
 import seedir as sd
@@ -91,7 +91,7 @@ class SparkEmrServerlessCLIExample:
         file_path: str,
         success_message: str,
         is_capture_output: bool = False,
-        args: str = None,
+        args: Optional[str] = None,
     ) -> Optional[str]:
         """
         Run python script from terminal
@@ -138,9 +138,11 @@ class SparkEmrServerlessCLIExample:
                 "Afterwards, type enter when you are ready to continue.",
             )
         if is_capture_output:
-            stdout = res.stdout.decode("utf-8")
+            stdout = res.stdout.decode("utf-8")  # type: ignore
             print(stdout)
-            return stdout
+            return stdout  # type: ignore
+        else:
+            return None
 
     @staticmethod
     def _recommend_pulumi_get_started_tutorial() -> None:
@@ -169,6 +171,7 @@ class SparkEmrServerlessCLIExample:
                 prompt="[bold blue]\nPlease type enter when you are ready to continue",
             )
 
+    @no_type_check  # Neglect mypy checks for this function
     def _set_pulumi_project_and_stack(self) -> None:
         """
         Set Pulumi project and stack names
@@ -212,7 +215,10 @@ class SparkEmrServerlessCLIExample:
         new_file_list = []
         for file in files_list:
             if file == "Pulumi.dev.yaml":
-                new_file = file.replace("dev", self.pulumi_stack)
+                if self.pulumi_stack:
+                    new_file = file.replace("dev", self.pulumi_stack)
+                else:
+                    raise ValueError("Missing self.pulumi_stack")
             else:
                 new_file = file
             new_file_dir = f"{os.path.abspath(self.pulumi_dir)}/{new_file}"
@@ -238,14 +244,17 @@ class SparkEmrServerlessCLIExample:
         Update the AWS account id in the Pulumi stack configuration (Pulumi.<stack>.yaml)
         :return: None
         """
-        self.stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
+        if self.pulumi_stack:
+            self.stack_config_file = f"{self.pulumi_dir}/Pulumi.{self.pulumi_stack}.yaml"
+        else:
+            raise ValueError("Missing self.pulumi_stack")
         print(
             f"\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be "
             f"filled. This account requires programmatic access with rights to deploy and manage resources handled "
             f"through Pulumi, as described in: "
             f"https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account"
         )
-        aws_account_id = Prompt.ask(
+        aws_account_id = Prompt.ask(  # type: ignore
             prompt="[bold blue]\nPlease type your AWS account id",
         )
         data = ruamel.yaml.YAML().load(open(self.stack_config_file, "r"))
@@ -279,13 +288,13 @@ class SparkEmrServerlessCLIExample:
         :return: None
         """
         print("\nNow we are going to create a new stack (or select it, if already exists) using the following command:")
-        rich_print("\n[bold italic]pulumi stack select <org-name>/<stack> --create")
+        rich_print("\n[bold italic]pulumi stack select <org-name>/<stack> --create")  # type: ignore
         print(
             "\nNote that <org-name> can be either the Pulumi organization where the stack will be created, or your "
             "\nPulumi individual Account ID if you don't belong to an organization."
             "\nFor more info about this command, read: https://www.pulumi.com/docs/reference/cli/pulumi_stack_select/"
         )
-        self.pulumi_organization = Prompt.ask(
+        self.pulumi_organization = Prompt.ask(  # type: ignore
             prompt="[bold blue]\nPlease type the target <org-name>",
         )
         pulumi_command = f"pulumi stack select {self.pulumi_organization}/{self.pulumi_stack} --create"
@@ -360,7 +369,7 @@ class SparkEmrServerlessCLIExample:
         poetry_version = subprocess.run(["poetry", "-V"], stdout=subprocess.PIPE).stdout.decode("utf-8")
         regex_version = r"version (\d+\.\d+\.\d+[a-z]?\d?)"
         try:
-            poetry_version = re.search(regex_version, poetry_version).group(1)
+            poetry_version = re.search(regex_version, poetry_version).group(1)  # type: ignore
         except AttributeError:
             raise ValueError(
                 f"Revise if poetry version from str '{poetry_version}' matches the regex format: {regex_version}"
@@ -449,7 +458,7 @@ class SparkEmrServerlessCLIExample:
             success_message="EMR Serverless job trigger was successful. Logs from trigger script:",
             is_capture_output=True,
         )
-        out_partitioned = trigger_output.rpartition(", and id: ")
+        out_partitioned = trigger_output.rpartition(", and id: ")  # type: ignore
         if len(out_partitioned) != 3:
             raise ValueError(
                 "The prints in script to trigger EMR job might have been modified. We are relying on those"
@@ -527,11 +536,11 @@ class SparkEmrServerlessCLIExample:
         The function `_common_steps_guidelines` returns a string containing common steps for a Pulumi project,
         including  selecting a stack if necessary.
 
-        :param start_num: The `start_num` parameter is an integer that represents the starting number for the steps in the
-        list. It is used to generate step numbers for each item in the `common_steps_list`
-        :param is_select_stack: The `is_select_stack` parameter is a boolean flag that determines whether or not to include
-        the step for selecting a stack in the common steps list. If `is_select_stack` is `True`, the step for selecting a
-        stack will be included. If `is_select_stack` is `False`,, defaults to True
+        :param start_num: The `start_num` parameter is an integer that represents the starting number for the steps
+        in the list. It is used to generate step numbers for each item in the `common_steps_list`
+        :param is_select_stack: The `is_select_stack` parameter is a boolean flag that determines whether or not
+        to include the step for selecting a stack in the common steps list. If `is_select_stack` is `True`, the step
+        for selecting a stack will be included. If `is_select_stack` is `False`,, defaults to True
         :return: a string that contains a list of common steps or instructions.
         """
         common_steps_list = [
@@ -601,8 +610,7 @@ class SparkEmrServerlessCLIExample:
             f'config, execute "pulumi stack rm {self.pulumi_organization}/<pulumi-stack>"\n'
         )
 
-    @staticmethod
-    def _run_optional_section() -> None:
+    def _run_optional_section(self) -> None:
         """
         Run optional section to trigger and monitor a Spark EMR Serverless Job
         :return: None

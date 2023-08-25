@@ -1,6 +1,6 @@
 import pathlib
 from datetime import datetime
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
 import boto3
 import botocore
@@ -48,7 +48,7 @@ def define_job_run_args(
     spark_emr_serverless_config: Dict[str, Any],
     script_file_path: str,
     emr_app_id: str,
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -> Tuple[str, Dict[str, Any]]:
     """
     Define job run arguments
@@ -92,7 +92,7 @@ def trigger_emr_job(
     script_file_path: str,
     is_update_script_s3: bool,
     base_dir_client_repo: Union[str, pathlib.Path] = "",
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -> str:
     """
     Trigger EMR Serverless job

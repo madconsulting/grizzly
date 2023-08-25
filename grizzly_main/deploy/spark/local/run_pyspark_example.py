@@ -13,7 +13,7 @@ def run_pyspark_example(example_name: str, example_kwargs: Dict[str, Any], run_m
     :return: None
     """
     spark = get_spark_context(app_name=example_name, run_mode=run_mode)
-    pyspark_example_dict[example_name](spark=spark, **example_kwargs)
+    pyspark_example_dict[example_name](spark=spark, **example_kwargs)  # type: ignore
     spark.stop()
 
 
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     is_run_on_cluster = True
     example_name = "pyspark_example_1"
     # example_name = "pyspark_example_2"
-    example_kwargs = {}
+    example_kwargs: Dict[str, Any] = {}
 
     # Example trigger
     if is_run_on_cluster:

@@ -1,11 +1,11 @@
 import os
 import pathlib
-from typing import Union
+from typing import Optional, Union
 
 
 def get_base_dir(
     path_end: str = "grizzly_main",
-    path_input: Union[str, pathlib.Path] = None,
+    path_input: Optional[Union[str, pathlib.Path]] = None,
 ) -> pathlib.Path:
     """
     Iterate until finding the end of the path. This is used to be able to run a script from multiple different
@@ -52,11 +52,11 @@ class cd:
         """
         The function restores the current working directory to its original path when exiting a context manager.
 
-        :param etype: The `etype` parameter in the `__exit__` method represents the type of exception that was raised, if
-        any. It is a reference to the exception class itself
-        :param value: The `value` parameter in the `__exit__` method is used to capture the exception value, if any, that
-        was raised in the `with` block. It represents the actual exception object that was raised. If no exception was
-        raised, the `value` parameter will be `None`
+        :param etype: The `etype` parameter in the `__exit__` method represents the type of exception that was raised,
+        if any. It is a reference to the exception class itself
+        :param value: The `value` parameter in the `__exit__` method is used to capture the exception value, if any,
+        that was raised in the `with` block. It represents the actual exception object that was raised. If no
+        exception was raised, the `value` parameter will be `None`
         :param traceback: The traceback parameter is a traceback object that contains information about the current call
         stack. It provides details about the sequence of function calls that led to the current point of execution
         """

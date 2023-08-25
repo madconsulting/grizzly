@@ -33,6 +33,7 @@ https://github.com/aws-samples/emr-serverless-samples/blob/main/examples/pyspark
 This is inspired in the Pyspark code example from
 https://github.com/aws-samples/emr-serverless-samples/blob/main/examples/pyspark/extreme_weather.py
 &#34;&#34;&#34;
+from typing import Optional
 
 from pyspark.sql import DataFrame, Row, SparkSession
 from pyspark.sql import functions as F
@@ -52,7 +53,7 @@ def find_largest(df: DataFrame, col_name: str) -&gt; Row:
         .filter(~F.col(col_name).isin([99.99, 999.9, 9999.9]))
         .orderBy(F.desc(col_name))
         .limit(1)
-        .first()
+        .first()  # type: ignore
     )
 
 
@@ -60,7 +61,7 @@ def pyspark_example_3(
     spark: SparkSession,
     year: int,
     is_specific_csv_file_only: bool,
-    csv_file_name: str = None,
+    csv_file_name: Optional[str] = None,
 ):
     &#34;&#34;&#34;
     Pyspark example nº 3 - extreme-weather
@@ -142,12 +143,12 @@ While 99.99 <em>could</em> be a valid value for temperature, for example, we kno
         .filter(~F.col(col_name).isin([99.99, 999.9, 9999.9]))
         .orderBy(F.desc(col_name))
         .limit(1)
-        .first()
+        .first()  # type: ignore
     )</code></pre>
 </details>
 </dd>
 <dt id="grizzly_main.deploy.spark.pyspark_examples.pyspark_example_3.pyspark_example_3"><code class="name flex">
-<span>def <span class="ident">pyspark_example_3</span></span>(<span>spark: pyspark.sql.session.SparkSession, year: int, is_specific_csv_file_only: bool, csv_file_name: str = None)</span>
+<span>def <span class="ident">pyspark_example_3</span></span>(<span>spark: pyspark.sql.session.SparkSession, year: int, is_specific_csv_file_only: bool, csv_file_name: Optional[str] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Pyspark example nº 3 - extreme-weather
@@ -166,7 +167,7 @@ csv files for that year.
     spark: SparkSession,
     year: int,
     is_specific_csv_file_only: bool,
-    csv_file_name: str = None,
+    csv_file_name: Optional[str] = None,
 ):
     &#34;&#34;&#34;
     Pyspark example nº 3 - extreme-weather

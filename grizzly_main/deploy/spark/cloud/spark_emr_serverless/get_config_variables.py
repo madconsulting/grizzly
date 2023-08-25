@@ -1,5 +1,5 @@
 import pathlib
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
     get_poetry_wheel_file,
@@ -97,7 +97,7 @@ def get_spark_emr_serverless_config(
     spark_resources_dict: Dict[str, Any],
     poetry_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path],
-    poetry_package_version: str = None,
+    poetry_package_version: Optional[str] = None,
     **kwargs,
 ) -> Dict[str, Any]:
     """
