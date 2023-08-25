@@ -27,7 +27,7 @@ def get_spark_context(
         SPARK_DRIVER_HOST = check_output(["hostname", "-i"]).decode(encoding="utf-8").strip()
         # See: https://github.com/bitnami/bitnami-docker-spark/issues/18#issuecomment-701487655
         os.environ["SPARK_LOCAL_IP"] = SPARK_DRIVER_HOST
-        config_var_list += [(k, v) for k, v in spark_local_cluster_context_config.items()] + [
+        config_var_list += [(k, v) for k, v in spark_local_cluster_context_config.items()] + [  # pylint: disable=R1721
             # spark.master = spark://<ip of master node>:<port of master node>
             (
                 "spark.master",

@@ -103,9 +103,9 @@ def analyse_job_run(
                 raise ValueError(
                     "The LiveUI should have been available for a running job. Check why. This was the "
                     f"error from EMR Serverless client side: {e}"
-                )
+                ) from e
         else:
-            raise ValueError(f"EMR Serverless client error: {e}")
+            raise ValueError(f"EMR Serverless client error: {e}") from e
     job_name = job_run_info["name"]
     if job_state not in not_started_job_states:
         download_logs_from_s3(

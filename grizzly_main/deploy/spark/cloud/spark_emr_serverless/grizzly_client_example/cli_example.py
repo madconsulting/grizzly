@@ -23,7 +23,7 @@ from grizzly_main.iac_pulumi.aws.reusable_architectures.spark_emr_serverless imp
 from grizzly_main.path_interations import cd
 
 
-class SparkEmrServerlessCLIExample:
+class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
     """
     CLI example to deploy and run PySpark code on EMR Serverless
     """
@@ -63,7 +63,7 @@ class SparkEmrServerlessCLIExample:
         )
         if is_execute_command == "y":
             with cd(self.pulumi_dir):
-                res = subprocess.run(
+                res = subprocess.run(  # pylint: disable=W1510
                     pulumi_command.split(),
                     stderr=subprocess.PIPE,
                 )
@@ -114,7 +114,7 @@ class SparkEmrServerlessCLIExample:
             command = ["poetry", "run", "python", file_path]
             if args:
                 command += args.split()
-            res = subprocess.run(
+            res = subprocess.run(  # pylint: disable=W1510
                 command,
                 stdout=stdout,
                 stderr=subprocess.PIPE,
@@ -141,8 +141,7 @@ class SparkEmrServerlessCLIExample:
             stdout = res.stdout.decode("utf-8")  # type: ignore
             print(stdout)
             return stdout  # type: ignore
-        else:
-            return None
+        return None
 
     @staticmethod
     def _recommend_pulumi_get_started_tutorial() -> None:
@@ -195,7 +194,9 @@ class SparkEmrServerlessCLIExample:
         Copy pulumi files to client repository within self.pulumi_dir
         :return: None
         """
-        source_dir = os.path.dirname(inspect.getfile(grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless))
+        source_dir = os.path.dirname(
+            inspect.getfile(grizzly_main.iac_pulumi.aws.pulumi_projects.spark_emr_serverless)  # pylint: disable=E1101
+        )
         files_list = os.listdir(source_dir)
         # Keep only "dev" environment file name
         files_list = [
@@ -333,9 +334,11 @@ class SparkEmrServerlessCLIExample:
         Copy files to deploy, trigger and monitor a minimal PySpark example
         :return: None
         """
+        # pylint: disable=E1101
         source_dir = os.path.dirname(
             inspect.getfile(grizzly_main.deploy.spark.cloud.spark_emr_serverless.grizzly_client_example.files_to_copy)
         )
+        # pylint: enable=E1101
         dst_dir = os.path.abspath(self.code_dir)
         shutil.copytree(
             src=source_dir,
@@ -352,9 +355,11 @@ class SparkEmrServerlessCLIExample:
         :return: Main configuration dictionary
         """
         loader = SourceFileLoader(fullname="main_config_module", path=self.main_config_path)
+        # pylint: disable=E1101
         mod = types.ModuleType(loader.name)
         loader.exec_module(mod)
         return mod.main_config
+        # pylint: enable=E1101
 
     def _update_main_config_with_user_params(self) -> None:
         """
@@ -366,18 +371,20 @@ class SparkEmrServerlessCLIExample:
         main_config_dict["pulumi_organization"] = self.pulumi_organization
         main_config_dict["pulumi_project"] = self.pulumi_project
         main_config_dict["pulumi_stack"] = self.pulumi_stack
-        poetry_version = subprocess.run(["poetry", "-V"], stdout=subprocess.PIPE).stdout.decode("utf-8")
+        poetry_version = subprocess.run(  # pylint: disable=W1510
+            ["poetry", "-V"], stdout=subprocess.PIPE
+        ).stdout.decode("utf-8")
         regex_version = r"version (\d+\.\d+\.\d+[a-z]?\d?)"
         try:
             poetry_version = re.search(regex_version, poetry_version).group(1)  # type: ignore
-        except AttributeError:
+        except AttributeError as e:
             raise ValueError(
                 f"Revise if poetry version from str '{poetry_version}' matches the regex format: {regex_version}"
-            )
+            ) from e
         main_config_dict["poetry_version"] = poetry_version
         main_config_dict["python_version"] = platform.python_version()
         main_config_dict["repository_name"] = (
-            subprocess.run(
+            subprocess.run(  # pylint: disable=W1510
                 "basename `git rev-parse --show-toplevel`",
                 shell=True,
                 stdout=subprocess.PIPE,
@@ -465,10 +472,9 @@ class SparkEmrServerlessCLIExample:
                 "to get the job id. Please, revise that the last print corresponds to: \n"
                 "', and id: {job_run_id}'"
             )
-        else:
-            job_id = out_partitioned[-1].replace("\n", "")
-            if job_id.isspace():
-                raise ValueError(f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}")
+        job_id = out_partitioned[-1].replace("\n", "")
+        if job_id.isspace():
+            raise ValueError(f"Job id is incorrect, no spaces expected!. Incorrect job_id = {job_id}")
         return job_id
 
     def _monitor_emr_serverless_job(self, job_id: str) -> None:
@@ -555,7 +561,7 @@ class SparkEmrServerlessCLIExample:
                 f"<pulumi-stack> by {self.pulumi_stack} in the command above."
             )
         common_steps = ""
-        for i, step in enumerate(common_steps_list):
+        for i, _ in enumerate(common_steps_list):
             common_steps += f"{i+start_num}. step"
         return common_steps
 

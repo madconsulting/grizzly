@@ -131,9 +131,9 @@ def analyse_job_run(
                 raise ValueError(
                     &#34;The LiveUI should have been available for a running job. Check why. This was the &#34;
                     f&#34;error from EMR Serverless client side: {e}&#34;
-                )
+                ) from e
         else:
-            raise ValueError(f&#34;EMR Serverless client error: {e}&#34;)
+            raise ValueError(f&#34;EMR Serverless client error: {e}&#34;) from e
     job_name = job_run_info[&#34;name&#34;]
     if job_state not in not_started_job_states:
         download_logs_from_s3(
@@ -220,9 +220,9 @@ but it's simpler from the EMR Studio)</p>
                 raise ValueError(
                     &#34;The LiveUI should have been available for a running job. Check why. This was the &#34;
                     f&#34;error from EMR Serverless client side: {e}&#34;
-                )
+                ) from e
         else:
-            raise ValueError(f&#34;EMR Serverless client error: {e}&#34;)
+            raise ValueError(f&#34;EMR Serverless client error: {e}&#34;) from e
     job_name = job_run_info[&#34;name&#34;]
     if job_state not in not_started_job_states:
         download_logs_from_s3(

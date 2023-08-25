@@ -40,6 +40,7 @@ class cd:
         file path, if it contains a tilde (~) character
         """
         self.new_path = os.path.expanduser(new_path)
+        self.saved_path = None
 
     def __enter__(self):
         """

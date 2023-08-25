@@ -20,13 +20,13 @@ def run_pyspark_example(example_name: str, example_kwargs: Dict[str, Any], run_m
 if __name__ == "__main__":
     # Inputs
     is_run_on_cluster = True
-    example_name = "pyspark_example_1"
-    # example_name = "pyspark_example_2"
-    example_kwargs: Dict[str, Any] = {}
+    example_name_ = "pyspark_example_1"
+    # example_name_ = "pyspark_example_2"
+    example_kwargs_: Dict[str, Any] = {}
 
     # Example trigger
     if is_run_on_cluster:
-        run_mode = "local_cluster"
+        run_mode_ = "local_cluster"
     else:
-        run_mode = "local_single_worker"
-    run_pyspark_example(example_name=example_name, example_kwargs=example_kwargs, run_mode=run_mode)
+        run_mode_ = "local_single_worker"
+    run_pyspark_example(example_name=example_name_, example_kwargs=example_kwargs_, run_mode=run_mode_)

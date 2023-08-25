@@ -31,8 +31,7 @@ def _find_single_pulumi_resource_based_on_type(
                     f"Multiple resources of type {resource_type} found in Pulumi stack {project_stack_name}. "
                     "This is not expected."
                 )
-            else:
-                selected_resource_dict = resource_dict
+            selected_resource_dict = resource_dict
     if selected_resource_dict is None:
         raise ValueError(f"resource of type {resource_type} not found in Pulumi stack {project_stack_name}.")
     return selected_resource_dict
@@ -98,7 +97,7 @@ def get_spark_emr_serverless_config(
     poetry_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path],
     poetry_package_version: Optional[str] = None,
-    **kwargs,
+    **kwargs,  # pylint: disable=unused-argument
 ) -> Dict[str, Any]:
     """
     Get Spark EMR Serverless config.

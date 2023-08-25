@@ -11,4 +11,7 @@ The recommended usage of pre-commit hooks is the following:
    a pass. 
    
 2) Once all the other hooks have passed without errors, you can add your files to git (`git add .`) and commit them 
-   (`git commit -m "your commit message"`)
+   (`git commit -m "your commit message"`) and push them (`git push origin <branch name>`)
+   
+NOTE: It's possible to disable the hooks in the commit and push commands by adding the `--no-verify` flag, but this
+is highly discouraged.

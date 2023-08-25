@@ -41,12 +41,10 @@ app = FastAPI(title=&#34;Grizzly API&#34;)
 
 
 @app.route(&#34;/&#34;)
-def hello_grizzly(root_path: str):
+def hello_grizzly():
     &#34;&#34;&#34;
     The function `hello_grizzly` returns a JSON response with the message &#34;hello grizzly_main&#34; and a status code of 200.
 
-    :param root_path: The root path is the base directory or folder where the code is located. It is used to specify the
-    location of files or resources relative to the root path
     :return: a JSON response with the message &#34;hello grizzly_main&#34; and a status code of 200.
     &#34;&#34;&#34;
     return JSONResponse({&#34;msg&#34;: &#34;hello grizzly_main&#34;}, status_code=200)
@@ -100,24 +98,20 @@ def docs():
 </details>
 </dd>
 <dt id="grizzly_main.api.main.hello_grizzly"><code class="name flex">
-<span>def <span class="ident">hello_grizzly</span></span>(<span>root_path: str)</span>
+<span>def <span class="ident">hello_grizzly</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>The function <code><a title="grizzly_main.api.main.hello_grizzly" href="#grizzly_main.api.main.hello_grizzly">hello_grizzly()</a></code> returns a JSON response with the message "hello grizzly_main" and a status code of 200.</p>
-<p>:param root_path: The root path is the base directory or folder where the code is located. It is used to specify the
-location of files or resources relative to the root path
-:return: a JSON response with the message "hello grizzly_main" and a status code of 200.</p></div>
+<p>:return: a JSON response with the message "hello grizzly_main" and a status code of 200.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@app.route(&#34;/&#34;)
-def hello_grizzly(root_path: str):
+def hello_grizzly():
     &#34;&#34;&#34;
     The function `hello_grizzly` returns a JSON response with the message &#34;hello grizzly_main&#34; and a status code of 200.
 
-    :param root_path: The root path is the base directory or folder where the code is located. It is used to specify the
-    location of files or resources relative to the root path
     :return: a JSON response with the message &#34;hello grizzly_main&#34; and a status code of 200.
     &#34;&#34;&#34;
     return JSONResponse({&#34;msg&#34;: &#34;hello grizzly_main&#34;}, status_code=200)</code></pre>

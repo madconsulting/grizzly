@@ -13,12 +13,10 @@ app = FastAPI(title="Grizzly API")
 
 
 @app.route("/")
-def hello_grizzly(root_path: str):
+def hello_grizzly():
     """
     The function `hello_grizzly` returns a JSON response with the message "hello grizzly_main" and a status code of 200.
 
-    :param root_path: The root path is the base directory or folder where the code is located. It is used to specify the
-    location of files or resources relative to the root path
     :return: a JSON response with the message "hello grizzly_main" and a status code of 200.
     """
     return JSONResponse({"msg": "hello grizzly_main"}, status_code=200)

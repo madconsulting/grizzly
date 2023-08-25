@@ -114,7 +114,7 @@ def rename_poetry_wheel_file(
         raise ValueError(
             f"No wheel file has been found for current package {package_name} and " f"version {package_version}"
         )
-    elif len(current_package_wheel_file) == 1:
+    if len(current_package_wheel_file) == 1:
         wheel_file_name = current_package_wheel_file[0]
         os.rename(
             f"{wheel_file_path}/{wheel_file_name}",
