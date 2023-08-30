@@ -1,0 +1,31 @@
+name: Build and Test 'Hello, world!' example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.12
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: docker build -f grizzly_main/deploy/docker_github_actions_example/Dockerfile -t hello_world .
+
+      - name: Docker run
+        run: docker run -it hello_world poetry run python grizzly_main/deploy/docker_github_actions_example/hello_world.py
+
+      - name: Run test to verify Docker run output
+        run: docker run -it hello_world poetry run pytest grizzly_main/deploy/docker_github_actions_example/test_hello_world.py
