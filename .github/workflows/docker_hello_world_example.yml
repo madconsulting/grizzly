@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - code_base_tools # TODO - temp
 
 jobs:
   build-and-test:
