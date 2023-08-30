@@ -26,7 +26,7 @@ jobs:
         run: docker build -f grizzly_main/deploy/docker_github_actions_example/Dockerfile -t hello_world .
 
       - name: Docker run
-        run: docker run -it hello_world poetry run python grizzly_main/deploy/docker_github_actions_example/hello_world.py
+        run: docker run hello_world poetry run python grizzly_main/deploy/docker_github_actions_example/hello_world.py
 
       - name: Run test to verify Docker run output
-        run: docker run -it hello_world poetry run pytest grizzly_main/deploy/docker_github_actions_example/test_hello_world.py
+        run: docker run hello_world poetry run pytest grizzly_main/deploy/docker_github_actions_example/test_hello_world.py
