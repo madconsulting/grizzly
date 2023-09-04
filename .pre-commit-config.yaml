@@ -53,7 +53,7 @@ repos:
 # Using mypy installed in poetry environment as we did not get expected behaviours using github repo hook
 - repo: local
   hooks:
-      - id: mypy # Docstrings coverage
+      - id: mypy # Dtypes check
         name: mypy
         language: system
         entry: sh
