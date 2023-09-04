@@ -1,5 +1,6 @@
 # See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
+# See https://pre-commit.com/hooks.html or https://github.com/pre-commit/pre-commit-hooks/blob/main/README.md
+# for more pre-commit hooks
 default_stages: [pre-commit, pre-push, pre-merge-commit]
 default_language_version:
     python: python3
@@ -7,7 +8,6 @@ exclude: "cython"
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
-    # Find all available hooks in https://github.com/pre-commit/pre-commit-hooks/blob/main/README.md
     hooks:
     -   id: check-builtin-literals
     -   id: check-executables-have-shebangs
@@ -69,12 +69,13 @@ repos:
     rev: pylint-2.7.2
     hooks:
     -   id: pylint # Code linting -> Deep code analysis for bugs, standards, and quality
+    # NOTE: Use the .pylintrc file to disable specific errors across all the repo
 -   repo: https://github.com/codespell-project/codespell
     rev: v2.2.5
     hooks:
     -   id: codespell # Code and text spelling
         additional_dependencies:
-          - tomli  # configure codespell using the pyproject.toml file
+          - tomli  # configuring codespell using the pyproject.toml file
 - repo: local
   hooks:
       - id: pytest-cov
