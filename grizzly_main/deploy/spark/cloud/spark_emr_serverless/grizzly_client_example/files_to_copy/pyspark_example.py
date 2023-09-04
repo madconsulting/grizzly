@@ -1,10 +1,10 @@
-from typing import Any, Dict
+from typing import Any
 
 from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
 from grizzly_main.deploy.spark.utils.spark_context import get_spark_context
 
 
-def pyspark_example(example_name: str, example_kwargs: Dict[str, Any]) -> None:
+def pyspark_example(example_name: str, example_kwargs: dict[str, Any]) -> None:
     """
     Run a PySpark example available in the following folder: 'grizzly_main.deploy.spark.pyspark_examples'
     :param example_name: Pyspark example name

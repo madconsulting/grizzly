@@ -1,5 +1,5 @@
 import pathlib
-from typing import Any, Dict, Optional, Tuple, Union
+from typing import Any, Optional, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
     get_poetry_wheel_file,
@@ -9,10 +9,10 @@ from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_s
 
 
 def _find_single_pulumi_resource_based_on_type(
-    stack_state_dict: Dict[str, Any],
+    stack_state_dict: dict[str, Any],
     resource_type: str,
     project_stack_name: str = "",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Find single Pulumi resource corresponding to a given resource type.
     :param stack_state_dict: Stack state dictionary
@@ -38,7 +38,7 @@ def _find_single_pulumi_resource_based_on_type(
 
 
 def get_s3_bucket_id_from_pulumi(
-    stack_state_dict: Dict[str, Any],
+    stack_state_dict: dict[str, Any],
     project_stack_name: str = "",
 ) -> str:
     """
@@ -55,9 +55,9 @@ def get_s3_bucket_id_from_pulumi(
 
 
 def get_emr_serverless_app_from_pulumi(
-    stack_state_dict: Dict[str, Any],
+    stack_state_dict: dict[str, Any],
     project_stack_name: str = "",
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """
     Get EMR Serverless application details from Pulumi
     :param stack_state_dict: Stack state dictionary
@@ -73,7 +73,7 @@ def get_emr_serverless_app_from_pulumi(
 
 
 def get_job_role_arm_from_pulumi(
-    stack_state_dict: Dict[str, Any],
+    stack_state_dict: dict[str, Any],
     project_stack_name: str = "",
 ) -> str:
     """
@@ -93,12 +93,12 @@ def get_spark_emr_serverless_config(
     pulumi_organization: str,
     pulumi_project: str,
     pulumi_stack: str,
-    spark_resources_dict: Dict[str, Any],
+    spark_resources_dict: dict[str, Any],
     poetry_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path],
     poetry_package_version: Optional[str] = None,
     **kwargs,  # pylint: disable=unused-argument
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Get Spark EMR Serverless config.
     Note that **kwargs is used so that we can pass additional redundant fields from the main config.

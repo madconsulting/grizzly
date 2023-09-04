@@ -26,13 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from typing import Any, Dict
+<pre><code class="python">from typing import Any
 
 from grizzly_main.deploy.spark.pyspark_examples.pyspark_example_dict import pyspark_example_dict
 from grizzly_main.deploy.spark.utils.spark_context import get_spark_context
 
 
-def run_pyspark_example(example_name: str, example_kwargs: Dict[str, Any], run_mode: str) -&gt; None:
+def run_pyspark_example(example_name: str, example_kwargs: dict[str, Any], run_mode: str) -&gt; None:
     &#34;&#34;&#34;
     Run pyspark example
     :param example_name: Pyspark example name
@@ -50,7 +50,7 @@ if __name__ == &#34;__main__&#34;:
     is_run_on_cluster = True
     example_name_ = &#34;pyspark_example_1&#34;
     # example_name_ = &#34;pyspark_example_2&#34;
-    example_kwargs_: Dict[str, Any] = {}
+    example_kwargs_: dict[str, Any] = {}
 
     # Example trigger
     if is_run_on_cluster:
@@ -68,7 +68,7 @@ if __name__ == &#34;__main__&#34;:
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="grizzly_main.deploy.spark.local.run_pyspark_example.run_pyspark_example"><code class="name flex">
-<span>def <span class="ident">run_pyspark_example</span></span>(<span>example_name: str, example_kwargs: Dict[str, Any], run_mode: str) ‑> None</span>
+<span>def <span class="ident">run_pyspark_example</span></span>(<span>example_name: str, example_kwargs: dict[str, typing.Any], run_mode: str) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Run pyspark example
@@ -80,7 +80,7 @@ if __name__ == &#34;__main__&#34;:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run_pyspark_example(example_name: str, example_kwargs: Dict[str, Any], run_mode: str) -&gt; None:
+<pre><code class="python">def run_pyspark_example(example_name: str, example_kwargs: dict[str, Any], run_mode: str) -&gt; None:
     &#34;&#34;&#34;
     Run pyspark example
     :param example_name: Pyspark example name

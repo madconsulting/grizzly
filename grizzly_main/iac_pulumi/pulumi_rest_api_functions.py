@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import sys
-from typing import Any, Dict
+from typing import Any
 
 import requests  # type: ignore
 
@@ -14,7 +14,7 @@ def get_pulumi_stack_state(
     pulumi_project: str,
     pulumi_stack: str,
     is_allow_input_token: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Get the stack state using the Pulumi REST API
     https://www.pulumi.com/docs/reference/service-rest-api/#get-stack-state

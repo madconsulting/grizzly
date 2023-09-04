@@ -30,7 +30,7 @@
 import pathlib
 import pprint
 import sys
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
 from zipfile import ZipFile
 
 import tomlkit
@@ -43,7 +43,7 @@ base_dir = get_base_dir()
 # ----------- Poetry functions -----------
 def _get_current_poetry_package_name_and_version(
     poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = &#34;&#34;
-) -&gt; Tuple[str, str]:
+) -&gt; tuple[str, str]:
     &#34;&#34;&#34;
     Get current Poetry package name and version from pyproject.toml file
     :param poetry_dir: Poetry directory
@@ -64,7 +64,7 @@ def _get_poetry_package_name_and_version(
     poetry_dir: str = &#34;&#34;,
     base_dir_client_repo: Union[str, pathlib.Path] = &#34;&#34;,
     package_version: Optional[str] = None,
-) -&gt; Tuple[str, str]:
+) -&gt; tuple[str, str]:
     &#34;&#34;&#34;
     Get Poetry package name and version from pyproject.toml file (or overwritten by input)
     :param poetry_dir: Poetry directory
@@ -88,7 +88,7 @@ def get_poetry_wheel_file(
     file_folder: str = &#34;deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files&#34;,
     package_version: Optional[str] = None,
     is_print: bool = True,
-) -&gt; Tuple[str, str]:
+) -&gt; tuple[str, str]:
     &#34;&#34;&#34;
     Get wheel file name
     :param poetry_dir: Poetry directory
@@ -173,7 +173,7 @@ def get_venv_file(
     file_folder: str = &#34;deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs&#34;,
     package_version: Optional[str] = None,
     is_print: bool = True,
-) -&gt; Tuple[str, str]:
+) -&gt; tuple[str, str]:
     &#34;&#34;&#34;
     Get venv file name
     :param poetry_dir: Poetry directory
@@ -273,7 +273,7 @@ if __name__ == &#34;__main__&#34;:
 </details>
 </dd>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions.get_poetry_wheel_file"><code class="name flex">
-<span>def <span class="ident">get_poetry_wheel_file</span></span>(<span>poetry_dir: str = '', base_dir_client_repo: Union[str, pathlib.Path] = '', file_folder: str = 'deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files', package_version: Optional[str] = None, is_print: bool = True) ‑> Tuple[str, str]</span>
+<span>def <span class="ident">get_poetry_wheel_file</span></span>(<span>poetry_dir: str = '', base_dir_client_repo: Union[str, pathlib.Path] = '', file_folder: str = 'deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files', package_version: Optional[str] = None, is_print: bool = True) ‑> tuple[str, str]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get wheel file name
@@ -294,7 +294,7 @@ the pyproject.toml file
     file_folder: str = &#34;deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files&#34;,
     package_version: Optional[str] = None,
     is_print: bool = True,
-) -&gt; Tuple[str, str]:
+) -&gt; tuple[str, str]:
     &#34;&#34;&#34;
     Get wheel file name
     :param poetry_dir: Poetry directory
@@ -318,7 +318,7 @@ the pyproject.toml file
 </details>
 </dd>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions.get_venv_file"><code class="name flex">
-<span>def <span class="ident">get_venv_file</span></span>(<span>poetry_dir: str = '', base_dir_client_repo: Union[str, pathlib.Path] = '', file_folder: str = 'deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs', package_version: Optional[str] = None, is_print: bool = True) ‑> Tuple[str, str]</span>
+<span>def <span class="ident">get_venv_file</span></span>(<span>poetry_dir: str = '', base_dir_client_repo: Union[str, pathlib.Path] = '', file_folder: str = 'deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs', package_version: Optional[str] = None, is_print: bool = True) ‑> tuple[str, str]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get venv file name
@@ -339,7 +339,7 @@ the pyproject.toml file
     file_folder: str = &#34;deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs&#34;,
     package_version: Optional[str] = None,
     is_print: bool = True,
-) -&gt; Tuple[str, str]:
+) -&gt; tuple[str, str]:
     &#34;&#34;&#34;
     Get venv file name
     :param poetry_dir: Poetry directory

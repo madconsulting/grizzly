@@ -33,6 +33,7 @@ fastapi = "0.100.1"
 pre-commit = "3.3.3"
 # Adding pre-commit hooks libraries to be available to be used independently via the Poetry environment
 black = "23.7.0"
+blacken-docs = "1.16.0"
 isort = "5.11.2"
 bandit = "1.7.5"
 mypy = "1.5.1"
@@ -40,7 +41,8 @@ flake8 = "6.1.0"
 pylint = "2.17.5"
 interrogate = "1.5.0"
 pdoc3 = "0.10.0"
-coverage = "7.3.0"
+pytest-cov = "4.1.0"
+codespell = "2.2.5"
 
 [tool.black]
 line-length = 120
@@ -53,6 +55,9 @@ line_length = 120
 
 [tool.pylint.format]
 max-line-length = 120
+
+[tool.codespell]
+skip = '*.lock'
 
 [build-system]
 requires = ["poetry-core>=1.2.0b3"]

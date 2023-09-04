@@ -1,9 +1,9 @@
-from typing import Any, Dict
+from typing import Any
 
 import boto3
 
 
-def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -> None:
+def stop_emr_app(spark_emr_serverless_config: dict[str, Any]) -> None:
     """
     Stop EMR Serverless application. Note that stopping the app manually is not always required as
     the app automatically stops after x time of being idle, where x is defined in the Pulumi config.

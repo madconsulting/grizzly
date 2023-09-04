@@ -2,3 +2,8 @@ __pycache__
 .pytest*
 venv
 .pyc
+.idea/
+bin/
+.mypypy_cache/
+.pytest_cache/
+dist/

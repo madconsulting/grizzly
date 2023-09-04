@@ -26,12 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from typing import Any, Dict
+<pre><code class="python">from typing import Any
 
 import boto3
 
 
-def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -&gt; None:
+def stop_emr_app(spark_emr_serverless_config: dict[str, Any]) -&gt; None:
     &#34;&#34;&#34;
     Stop EMR Serverless application. Note that stopping the app manually is not always required as
     the app automatically stops after x time of being idle, where x is defined in the Pulumi config.
@@ -51,7 +51,7 @@ def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -&gt; None:
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.stop_emr_app.stop_emr_app"><code class="name flex">
-<span>def <span class="ident">stop_emr_app</span></span>(<span>spark_emr_serverless_config: Dict[str, Any]) ‑> None</span>
+<span>def <span class="ident">stop_emr_app</span></span>(<span>spark_emr_serverless_config: dict[str, typing.Any]) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Stop EMR Serverless application. Note that stopping the app manually is not always required as
@@ -62,7 +62,7 @@ the app automatically stops after x time of being idle, where x is defined in th
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def stop_emr_app(spark_emr_serverless_config: Dict[str, Any]) -&gt; None:
+<pre><code class="python">def stop_emr_app(spark_emr_serverless_config: dict[str, Any]) -&gt; None:
     &#34;&#34;&#34;
     Stop EMR Serverless application. Note that stopping the app manually is not always required as
     the app automatically stops after x time of being idle, where x is defined in the Pulumi config.

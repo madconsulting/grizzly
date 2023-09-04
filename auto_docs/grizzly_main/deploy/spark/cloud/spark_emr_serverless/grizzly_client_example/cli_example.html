@@ -36,7 +36,7 @@ import subprocess
 import sys
 import types
 from importlib.machinery import SourceFileLoader
-from typing import Any, Dict, Optional, no_type_check
+from typing import Any, Optional, no_type_check
 
 import ruamel.yaml
 import seedir as sd
@@ -209,7 +209,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
             default=&#34;spark_emr_serverless&#34;,
         )
         print(
-            &#34;\nWe will use a single environment for this example. We will also name the Pulumi Stack as the &#34;
+            &#34;\n We will use a single environment for this example. We will also name the Pulumi Stack as the &#34;
             &#34;environment name.&#34;
         )
         self.pulumi_stack = Prompt.ask(
@@ -253,7 +253,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
             new_file_dir = f&#34;{os.path.abspath(self.pulumi_dir)}/{new_file}&#34;
             shutil.copyfile(src=f&#34;{source_dir}/{file}&#34;, dst=new_file_dir)
             new_file_list.append(new_file)
-        print(f&#34;The folowing files have been created in {self.pulumi_dir}: {new_file_list}&#34;)
+        print(f&#34;The following files have been created in {self.pulumi_dir}: {new_file_list}&#34;)
 
     def _update_pulumi_project_name(self) -&gt; None:
         &#34;&#34;&#34;
@@ -261,7 +261,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         :return: None
         &#34;&#34;&#34;
         config_file = f&#34;{self.pulumi_dir}/Pulumi.yaml&#34;
-        data = ruamel.yaml.YAML().load(open(config_file, &#34;r&#34;))
+        data = ruamel.yaml.YAML().load(open(config_file))
         data[&#34;name&#34;] = self.pulumi_project
         yaml = ruamel.yaml.YAML()
         with open(config_file, &#34;w&#34;) as fp:
@@ -278,7 +278,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         else:
             raise ValueError(&#34;Missing self.pulumi_stack&#34;)
         print(
-            f&#34;\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be &#34;
+            f&#34;\n In the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be &#34;
             f&#34;filled. This account requires programmatic access with rights to deploy and manage resources handled &#34;
             f&#34;through Pulumi, as described in: &#34;
             f&#34;https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account&#34;
@@ -286,7 +286,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         aws_account_id = Prompt.ask(  # type: ignore
             prompt=&#34;[bold blue]\nPlease type your AWS account id&#34;,
         )
-        data = ruamel.yaml.YAML().load(open(self.stack_config_file, &#34;r&#34;))
+        data = ruamel.yaml.YAML().load(open(self.stack_config_file))
         data[&#34;config&#34;][&#34;aws_account_id&#34;] = aws_account_id
         self.idle_timeout_minutes = data[&#34;config&#34;][&#34;idle_timeout_minutes&#34;]
         yaml = ruamel.yaml.YAML()
@@ -377,7 +377,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         print(f&#34;The following files have been copied to the main example directory {self.code_dir}:&#34;)
         sd.seedir(dst_dir, style=&#34;lines&#34;)
 
-    def _read_main_config(self) -&gt; Dict[str, Any]:
+    def _read_main_config(self) -&gt; dict[str, Any]:
         &#34;&#34;&#34;
         Read main configuration
         :return: Main configuration dictionary
@@ -882,7 +882,7 @@ code and tools to trigger and monitor the EMR Serverless jobs</p></div>
             default=&#34;spark_emr_serverless&#34;,
         )
         print(
-            &#34;\nWe will use a single environment for this example. We will also name the Pulumi Stack as the &#34;
+            &#34;\n We will use a single environment for this example. We will also name the Pulumi Stack as the &#34;
             &#34;environment name.&#34;
         )
         self.pulumi_stack = Prompt.ask(
@@ -926,7 +926,7 @@ code and tools to trigger and monitor the EMR Serverless jobs</p></div>
             new_file_dir = f&#34;{os.path.abspath(self.pulumi_dir)}/{new_file}&#34;
             shutil.copyfile(src=f&#34;{source_dir}/{file}&#34;, dst=new_file_dir)
             new_file_list.append(new_file)
-        print(f&#34;The folowing files have been created in {self.pulumi_dir}: {new_file_list}&#34;)
+        print(f&#34;The following files have been created in {self.pulumi_dir}: {new_file_list}&#34;)
 
     def _update_pulumi_project_name(self) -&gt; None:
         &#34;&#34;&#34;
@@ -934,7 +934,7 @@ code and tools to trigger and monitor the EMR Serverless jobs</p></div>
         :return: None
         &#34;&#34;&#34;
         config_file = f&#34;{self.pulumi_dir}/Pulumi.yaml&#34;
-        data = ruamel.yaml.YAML().load(open(config_file, &#34;r&#34;))
+        data = ruamel.yaml.YAML().load(open(config_file))
         data[&#34;name&#34;] = self.pulumi_project
         yaml = ruamel.yaml.YAML()
         with open(config_file, &#34;w&#34;) as fp:
@@ -951,7 +951,7 @@ code and tools to trigger and monitor the EMR Serverless jobs</p></div>
         else:
             raise ValueError(&#34;Missing self.pulumi_stack&#34;)
         print(
-            f&#34;\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be &#34;
+            f&#34;\n In the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be &#34;
             f&#34;filled. This account requires programmatic access with rights to deploy and manage resources handled &#34;
             f&#34;through Pulumi, as described in: &#34;
             f&#34;https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account&#34;
@@ -959,7 +959,7 @@ code and tools to trigger and monitor the EMR Serverless jobs</p></div>
         aws_account_id = Prompt.ask(  # type: ignore
             prompt=&#34;[bold blue]\nPlease type your AWS account id&#34;,
         )
-        data = ruamel.yaml.YAML().load(open(self.stack_config_file, &#34;r&#34;))
+        data = ruamel.yaml.YAML().load(open(self.stack_config_file))
         data[&#34;config&#34;][&#34;aws_account_id&#34;] = aws_account_id
         self.idle_timeout_minutes = data[&#34;config&#34;][&#34;idle_timeout_minutes&#34;]
         yaml = ruamel.yaml.YAML()
@@ -1050,7 +1050,7 @@ code and tools to trigger and monitor the EMR Serverless jobs</p></div>
         print(f&#34;The following files have been copied to the main example directory {self.code_dir}:&#34;)
         sd.seedir(dst_dir, style=&#34;lines&#34;)
 
-    def _read_main_config(self) -&gt; Dict[str, Any]:
+    def _read_main_config(self) -&gt; dict[str, Any]:
         &#34;&#34;&#34;
         Read main configuration
         :return: Main configuration dictionary

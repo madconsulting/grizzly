@@ -2,7 +2,7 @@ import os
 import pathlib
 import pprint
 import sys
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
 from zipfile import ZipFile
 
 import tomlkit
@@ -15,7 +15,7 @@ base_dir = get_base_dir()
 # ----------- Poetry functions -----------
 def _get_current_poetry_package_name_and_version(
     poetry_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = ""
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """
     Get current Poetry package name and version from pyproject.toml file
     :param poetry_dir: Poetry directory
@@ -36,7 +36,7 @@ def _get_poetry_package_name_and_version(
     poetry_dir: str = "",
     base_dir_client_repo: Union[str, pathlib.Path] = "",
     package_version: Optional[str] = None,
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """
     Get Poetry package name and version from pyproject.toml file (or overwritten by input)
     :param poetry_dir: Poetry directory
@@ -60,7 +60,7 @@ def get_poetry_wheel_file(
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/package_wheel_files",
     package_version: Optional[str] = None,
     is_print: bool = True,
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """
     Get wheel file name
     :param poetry_dir: Poetry directory
@@ -145,7 +145,7 @@ def get_venv_file(
     file_folder: str = "deploy/spark/cloud/spark_emr_serverless/build/temp_artifacts/venvs",
     package_version: Optional[str] = None,
     is_print: bool = True,
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """
     Get venv file name
     :param poetry_dir: Poetry directory

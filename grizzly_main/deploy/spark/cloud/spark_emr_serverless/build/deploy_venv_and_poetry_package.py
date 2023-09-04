@@ -2,7 +2,7 @@ import inspect
 import os
 import pathlib
 import subprocess
-from typing import Any, Dict, Union
+from typing import Any, Union
 
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.build
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import get_s3_bucket_id_from_pulumi
@@ -12,7 +12,7 @@ from grizzly_main.path_interations import cd, get_base_dir
 base_dir = get_base_dir()
 
 
-def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -> None:
+def deploy_venv_and_poetry_package(main_config: dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -> None:
     """
     Deploy virtual environment and poetry package wheel files
     :param main_config: Main configuration dictionary

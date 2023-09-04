@@ -30,7 +30,7 @@
 import os
 import pathlib
 import subprocess
-from typing import Any, Dict, Union
+from typing import Any, Union
 
 import grizzly_main.deploy.spark.cloud.spark_emr_serverless.build
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.get_config_variables import get_s3_bucket_id_from_pulumi
@@ -40,7 +40,7 @@ from grizzly_main.path_interations import cd, get_base_dir
 base_dir = get_base_dir()
 
 
-def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -&gt; None:
+def deploy_venv_and_poetry_package(main_config: dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -&gt; None:
     &#34;&#34;&#34;
     Deploy virtual environment and poetry package wheel files
     :param main_config: Main configuration dictionary
@@ -80,7 +80,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.deploy_venv_and_poetry_package.deploy_venv_and_poetry_package"><code class="name flex">
-<span>def <span class="ident">deploy_venv_and_poetry_package</span></span>(<span>main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) ‑> None</span>
+<span>def <span class="ident">deploy_venv_and_poetry_package</span></span>(<span>main_config: dict[str, typing.Any], base_dir_client_repo: Union[str, pathlib.Path]) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Deploy virtual environment and poetry package wheel files
@@ -91,7 +91,7 @@ def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def deploy_venv_and_poetry_package(main_config: Dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -&gt; None:
+<pre><code class="python">def deploy_venv_and_poetry_package(main_config: dict[str, Any], base_dir_client_repo: Union[str, pathlib.Path]) -&gt; None:
     &#34;&#34;&#34;
     Deploy virtual environment and poetry package wheel files
     :param main_config: Main configuration dictionary

@@ -30,7 +30,7 @@
 import os
 import pathlib
 import shutil
-from typing import Any, Dict, Union
+from typing import Any, Union
 
 import boto3
 import botocore
@@ -84,7 +84,7 @@ def download_logs_from_s3(
 
 
 def analyse_job_run(
-    spark_emr_serverless_config: Dict[str, Any],
+    spark_emr_serverless_config: dict[str, Any],
     job_run_id: str,
     logs_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path] = &#34;&#34;,
@@ -154,7 +154,7 @@ def analyse_job_run(
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="grizzly_main.deploy.spark.cloud.spark_emr_serverless.analyse_emr_job.analyse_job_run"><code class="name flex">
-<span>def <span class="ident">analyse_job_run</span></span>(<span>spark_emr_serverless_config: Dict[str, Any], job_run_id: str, logs_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = '') ‑> None</span>
+<span>def <span class="ident">analyse_job_run</span></span>(<span>spark_emr_serverless_config: dict[str, typing.Any], job_run_id: str, logs_dir: str, base_dir_client_repo: Union[str, pathlib.Path] = '') ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get information regarding a job ID</p>
@@ -173,7 +173,7 @@ but it's simpler from the EMR Studio)</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def analyse_job_run(
-    spark_emr_serverless_config: Dict[str, Any],
+    spark_emr_serverless_config: dict[str, Any],
     job_run_id: str,
     logs_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path] = &#34;&#34;,

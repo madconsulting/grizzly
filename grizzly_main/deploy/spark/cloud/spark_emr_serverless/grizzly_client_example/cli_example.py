@@ -8,7 +8,7 @@ import subprocess
 import sys
 import types
 from importlib.machinery import SourceFileLoader
-from typing import Any, Dict, Optional, no_type_check
+from typing import Any, Optional, no_type_check
 
 import ruamel.yaml
 import seedir as sd
@@ -181,7 +181,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
             default="spark_emr_serverless",
         )
         print(
-            "\nWe will use a single environment for this example. We will also name the Pulumi Stack as the "
+            "\n We will use a single environment for this example. We will also name the Pulumi Stack as the "
             "environment name."
         )
         self.pulumi_stack = Prompt.ask(
@@ -225,7 +225,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
             new_file_dir = f"{os.path.abspath(self.pulumi_dir)}/{new_file}"
             shutil.copyfile(src=f"{source_dir}/{file}", dst=new_file_dir)
             new_file_list.append(new_file)
-        print(f"The folowing files have been created in {self.pulumi_dir}: {new_file_list}")
+        print(f"The following files have been created in {self.pulumi_dir}: {new_file_list}")
 
     def _update_pulumi_project_name(self) -> None:
         """
@@ -233,7 +233,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         :return: None
         """
         config_file = f"{self.pulumi_dir}/Pulumi.yaml"
-        data = ruamel.yaml.YAML().load(open(config_file, "r"))
+        data = ruamel.yaml.YAML().load(open(config_file))
         data["name"] = self.pulumi_project
         yaml = ruamel.yaml.YAML()
         with open(config_file, "w") as fp:
@@ -250,7 +250,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         else:
             raise ValueError("Missing self.pulumi_stack")
         print(
-            f"\nIn the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be "
+            f"\n In the stack configuration file ({self.stack_config_file}), there is the aws_account_id pending to be "
             f"filled. This account requires programmatic access with rights to deploy and manage resources handled "
             f"through Pulumi, as described in: "
             f"https://www.pulumi.com/docs/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account"
@@ -258,7 +258,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         aws_account_id = Prompt.ask(  # type: ignore
             prompt="[bold blue]\nPlease type your AWS account id",
         )
-        data = ruamel.yaml.YAML().load(open(self.stack_config_file, "r"))
+        data = ruamel.yaml.YAML().load(open(self.stack_config_file))
         data["config"]["aws_account_id"] = aws_account_id
         self.idle_timeout_minutes = data["config"]["idle_timeout_minutes"]
         yaml = ruamel.yaml.YAML()
@@ -349,7 +349,7 @@ class SparkEmrServerlessCLIExample:  # pylint: disable=R0903
         print(f"The following files have been copied to the main example directory {self.code_dir}:")
         sd.seedir(dst_dir, style="lines")
 
-    def _read_main_config(self) -> Dict[str, Any]:
+    def _read_main_config(self) -> dict[str, Any]:
         """
         Read main configuration
         :return: Main configuration dictionary

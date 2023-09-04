@@ -12,18 +12,38 @@ repos:
     -   id: check-builtin-literals
     -   id: check-executables-have-shebangs
     -   id: check-merge-conflict
+    -   id: check-json
     -   id: check-yaml
     -   id: debug-statements
     -   id: detect-private-key
+    -   id: detect-aws-credentials
+    -   id: check-added-large-files
+    -   id: check-ast
+    -   id: check-byte-order-marker
+    -   id: check-case-conflict
+    -   id: check-docstring-first
+    -   id: trailing-whitespace
+    -   id: mixed-line-ending
 -   repo: https://github.com/pre-commit/mirrors-isort # Using isort mirror to prevent import error
     rev: v5.10.1
     hooks:
       - id: isort # Import sorting
         args: ["--profile", "black"] # black compatibility
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.10.1
+    hooks:
+    -   id: pyupgrade # Automatically upgrade Python syntax for newer versions of the language
+        args: [--py39-plus] # Bring python code up to date with improvements for Python 3.9 and higher
 -   repo: https://github.com/psf/black
     rev: 23.7.0
     hooks:
-      - id: black # Code formatting.
+      - id: black # Black code formatting
+-   repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.16.0
+    hooks:
+    -   id: blacken-docs # Black formatting for Python code blocks in documentation files
+        additional_dependencies:
+        - black==23.7.0
 -   repo: https://github.com/PyCQA/bandit
     rev: 1.7.5
     hooks:
@@ -49,16 +69,21 @@ repos:
     rev: pylint-2.7.2
     hooks:
     -   id: pylint # Code linting -> Deep code analysis for bugs, standards, and quality
-# TODO - coverage not working! - commented temporarily
-#-   repo: https://github.com/nedbat/coveragepy
-#    rev: 7.3.0
-#    hooks:
-#    -   id: coverage  # Test coverage
-#        args: ["--fail-under=80"]
-# Using packages installed in poetry environments for hooks where we did not get expected behaviours using
-# github repo hooks.
+-   repo: https://github.com/codespell-project/codespell
+    rev: v2.2.5
+    hooks:
+    -   id: codespell # Code and text spelling
+        additional_dependencies:
+          - tomli  # configure codespell using the pyproject.toml file
 - repo: local
   hooks:
+      - id: pytest-cov
+        name: pytest-cov # Run pytest ensuring a minimum required coverage.
+        # Note: we might want to disable it here and just add it in the CI/CD pipelines if tests take too long to run
+        language: system
+        entry: sh
+         # TODO - grizzly still does not have tests for all the repo, temporarily setting minimum test coverage to 1%
+        args: ["-c", "poetry run pytest", "--cov=grizzly_main", "--cov-fail-under=1"]
       - id: interrogate # Check docstrings coverage
         name: interrogate
         language: system
@@ -71,4 +96,7 @@ repos:
         name: pdoc3
         language: system
         entry: sh
-        args: [ "-c", "poetry run python3 -m pdoc --html -f grizzly_main -o auto_docs --skip-errors" ]
+        args: [ "-c", "poetry run python3 -m pdoc --html -f grizzly_main -o auto_docs --skip-errors",
+                # Redirect standard error (file descriptor 2) to /dev/null, effectively silencing any error messages
+                # that might be produced during the documentation generation process
+                "2>/dev/null"]

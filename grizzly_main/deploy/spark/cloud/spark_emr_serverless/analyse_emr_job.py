@@ -2,7 +2,7 @@ import gzip
 import os
 import pathlib
 import shutil
-from typing import Any, Dict, Union
+from typing import Any, Union
 
 import boto3
 import botocore
@@ -56,7 +56,7 @@ def download_logs_from_s3(
 
 
 def analyse_job_run(
-    spark_emr_serverless_config: Dict[str, Any],
+    spark_emr_serverless_config: dict[str, Any],
     job_run_id: str,
     logs_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path] = "",
