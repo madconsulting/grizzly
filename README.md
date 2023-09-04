@@ -35,6 +35,7 @@ Below there are additional explanations and guidelines on the pre-commit hooks:
      - black: It disables the formatting for lines that end with `# fmt: skip` or blocks the ones that start with
               `# fmt: off` and end with `# fmt: on`
               (https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#code-style)
+
      If you encounter with other hooks' errors that need to be neglected at the code level and not described here,
      please read the specific library documentation and update this README.md file accordingly.
 
