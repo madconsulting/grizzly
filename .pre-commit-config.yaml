@@ -1,30 +1,103 @@
 # See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
-default_stages: [commit, push]
+# See https://pre-commit.com/hooks.html or https://github.com/pre-commit/pre-commit-hooks/blob/main/README.md
+# for more pre-commit hooks
+default_stages: [pre-commit, pre-push, pre-merge-commit]
 default_language_version:
     python: python3
 exclude: "cython"
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.4.0
     hooks:
     -   id: check-builtin-literals
     -   id: check-executables-have-shebangs
     -   id: check-merge-conflict
+    -   id: check-json
     -   id: check-yaml
     -   id: debug-statements
     -   id: detect-private-key
+    -   id: detect-aws-credentials
+    -   id: check-added-large-files
+    -   id: check-ast
+    -   id: check-byte-order-marker
+    -   id: check-case-conflict
+    -   id: check-docstring-first
+    -   id: trailing-whitespace
+    -   id: mixed-line-ending
+-   repo: https://github.com/pre-commit/mirrors-isort # Using isort mirror to prevent import error
+    rev: v5.10.1
+    hooks:
+      - id: isort # Import sorting
+        args: ["--profile", "black"] # black compatibility
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.10.1
+    hooks:
+    -   id: pyupgrade # Automatically upgrade Python syntax for newer versions of the language
+        args: [--py39-plus] # Bring python code up to date with improvements for Python 3.9 and higher
+-   repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black # Black code formatting
+-   repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.16.0
+    hooks:
+    -   id: blacken-docs # Black formatting for Python code blocks in documentation files
+        additional_dependencies:
+        - black==23.7.0
 -   repo: https://github.com/PyCQA/bandit
-    rev: 1.7.0
+    rev: 1.7.5
     hooks:
-    -   id: bandit # security vulnerabilities
-        args: ["--exclude", "scripts,setup.py,bin,tests,dat,cython"]
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.812
+    -   id: bandit # Security vulnerabilities
+        args: ["--exclude", "scripts,setup.py,bin,tests,dat,cython",
+               '--severity', 'medium'] # Severity above Medium considered (Low neglected)
+# Using mypy installed in poetry environment as we did not get expected behaviours using github repo hook
+- repo: local
+  hooks:
+      - id: mypy # Docstrings coverage
+        name: mypy
+        language: system
+        entry: sh
+        # Analysing grizzly_main package; skip checking import statements for modules that are missing
+        # type annotations (to not fail due to external packages imported with missing annotations)
+        args: [ "-c",
+                "poetry run python3 -m mypy -p grizzly_main --ignore-missing-imports" ]
+-   repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
     hooks:
-    -   id: mypy # type annotations
-        exclude: ^tests/,^dat/,^cython/
+    -   id: flake8 # Code linting -> Focuses on PEP 8 style and basic style issues
 -   repo: https://github.com/PyCQA/pylint
     rev: pylint-2.7.2
     hooks:
-    -   id: pylint
+    -   id: pylint # Code linting -> Deep code analysis for bugs, standards, and quality
+    # NOTE: Use the .pylintrc file to disable specific errors across all the repo
+-   repo: https://github.com/codespell-project/codespell
+    rev: v2.2.5
+    hooks:
+    -   id: codespell # Code and text spelling
+        additional_dependencies:
+          - tomli  # configuring codespell using the pyproject.toml file
+- repo: local
+  hooks:
+      - id: pytest-cov
+        name: pytest-cov # Run pytest ensuring a minimum required coverage.
+        # Note: we might want to disable it here and just add it in the CI/CD pipelines if tests take too long to run
+        language: system
+        entry: sh
+         # TODO - grizzly still does not have tests for all the repo, temporarily setting minimum test coverage to 1%
+        args: ["-c", "poetry run pytest", "--cov=grizzly_main", "--cov-fail-under=1"]
+      - id: interrogate # Check docstrings coverage
+        name: interrogate
+        language: system
+        entry: sh
+        # 95% docstring coverage required, ignoring __init__.py modules and module-level docstrings
+        # Note: use -vv for extended verbosity
+        args: [ "-c",
+            "poetry run python3 -m interrogate --fail-under 95 --ignore-init-module --ignore-module -v"]
+      - id: pdoc3 # Auto-documentation in HTML format
+        name: pdoc3
+        language: system
+        entry: sh
+        args: [ "-c", "poetry run python3 -m pdoc --html -f grizzly_main -o auto_docs --skip-errors",
+                # Redirect standard error (file descriptor 2) to /dev/null, effectively silencing any error messages
+                # that might be produced during the documentation generation process
+                "2>/dev/null"]

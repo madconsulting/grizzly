@@ -1,0 +1,10 @@
+# Pylint errors to neglect:
+# - Docstrings errors (already covered by interrogate): C0114
+# - Import errors, which work perfectly: E0401, E0611
+# - Snake case naming: C0103
+# - Too many arguments / local variables / instance attributes: R0913, R0914, R0902
+[MESSAGES CONTROL]
+disable = C0114, E0401, E0611, C0103, R0913, R0914, R0902
+
+[FORMAT]
+max-line-length = 120
