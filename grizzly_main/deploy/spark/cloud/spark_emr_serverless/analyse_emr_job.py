@@ -1,10 +1,11 @@
-import os
 import gzip
-import boto3
-import shutil
+import os
 import pathlib
+import shutil
+from typing import Any, Union
+
+import boto3
 import botocore
-from typing import Dict, Any, Union
 
 
 def download_logs_from_s3(
@@ -46,7 +47,7 @@ def download_logs_from_s3(
             os.remove(target)
         # Print the stdout logs from the driver
         if "SPARK_DRIVER/stdout" in target:
-            print(f"Printing below the Spark driver stdout logs:")
+            print("Printing below the Spark driver stdout logs:")
             print("-" * 50, end="\n\n")
             with open(target.replace(".gz", ".txt"), encoding="utf8") as f:
                 for line in f:
@@ -55,7 +56,7 @@ def download_logs_from_s3(
 
 
 def analyse_job_run(
-    spark_emr_serverless_config: Dict[str, Any],
+    spark_emr_serverless_config: dict[str, Any],
     job_run_id: str,
     logs_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path] = "",
@@ -79,28 +80,20 @@ def analyse_job_run(
     not_started_job_states = ["submitted", "pending", "scheduled"]
     emr_app_id = spark_emr_serverless_config["emr_serverless"]["app_id"]
     emr_client = boto3.client("emr-serverless")
-    job_run_info = emr_client.get_job_run(
-        applicationId=emr_app_id, jobRunId=job_run_id
-    )["jobRun"]
+    job_run_info = emr_client.get_job_run(applicationId=emr_app_id, jobRunId=job_run_id)["jobRun"]
     job_state = job_run_info["state"].lower()
     print(f"Job state: {job_state}")
     job_details = job_run_info["stateDetails"]
     print(f"Job state details: {job_details if job_details!='' else 'None'}")
     if "totalResourceUtilization" in job_run_info.keys():
-        print(
-            f"Job total resource utilization: {job_run_info['totalResourceUtilization']}"
-        )
+        print(f"Job total resource utilization: {job_run_info['totalResourceUtilization']}")
     try:
-        dashboard_url = emr_client.get_dashboard_for_job_run(
-            applicationId=emr_app_id, jobRunId=job_run_id
-        )["url"]
+        dashboard_url = emr_client.get_dashboard_for_job_run(applicationId=emr_app_id, jobRunId=job_run_id)["url"]
         print(f"Dashboard URL: {dashboard_url}")
     except botocore.exceptions.ClientError as e:
         if "LiveUI is not supported for jobs that are not running" in str(e):
             if job_state in not_started_job_states:
-                print(
-                    f"You can't check the Spark Live UI until the job transitions from {job_state} to RUNNING state"
-                )
+                print(f"You can't check the Spark Live UI until the job transitions from {job_state} to RUNNING state")
             elif job_state != "running":
                 print(
                     "The job is not running and thus, there is no Spark Live UI available. If you'd like to check "
@@ -110,9 +103,9 @@ def analyse_job_run(
                 raise ValueError(
                     "The LiveUI should have been available for a running job. Check why. This was the "
                     f"error from EMR Serverless client side: {e}"
-                )
+                ) from e
         else:
-            raise ValueError(f"EMR Serverless client error: {e}")
+            raise ValueError(f"EMR Serverless client error: {e}") from e
     job_name = job_run_info["name"]
     if job_state not in not_started_job_states:
         download_logs_from_s3(

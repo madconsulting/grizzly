@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # --  Print inputs
 echo "Inputs to deploy Spark cloud env to s3:"
 echo "PYTHON_VERSION=$PYTHON_VERSION"

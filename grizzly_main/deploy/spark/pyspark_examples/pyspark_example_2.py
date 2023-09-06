@@ -23,4 +23,4 @@ def pyspark_example_2(spark: SparkSession) -> None:
         ]
     )  # an RDD of Vectors
     # Calculate the correlation matrix using Pearson's method.
-    print(Statistics.corr(data, method="pearson"))
+    print(Statistics.corr(data, method="pearson"))  # type: ignore

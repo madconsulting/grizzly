@@ -10,7 +10,7 @@ WORKDIR ${SHARED_WORKSPACE}
 # Copy poetry files: pyproject.toml and poetry.lock into our working directory
 COPY pyproject.toml poetry.lock ./
 # Copy the deploy folder (containing the poetry package and the local/spark_cluster folder):
-COPY deploy/ deploy/
+COPY grizzly_main/deploy/ grizzly_main/deploy/
 RUN echo $(ls)
 # Create a virtual environment & make Poetry packages to be installed to this venv
 RUN apt-get update -y && apt-get install -y python3-pip python3-venv

@@ -1,8 +1,9 @@
-import boto3
 import pathlib
-import botocore
 from datetime import datetime
-from typing import Dict, Any, Tuple, Union
+from typing import Any, Optional, Union
+
+import boto3
+import botocore
 
 
 def upload_file_to_s3(
@@ -26,7 +27,9 @@ def upload_file_to_s3(
 
 
 def start_emr_app(
-    emr_client: botocore.client.BaseClient, emr_app_id: str, emr_app_name: str,
+    emr_client: botocore.client.BaseClient,
+    emr_app_id: str,
+    emr_app_name: str,
 ) -> None:
     """
     Start EMR Serverless application - the app needs to be in STARTED mode in order to be able to run a job
@@ -35,27 +38,25 @@ def start_emr_app(
     :param emr_app_name: EMR Serverless app name
     :return: None
     """
-    emr_app_details = emr_client.get_application(applicationId=emr_app_id)[
-        "application"
-    ]
+    emr_app_details = emr_client.get_application(applicationId=emr_app_id)["application"]
     print(f"{emr_app_name} - details:")
     print(emr_app_details)
     _ = emr_client.start_application(applicationId=emr_app_id)
 
 
 def define_job_run_args(
-    spark_emr_serverless_config: Dict[str, Any],
+    spark_emr_serverless_config: dict[str, Any],
     script_file_path: str,
     emr_app_id: str,
-    execution_timeout_min: int = None,
-) -> Tuple[str, Dict[str, Any]]:
+    execution_timeout_min: Optional[int] = None,
+) -> tuple[str, dict[str, Any]]:
     """
     Define job run arguments
     :param spark_emr_serverless_config: Spark EMR Serverless config
     :param script_file_path: File path of the script to be run
     :param emr_app_id: EMR Serverless application ID
     :param execution_timeout_min: Execution timeout in minutes
-    :return: 
+    :return:
     """
     job_driver = {
         "sparkSubmit": {
@@ -64,22 +65,13 @@ def define_job_run_args(
     }
     if len(spark_emr_serverless_config["spark_submit_parameters"]) > 0:
         spark_submit_parameters = " ".join(
-            [
-                f"--conf {k}={v}"
-                for k, v in spark_emr_serverless_config[
-                    "spark_submit_parameters"
-                ].items()
-            ]
+            [f"--conf {k}={v}" for k, v in spark_emr_serverless_config["spark_submit_parameters"].items()]
         )
-        job_driver["sparkSubmit"].update(
-            {"sparkSubmitParameters": spark_submit_parameters}
-        )
+        job_driver["sparkSubmit"].update({"sparkSubmitParameters": spark_submit_parameters})
     job_name = f"{script_file_path.replace('/', '__')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     job_args = {
         "applicationId": emr_app_id,
-        "executionRoleArn": spark_emr_serverless_config["emr_serverless"][
-            "job_role_arn"
-        ],
+        "executionRoleArn": spark_emr_serverless_config["emr_serverless"]["job_role_arn"],
         "jobDriver": job_driver,
         "configurationOverrides": {
             "monitoringConfiguration": {
@@ -96,11 +88,11 @@ def define_job_run_args(
 
 
 def trigger_emr_job(
-    spark_emr_serverless_config: Dict[str, Any],
+    spark_emr_serverless_config: dict[str, Any],
     script_file_path: str,
     is_update_script_s3: bool,
     base_dir_client_repo: Union[str, pathlib.Path] = "",
-    execution_timeout_min: int = None,
+    execution_timeout_min: Optional[int] = None,
 ) -> str:
     """
     Trigger EMR Serverless job

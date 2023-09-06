@@ -1,7 +1,11 @@
 main_config = {
     # Run specific variables
     "spark_resources_dict": {
-        "driver": {"num_cores": 1, "memory_in_GB": 2, "disk_in_GB": 20,},
+        "driver": {
+            "num_cores": 1,
+            "memory_in_GB": 2,
+            "disk_in_GB": 20,
+        },
         "executor": {
             "num_cores": 1,
             "instances": 2,

@@ -2,8 +2,9 @@
 This is inspired in the Pyspark code example from
 https://github.com/aws-samples/emr-serverless-samples/blob/main/examples/pyspark/extreme_weather.py
 """
+from typing import Optional
 
-from pyspark.sql import SparkSession, DataFrame, Row
+from pyspark.sql import DataFrame, Row, SparkSession
 from pyspark.sql import functions as F
 
 
@@ -17,13 +18,11 @@ def find_largest(df: DataFrame, col_name: str) -> Row:
     :return: Row with largest value
     """
     return (
-        df.select(
-            "STATION", "DATE", "LATITUDE", "LONGITUDE", "ELEVATION", "NAME", col_name
-        )
+        df.select("STATION", "DATE", "LATITUDE", "LONGITUDE", "ELEVATION", "NAME", col_name)
         .filter(~F.col(col_name).isin([99.99, 999.9, 9999.9]))
         .orderBy(F.desc(col_name))
         .limit(1)
-        .first()
+        .first()  # type: ignore
     )
 
 
@@ -31,7 +30,7 @@ def pyspark_example_3(
     spark: SparkSession,
     year: int,
     is_specific_csv_file_only: bool,
-    csv_file_name: str = None,
+    csv_file_name: Optional[str] = None,
 ):
     """
     Pyspark example nº 3 - extreme-weather
@@ -46,9 +45,7 @@ def pyspark_example_3(
     s3_path = f"s3://noaa-gsod-pds/{year}/"
     if is_specific_csv_file_only:
         if csv_file_name is None:
-            raise ValueError(
-                "csv_file_name needs to be defined if is_specific_csv_file_only is True"
-            )
+            raise ValueError("csv_file_name needs to be defined if is_specific_csv_file_only is True")
         s3_path += csv_file_name
     df = spark.read.csv(s3_path, header=True, inferSchema=True)
     print(f"The amount of weather readings in {year} is: {df.count()}\n")
@@ -75,5 +72,6 @@ def pyspark_example_3(
     for stat in stats_to_gather:
         max_row = find_largest(df, stat["column_name"])
         print(
-            f"  {stat['description']}: {max_row[stat['column_name']]}{stat['units']} on {max_row.DATE} at {max_row.NAME} ({max_row.LATITUDE}, {max_row.LONGITUDE})"
+            f"  {stat['description']}: {max_row[stat['column_name']]}{stat['units']} on"
+            f" {max_row.DATE} at {max_row.NAME} ({max_row.LATITUDE}, {max_row.LONGITUDE})"
         )

@@ -1,11 +1,14 @@
 import json
+from typing import Any, Optional
+
 import pulumi
 import pulumi_aws as aws
-from typing import List, Dict, Any, Tuple
 
 
 def create_s3_bucket(
-    resource_prefix_name: str, is_bucket_encryption: bool, tags: Dict[str, Any] = None,
+    resource_prefix_name: str,
+    is_bucket_encryption: bool,
+    tags: Optional[dict[str, Any]] = None,
 ) -> aws.s3.Bucket:
     """
     Create a s3 bucket
@@ -17,27 +20,34 @@ def create_s3_bucket(
     s3_bucket = aws.s3.Bucket(
         f"{resource_prefix_name}-bucket",
         acl="private",
-        versioning=aws.s3.BucketVersioningArgs(enabled=True,),
+        versioning=aws.s3.BucketVersioningArgs(
+            enabled=True,
+        ),
         tags=tags,
         force_destroy=True,  # To be able to delete a not empty bucket
     )
     if is_bucket_encryption:
+        # Disable black formatting, to prevent having a longer line than allowed
+        # fmt: off
         aws.s3.BucketServerSideEncryptionConfigurationV2(
             f"{resource_prefix_name}-bucket_encryption",
             bucket=s3_bucket.bucket,
             rules=[
                 aws.s3.BucketServerSideEncryptionConfigurationV2RuleArgs(
-                    apply_server_side_encryption_by_default=aws.s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs(
+                    apply_server_side_encryption_by_default=  # noqa: E251
+                    aws.s3.BucketServerSideEncryptionConfigurationV2RuleApplyServerSideEncryptionByDefaultArgs(
                         sse_algorithm="AES256",
                     ),
                 )
             ],
         )
+    # fmt: off
     return s3_bucket
 
 
 def create_iam_role(
-    resource_prefix_name: str, tags: Dict[str, Any] = None,
+    resource_prefix_name: str,
+    tags: Optional[dict[str, Any]] = None,
 ) -> aws.iam.Role:
     """
     Create IAM role to allow jobs submitted to the Amazon EMR Serverless application to access other AWS services
@@ -65,8 +75,8 @@ def create_iam_role(
 
 
 def get_access_role_policy_details(
-    s3_bucket_arn: aws.s3.Bucket.arn, additional_read_access_resources: List[str] = None
-) -> Dict[str, Any]:
+    s3_bucket_arn: str, additional_read_access_resources: Optional[list[str]] = None
+) -> dict[str, Any]:
     """
     Get access IAM role policy details
     :param s3_bucket_arn: S3 bucket
@@ -108,7 +118,7 @@ def create_iam_role_policy(
     resource_prefix_name: str,
     s3_bucket: aws.s3.Bucket,
     iam_role: aws.iam.Role,
-    additional_read_access_resources: List[str] = None,
+    additional_read_access_resources: Optional[list[str]] = None,
 ) -> aws.iam.RolePolicy:
     """
     Create IAM Role Policy
@@ -125,7 +135,7 @@ def create_iam_role_policy(
         # Note: Need to define the get_access_role_policy_details function to pass the bucket.arn. Otherwise an Output
         # is not JSON serializable
         policy=pulumi.Output.all(s3_bucket_arn, additional_read_access_resources).apply(
-            lambda args: get_access_role_policy_details(
+            lambda args: get_access_role_policy_details(  # type: ignore
                 s3_bucket_arn=args[0], additional_read_access_resources=args[1]
             )
         ),
@@ -138,7 +148,7 @@ def create_emr_serverless_app(
     max_memory_gb: int,
     max_disk_gb: int,
     idle_timeout_minutes: int = 60,
-    tags: Dict[str, Any] = None,
+    tags: Optional[dict[str, Any]] = None,
 ) -> aws.emrserverless.Application:
     """
     Create EMR Serverless app
@@ -158,11 +168,10 @@ def create_emr_serverless_app(
             memory=f"{max_memory_gb} GB",
             disk=f"{max_disk_gb} GB",
         ),
-        auto_start_configuration=aws.emrserverless.ApplicationAutoStartConfigurationArgs(
-            enabled=True
-        ),
+        auto_start_configuration=aws.emrserverless.ApplicationAutoStartConfigurationArgs(enabled=True),
         auto_stop_configuration=aws.emrserverless.ApplicationAutoStopConfigurationArgs(
-            enabled=True, idle_timeout_minutes=idle_timeout_minutes,
+            enabled=True,
+            idle_timeout_minutes=idle_timeout_minutes,
         ),
         release_label="emr-6.8.0",
         tags=tags,
@@ -176,12 +185,10 @@ def create_spark_emr_serverless_architecture(
     max_memory_gb: int,
     max_disk_gb: int,
     idle_timeout_minutes: int = 60,
-    additional_read_access_resources: List[str] = None,
+    additional_read_access_resources: Optional[list[str]] = None,
     is_bucket_encryption: bool = True,
-    tags: Dict[str, Any] = None,
-) -> Tuple[
-    aws.s3.Bucket, aws.iam.Role, aws.iam.RolePolicy, aws.emrserverless.Application
-]:
+    tags: Optional[dict[str, Any]] = None,
+) -> tuple[aws.s3.Bucket, aws.iam.Role, aws.iam.RolePolicy, aws.emrserverless.Application]:
     """
     Creates the following infrastructure is required to run Spark on AWS with EMR Serverless:
     - S3 bucket

@@ -1,5 +1,5 @@
 import pathlib
-from typing import Dict, Any, Tuple, Union
+from typing import Any, Optional, Union
 
 from grizzly_main.deploy.spark.cloud.spark_emr_serverless.build.build_artifacts_interactions import (
     get_poetry_wheel_file,
@@ -9,8 +9,10 @@ from grizzly_main.iac_pulumi.pulumi_rest_api_functions import get_pulumi_stack_s
 
 
 def _find_single_pulumi_resource_based_on_type(
-    stack_state_dict: Dict[str, Any], resource_type: str, project_stack_name: str = "",
-) -> Dict[str, Any]:
+    stack_state_dict: dict[str, Any],
+    resource_type: str,
+    project_stack_name: str = "",
+) -> dict[str, Any]:
     """
     Find single Pulumi resource corresponding to a given resource type.
     :param stack_state_dict: Stack state dictionary
@@ -21,9 +23,7 @@ def _find_single_pulumi_resource_based_on_type(
     selected_resource_dict = None
     if "deployment" not in stack_state_dict.keys():
         print(f"Stack state dictionary: {stack_state_dict}")
-        raise ValueError(
-            "Stack state dictionary does not contain deployed resources information"
-        )
+        raise ValueError("Stack state dictionary does not contain deployed resources information")
     for resource_dict in stack_state_dict["deployment"]["resources"]:
         if resource_dict["type"] == resource_type:
             if selected_resource_dict is not None:
@@ -31,17 +31,15 @@ def _find_single_pulumi_resource_based_on_type(
                     f"Multiple resources of type {resource_type} found in Pulumi stack {project_stack_name}. "
                     "This is not expected."
                 )
-            else:
-                selected_resource_dict = resource_dict
+            selected_resource_dict = resource_dict
     if selected_resource_dict is None:
-        raise ValueError(
-            f"resource of type {resource_type} not found in Pulumi stack {project_stack_name}."
-        )
+        raise ValueError(f"resource of type {resource_type} not found in Pulumi stack {project_stack_name}.")
     return selected_resource_dict
 
 
 def get_s3_bucket_id_from_pulumi(
-    stack_state_dict: Dict[str, Any], project_stack_name: str = "",
+    stack_state_dict: dict[str, Any],
+    project_stack_name: str = "",
 ) -> str:
     """
     Get s3 bucket id from Pulumi
@@ -57,8 +55,9 @@ def get_s3_bucket_id_from_pulumi(
 
 
 def get_emr_serverless_app_from_pulumi(
-    stack_state_dict: Dict[str, Any], project_stack_name: str = "",
-) -> Tuple[str, str]:
+    stack_state_dict: dict[str, Any],
+    project_stack_name: str = "",
+) -> tuple[str, str]:
     """
     Get EMR Serverless application details from Pulumi
     :param stack_state_dict: Stack state dictionary
@@ -74,7 +73,8 @@ def get_emr_serverless_app_from_pulumi(
 
 
 def get_job_role_arm_from_pulumi(
-    stack_state_dict: Dict[str, Any], project_stack_name: str = "",
+    stack_state_dict: dict[str, Any],
+    project_stack_name: str = "",
 ) -> str:
     """
     Get job role ARN from Pulumi
@@ -93,12 +93,12 @@ def get_spark_emr_serverless_config(
     pulumi_organization: str,
     pulumi_project: str,
     pulumi_stack: str,
-    spark_resources_dict: Dict[str, Any],
+    spark_resources_dict: dict[str, Any],
     poetry_dir: str,
     base_dir_client_repo: Union[str, pathlib.Path],
-    poetry_package_version: str = None,
-    **kwargs,
-) -> Dict[str, Any]:
+    poetry_package_version: Optional[str] = None,
+    **kwargs,  # pylint: disable=unused-argument
+) -> dict[str, Any]:
     """
     Get Spark EMR Serverless config.
     Note that **kwargs is used so that we can pass additional redundant fields from the main config.
@@ -120,13 +120,16 @@ def get_spark_emr_serverless_config(
     )
     project_stack_name = f"{pulumi_organization}/{pulumi_project}/{pulumi_stack}"
     s3_bucket = get_s3_bucket_id_from_pulumi(
-        stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
+        stack_state_dict=stack_state_dict,
+        project_stack_name=project_stack_name,
     )
     app_id, app_name = get_emr_serverless_app_from_pulumi(
-        stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
+        stack_state_dict=stack_state_dict,
+        project_stack_name=project_stack_name,
     )
     job_role_arm = get_job_role_arm_from_pulumi(
-        stack_state_dict=stack_state_dict, project_stack_name=project_stack_name,
+        stack_state_dict=stack_state_dict,
+        project_stack_name=project_stack_name,
     )
     _, venv_file_name = get_venv_file(
         poetry_dir=poetry_dir,
@@ -171,9 +174,7 @@ def get_spark_emr_serverless_config(
             "spark.driver.memory": f"{spark_resources_dict['driver']['memory_in_GB']}g",
             "spark.driver.disk": spark_resources_dict["driver"]["disk_in_GB"],
             "spark.executor.cores": str(spark_resources_dict["executor"]["num_cores"]),
-            "spark.executor.instances": str(
-                spark_resources_dict["executor"]["instances"]
-            ),
+            "spark.executor.instances": str(spark_resources_dict["executor"]["instances"]),
             "spark.executor.memory": f"{spark_resources_dict['executor']['memory_in_GB']}g",
             "spark.executor.disk": spark_resources_dict["executor"]["disk_in_GB"],
         },
