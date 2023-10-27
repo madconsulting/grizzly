@@ -3,8 +3,14 @@
 # - Import errors, which work perfectly: E0401, E0611
 # - Snake case naming: C0103
 # - Too many arguments / local variables / instance attributes: R0913, R0914, R0902
+# - Use lazy % formatting in logging functions: W1203
+# - Too few public methods: R0903
+# - Unnecessary "else" after "raise" or "return": R1705, R1720
+# - Similar lines in 2 files: R0801
+
+
 [MESSAGES CONTROL]
-disable = C0114, E0401, E0611, C0103, R0913, R0914, R0902
+disable = C0114, E0401, E0611, C0103, R0913, R0914, R0902, W1203, R0903, R1705, R1720, R0801
 
 [FORMAT]
 max-line-length = 120

@@ -29,6 +29,29 @@ seedir =  "0.4.2"
 flask = "2.3.3"
 fastapi = "0.100.1"
 
+# Optional dependency group for the Prefect POC (in grizzly_main/orchestrator/prefect_poc)
+[tool.poetry.group.prefect_poc]
+optional = true
+
+[tool.poetry.group.prefect_poc.dependencies]
+prefect = "2.13.5"
+pysqlite3 = "0.5.1"
+mysql-connector-python = "8.1.0"
+pandas = "2.1.0"
+featuretools = "1.27.0"
+matplotlib = "3.5.2"
+lightgbm = "4.1.0"
+optuna = "3.3.0"
+mysqlclient = "2.2.0"
+pyarrow = "13.0.0"
+mlflow = "2.7.1"
+plotly = "5.17.0"
+kaleido = "0.2.1"
+shap = "0.42.1"
+ipython = "8.16.1"
+fasttreeshap = "0.1.6"
+
+
 [tool.poetry.group.dev.dependencies]
 pre-commit = "3.3.3"
 # Adding pre-commit hooks libraries to be available to be used independently via the Poetry environment

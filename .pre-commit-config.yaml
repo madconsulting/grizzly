@@ -70,14 +70,13 @@ repos:
     hooks:
     -   id: pylint # Code linting -> Deep code analysis for bugs, standards, and quality
     # NOTE: Use the .pylintrc file to disable specific errors across all the repo
--   repo: https://github.com/codespell-project/codespell
-    rev: v2.2.5
-    hooks:
-    -   id: codespell # Code and text spelling
-        additional_dependencies:
-          - tomli  # configuring codespell using the pyproject.toml file
 - repo: local
   hooks:
+      - id: codespell
+        name: codespell
+        language: system
+        entry: sh
+        args: [ "-c", "poetry run codespell --ignore-words-list [PostgresSQL, mape]"]
       - id: pytest-cov
         name: pytest-cov # Run pytest ensuring a minimum required coverage.
         # Note: we might want to disable it here and just add it in the CI/CD pipelines if tests take too long to run
